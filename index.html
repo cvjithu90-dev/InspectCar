@@ -1,62 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-<!doctype html><html><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>InspectCarsAI | AI Powered Car Inspection Bangalore</title>
-<meta name="description" content="Premium used and new car inspection in Bangalore.">
-<link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>InspectCar | AI Powered Used Car Inspection in Bangalore</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
 </head>
-<body>
-<header>
-<div class="wrap">
-<h1>Buy Your Next Car<br>With Confidence.</h1>
-<p style="font-size:22px;margin:25px 0">AI Powered • 300+ Point Inspection • OBD Diagnostics • Vehicle Health Score</p>
-<a class="btn primary" href="https://wa.me/919900368006">Book on WhatsApp</a>
-<a class="btn secondary" href="tel:+919900368006">Call 9900368006</a>
 
-<div class="stats">
-<div class="stat"><h2>300+</h2><p>Inspection Points</p></div>
-<div class="stat"><h2>AI</h2><p>Vehicle Analysis</p></div>
-<div class="stat"><h2>60-90</h2><p>Minutes</p></div>
-<div class="stat"><h2>Same Day</h2><p>Booking</p></div>
+<body>
+    <div id="scroll-progress"></div>
+    <div id="loader">
+
+    <div class="loader-content">
+
+        <div class="loader-logo">
+            <img src="images/Logo.png" alt="InspectCar">
+        </div>
+
+        <h2>InspectCar</h2>
+
+        <p>AI Powered Used Car Inspection</p>
+
+    </div>
+
 </div>
-</div>
+
+<div class="bg-gradient"></div>
+<div class="bg-purple"></div>
+<div class="bg-blue"></div>
+<div class="bg-light1"></div>
+<div class="bg-light2"></div>
+<div class="bg-light3"></div>
+
+<!-- ===========================
+        HEADER
+=========================== -->
+
+<header>
+
+   <nav class="navbar">
+
+    <!-- Logo -->
+    <a href="#home" class="logo">
+        <img src="images/Logo.png" alt="InspectCar">
+    </a>
+
+    <!-- Navigation -->
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#whyus">Why Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <!-- Right Icons -->
+    <div class="nav-actions">
+
+        <a href="tel:+919900368006"
+           class="nav-circle call-circle"
+           aria-label="Call">
+            <i class="fas fa-phone"></i>
+        </a>
+
+        <a href="https://wa.me/919900368006"
+           target="_blank"
+           class="nav-circle whatsapp-circle"
+           aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Open Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+</nav>
+
 </header>
 
-<section class="wrap">
-<h2>Our Services</h2>
-<div class="grid">
-<div class="card"><h3>Used Car Inspection</h3><br><p>Complete mechanical, structural and diagnostic inspection before purchase.</p></div>
-<div class="card"><h3>New Car PDI</h3><br><p>Ensure your new vehicle is delivered defect-free.</p></div>
-<div class="card"><h3>Luxury Car Inspection</h3><br><p>BMW, Mercedes, Audi, Jaguar, Volvo and more.</p></div>
-<div class="card"><h3>Corporate & Dealers</h3><br><p>Fleet and dealership inspection solutions.</p></div>
-</div>
+<section class="hero" id="home">
+
+    <!-- LEFT SIDE -->
+    <div class="hero-left" data-aos="fade-right">
+
+        <span class="tag">
+            AI Powered Vehicle Inspection Platform
+        </span>
+
+        <h1>
+            Buy Smarter.<br>
+            Drive with
+            <span>Confidence.</span>
+        </h1>
+
+        <p>
+            AI-powered 300+ point used car inspections with engine diagnostics,
+            OBD scanning, service history verification, chassis analysis,
+            paint inspection, and detailed reports—helping you buy with complete confidence.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#" class="primary-btn">
+                Book Inspection
+            </a>
+
+            <a href="#packages" class="secondary-btn">
+              View Packages
+             </a>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon">🔍</div>
+                <h2 class="counter" data-target="300">0</h2>
+                <p>Inspection Points</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">🚗</div>
+                <h2 class="counter" data-target="5000">0</h2>
+                <p>Cars Inspected</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <h2 class="counter" data-target="98">0</h2>
+                <p>Customer Satisfaction</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <h2 class="counter" data-target="4">0</h2>
+                <p>Report Delivery</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="hero-right" data-aos="fade-left">
+
+        <div class="shield-glow"></div>
+
+        <img src="images/hero-car.png"
+             alt="Premium Vehicle Inspection"
+             class="hero-car">
+
+        <!-- Engine -->
+        <div class="hotspot hs1">
+            <span class="dot"></span>
+            <div class="glass-card">
+                <h4>Engine Health</h4>
+                <p>AI Diagnostics</p>
+            </div>
+        </div>
+
+        <!-- Paint -->
+        <div class="hotspot hs2">
+            <span class="dot"></span>
+            <div class="glass-card">
+                <h4>Paint Thickness</h4>
+                <p>Factory Finish</p>
+            </div>
+        </div>
+
+        <!-- OBD -->
+        <div class="hotspot hs3">
+            <span class="dot"></span>
+            <div class="glass-card">
+                <h4>OBD Scan</h4>
+                <p>Fault Detection</p>
+            </div>
+        </div>
+
+        <!-- Chassis -->
+        <div class="hotspot hs4">
+            <span class="dot"></span>
+            <div class="glass-card">
+                <h4>Chassis</h4>
+                <p>Structural Check</p>
+            </div>
+        </div>
+
+        <!-- Service History -->
+        <div class="hotspot hs5">
+            <span class="dot"></span>
+            <div class="glass-card">
+                <h4>Service History</h4>
+                <p>Verified Records</p>
+            </div>
+        </div>
+
+        <!-- AI Score -->
+        <div class="hotspot hs6">
+            <span class="dot"></span>
+            <div class="glass-card">
+                <h4>AI Vehicle Score</h4>
+                <p>300+ Point Analysis</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<section class="brands">
+
+    <div class="section-header">
+        <span>MULTI-BRAND EXPERTISE</span>
+
+        <h2>We Inspect Every Major Car Brand</h2>
+
+        <p>
+            From Maruti to Mercedes-Benz, our certified experts inspect every vehicle
+            using advanced AI diagnostics and a 300+ point inspection process.
+        </p>
+    </div>
+
+    <div class="brand-slider">
+
+        <div class="brand-track">
+
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/suzuki/mono.svg" alt="Maruti Suzuki">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/hyundai/default.svg" alt="Hyundai">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/honda/mono.svg" alt="Honda">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/toyota/mono.svg" alt="Toyota">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/tata/mono.svg" alt="Tata">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mahindra/mono.svg" alt="Mahindra">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/kia/mono.svg" alt="Kia">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mg/mono.svg" alt="MG">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/skoda/mono.svg" alt="Skoda">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/volkswagen/mono.svg" alt="Volkswagen">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/jeep/default.svg" alt="Jeep">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bmw/default.svg" alt="BMW">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mercedes-benz/default.svg" alt="Mercedes-Benz">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/audi/mono.svg" alt="Audi">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/ford/mono.svg" alt="Ford">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mini/mono.svg" alt="Mini">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/volvo/default.svg" alt="Volvo">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/chevrolet/default.svg" alt="Chevrolet">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/renault/mono.svg" alt="Renault">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/porsche/mono.svg" alt="Porsche">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/nissan/default.svg" alt="Nissan">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mitsubishi/mono.svg" alt="mitsubishi">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/fiat/mono.svg" alt="fiat">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/citroen/default.svg" alt="citroen">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/amg/default.svg" alt="amg">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/abarth/default.svg" alt="abarth">
+            
+            
+
+
+
+            <!-- Duplicate logos for infinite loop -->
+
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/suzuki/mono.svg" alt="Maruti Suzuki">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/hyundai/default.svg" alt="Hyundai">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/honda/mono.svg" alt="Honda">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/toyota/mono.svg" alt="Toyota">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/tata/mono.svg" alt="Tata">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mahindra/mono.svg" alt="Mahindra">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/kia/mono.svg" alt="Kia">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mg/mono.svg" alt="MG">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/skoda/mono.svg" alt="Skoda">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/volkswagen/mono.svg" alt="Volkswagen">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/jeep/default.svg" alt="Jeep">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bmw/default.svg" alt="BMW">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mercedes-benz/default.svg" alt="Mercedes-Benz">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/audi/mono.svg" alt="Audi">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/ford/mono.svg" alt="Ford">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mini/mono.svg" alt="Mini">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/volvo/default.svg" alt="Volvo">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/chevrolet/default.svg" alt="Chevrolet">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/renault/mono.svg" alt="Renault">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/porsche/mono.svg" alt="Porsche">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/nissan/default.svg" alt="Nissan">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mitsubishi/mono.svg" alt="mitsubishi">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/fiat/mono.svg" alt="fiat">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/citroen/default.svg" alt="citroen">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/amg/default.svg" alt="amg">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/abarth/default.svg" alt="abarth">
+
+        </div>
+
+    </div>
+
 </section>
 
-<section class="wrap">
-<h2>Why InspectCarsAI?</h2>
-<div class="grid">
-<div class="card">✓ Independent Inspection</div>
-<div class="card">✓ Engine Diagnostics</div>
-<div class="card">✓ Accident Detection</div>
-<div class="card">✓ Paint Thickness Test</div>
-<div class="card">✓ Service History Verification</div>
-<div class="card">✓ AI Vehicle Health Report</div>
-</div>
-</section>
+<!-- ===========================
+     SERVICES SECTION
+=========================== -->
 
-<section class="wrap">
-<h2>Inspection Journey</h2>
-<p>Book → Inspector Assigned → On-site Inspection → AI Report → Negotiation Support → Buy with Confidence</p>
-</section>
+<section id="services" class="services reveal">
 
-<section class="wrap">
-<h2>Ready to Book?</h2>
-<p>Serving customers across Bangalore with professional vehicle inspections.</p>
-<br>
-<a class="btn primary" href="https://wa.me/919900368006">Book Inspection</a>
-</section>
+<div class="section-header">
 
-<footer>
-© 2026 InspectCarsAI • Bangalore • AI Powered Car Inspection
+        <span>OUR SERVICES</span>
+
+        <h2>Everything We Check Before You Buy</h2>
+
+        <p>
+            Every inspection includes advanced diagnostics,
+            AI-powered analysis and a detailed report
+            so you know exactly what you're buying.
+        </p>
+
+    </div>
+
+    <div class="services-grid">
+
+        <div class="service-card" data-aos="zoom-in">
+            <div class="icon">🔧</div>
+            <h3>Engine Diagnostics</h3>
+            <p>Complete engine health analysis with AI-assisted diagnostics.</p>
+        </div>
+
+        <div class="service-card" data-aos="zoom-in">
+            <div class="icon">💻</div>
+            <h3>OBD Computer Scan</h3>
+            <p>Read hidden fault codes directly from the vehicle ECU.</p>
+        </div>
+
+        <div class="service-card" data-aos="zoom-in">
+            <div class="icon">🎨</div>
+            <h3>Paint Thickness Test</h3>
+            <p>Identify repainting, accident repairs and bodywork.</p>
+        </div>
+
+        <div class="service-card" data-aos="zoom-in">
+            <div class="icon">🛡️</div>
+            <h3>Chassis Inspection</h3>
+            <p>Detect structural repairs and frame damage.</p>
+        </div>
+
+        <div class="service-card" data-aos="zoom-in">
+            <div class="icon">📄</div>
+            <h3>Service History Verification</h3>
+            <p>Verify maintenance records wherever available.</p>
+        </div>
+
+        <div class="service-card" data-aos="zoom-in">
+            <div class="icon">🤖</div>
+            <h3>AI Vehicle Score</h3>
+            <p>Easy-to-understand vehicle health score based on 300+ inspection points.</p>
+        </div>
+
+    </div>
+
+</section>
+<!-- ===========================
+     PACKAGES
+=========================== -->
+
+<section class="packages" id="packages" data-aos="fade-up">
+
+    <div class="section-header">
+
+        <span>OUR PACKAGES</span>
+
+        <h2>Choose Your Inspection</h2>
+
+        <p>
+            Designed for every type of buyer—from budget hatchbacks to premium luxury cars.
+        </p>
+
+    </div>
+
+    <div class="package-grid">
+
+        <!-- Super Value  -->
+
+        <div class="package-card">
+
+            <h3>Super Value</h3>
+
+            <div class="price">
+                ₹2,500
+            </div>
+
+            <ul>
+
+                <li>✔ 300+ Inspection Points</li>
+
+                <li>✔ Engine Health Check</li>
+
+                <li>✔ OBD Scan</li>
+
+                <li>✔ Suspension Check</li>
+
+                <li>✔ Brake Inspection</li>
+
+                <li>✔ Digital Report</li>
+
+            </ul>
+
+            <a href="#" class="package-btn">
+                Book Now
+            </a>
+
+        </div>
+
+        <!-- Luxury Expert -->
+
+        <div class="package-card featured">
+
+            <div class="popular">
+                MOST POPULAR
+            </div>
+
+            <h3>Luxury Expert</h3>
+
+            <div class="price">
+                ₹3,599
+            </div>
+
+            <ul>
+
+                <li>✔ 300+ Inspection Points</li>
+
+                <li>✔ AI Vehicle Score</li>
+
+                <li>✔ Engine Diagnostics</li>
+
+                <li>✔ Paint Thickness Test</li>
+
+                <li>✔ Chassis Inspection</li>
+
+                <li>✔ Odometer Verification</li>
+
+                <li>✔ Complete AI Report</li>
+
+                <li>✔ Luxury Car Specialist</li>
+
+                <li>✔ Priority Support</li>
+
+                <li>✔ Same Day Report</li>
+
+            </ul>
+
+            <a href="#" class="package-btn">
+                Book Now
+            </a>
+
+        </div>
+
+        <!-- Quick Delivery-New Car -->
+
+        <div class="package-card">
+
+            <h3>Quick Delivery-New Car</h3>
+
+            <div class="price">
+                ₹2,000
+            </div>
+
+            <ul>
+
+                <li>✔ Premium Vehicle Inspection</li>
+
+                <li>✔ 300+ Inspection Points</li>
+
+                <li>✔ Advanced Diagnostics</li>
+
+                <li>✔ Complete AI Report</li>
+
+                <li>✔ Priority Support</li>
+
+            </ul>
+
+            <a href="#" class="package-btn">
+                Book Now
+            </a>
+
+        </div>
+
+    </div>
+
+</section><!-- ===========================
+     WHY CHOOSE US
+=========================== -->
+
+<section class="why-us" id="whyus" data-aos="fade-up">
+
+    <div class="section-header">
+
+        <span>WHY INSPECTCAR</span>
+
+        <h2>Why Thousands of Buyers Trust InspectCar</h2>
+
+        <p>
+            We combine expert inspectors with advanced AI technology to give
+            you complete confidence before purchasing your next vehicle.
+        </p>
+
+    </div>
+
+    <div class="why-grid">
+
+        <div class="why-card">
+            <div class="why-icon">🤖</div>
+            <h3>AI Powered Inspection</h3>
+            <p>Advanced diagnostics and intelligent analysis for accurate vehicle assessment.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">👨‍🔧</div>
+            <h3>Certified Experts</h3>
+            <p>Every inspection is performed by experienced automotive professionals.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">📄</div>
+            <h3>Transparent Reports</h3>
+            <p>Easy-to-understand reports with photos, recommendations and health scores.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">⚡</div>
+            <h3>Same-Day Reports</h3>
+            <p>Receive your complete inspection report within hours.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">🛡️</div>
+            <h3>300+ Point Inspection</h3>
+            <p>Every important component is professionally inspected.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon">📍</div>
+            <h3>On-Site Inspection</h3>
+            <p>We inspect the vehicle wherever it is located across Bangalore.</p>
+        </div>
+
+    </div>
+
+</section><!-- ===========================
+     TESTIMONIALS
+=========================== -->
+
+<section class="testimonials" data-aos="fade-up">
+
+    <div class="section-header">
+
+        <span>TESTIMONIALS</span>
+
+        <h2>What Our Customers Say</h2>
+
+        <p>
+            Trusted by car buyers across Bangalore for transparent and professional inspections.
+        </p>
+
+    </div>
+
+    <div class="testimonial-grid">
+
+        <div class="testimonial-card">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                "The inspection report helped me avoid buying a car with hidden accident damage. Worth every rupee."
+            </p>
+
+            <div class="customer">
+
+                <div class="avatar">R</div>
+
+                <div>
+                    <h4>Rahul Sharma</h4>
+                    <span>Verified Customer</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="testimonial-card featured-review">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                "Professional team, detailed report, and excellent support during price negotiation. Highly recommended."
+            </p>
+
+            <div class="customer">
+
+                <div class="avatar">A</div>
+
+                <div>
+                    <h4>Arjun Nair</h4>
+                    <span>Verified Customer</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="testimonial-card">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                "Booked online in minutes. The inspector arrived on time and explained everything clearly."
+            </p>
+
+            <div class="customer">
+
+                <div class="avatar">S</div>
+
+                <div>
+                    <h4>Sneha R</h4>
+                    <span>Verified Customer</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section><!-- ===========================
+     INSPECTION PROCESS
+=========================== -->
+
+<section class="process" data-aos="fade-up">
+
+    <div class="section-header">
+
+        <span>HOW IT WORKS</span>
+
+        <h2>Your Car Inspection Journey</h2>
+
+        <p>
+            A simple, transparent process designed to help you make the right buying decision.
+        </p>
+
+    </div>
+
+    <div class="process-container">
+
+        <div class="process-step">
+
+            <div class="step-number">1</div>
+
+            <div class="step-icon">📅</div>
+
+            <h3>Book Inspection</h3>
+
+            <p>
+                Schedule an inspection online or via WhatsApp at your preferred date and time.
+            </p>
+
+        </div>
+
+        <div class="process-line"></div>
+
+        <div class="process-step">
+
+            <div class="step-number">2</div>
+
+            <div class="step-icon">🚗</div>
+
+            <h3>Inspector Visits</h3>
+
+            <p>
+                Our certified inspector reaches the seller's location anywhere in Bangalore.
+            </p>
+
+        </div>
+
+        <div class="process-line"></div>
+
+        <div class="process-step">
+
+            <div class="step-number">3</div>
+
+            <div class="step-icon">🔍</div>
+
+            <h3>300+ Point Inspection</h3>
+
+            <p>
+                Complete mechanical, electrical, structural and diagnostic inspection.
+            </p>
+
+        </div>
+
+        <div class="process-line"></div>
+
+        <div class="process-step">
+
+            <div class="step-number">4</div>
+
+            <div class="step-icon">🤖</div>
+
+            <h3>AI Analysis</h3>
+
+            <p>
+                AI evaluates the inspection data and generates an overall vehicle health score.
+            </p>
+
+        </div>
+
+        <div class="process-line"></div>
+
+        <div class="process-step">
+
+            <div class="step-number">5</div>
+
+            <div class="step-icon">✅</div>
+
+            <h3>Detailed Report</h3>
+
+            <p>
+                Receive a professional report with photos, findings, repair estimates and buying recommendations.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="faq" id="faq" data-aos="fade-up">
+
+    <div class="section-header">
+        <span>FAQ</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>
+            Everything you need to know before booking your vehicle inspection.
+        </p>
+    </div>
+
+    <div class="faq-container">
+
+        <div class="faq-item active">
+            <button class="faq-question">
+                <span>How long does a car inspection take?</span>
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    A complete used car inspection usually takes 60–90 minutes,
+                    depending on the vehicle and package selected.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Do you inspect the car at the seller's location?</span>
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Yes. Our inspector travels to the seller's location anywhere
+                    in Bangalore for maximum convenience.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Will I receive a detailed inspection report?</span>
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Yes. You'll receive a detailed digital report with photos,
+                    observations, AI-assisted analysis, and our recommendation.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Do you inspect luxury cars?</span>
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Yes. We inspect premium brands including Mercedes-Benz, BMW,
+                    Audi, Jaguar, Land Rover, Porsche and more.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<!-- ===========================
+     CONTACT
+=========================== -->
+
+<section class="contact" id="contact" data-aos="fade-up">
+
+    <div class="contact-left">
+
+        <span class="section-tag">GET IN TOUCH</span>
+
+        <h2>Ready to Buy Your Next Car?</h2>
+
+        <p>
+            Book your professional vehicle inspection today and purchase with complete confidence.
+            Our certified experts are available across Bangalore.
+        </p>
+
+        <div class="contact-info">
+
+            <div class="info-card">
+                <div class="info-icon">📞</div>
+                <div>
+                    <h4>Call Us</h4>
+                    <a href="tel:+919900368006">+91 99003 68006</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">💬</div>
+                <div>
+                    <h4>WhatsApp</h4>
+                    <a href="https://wa.me/919900368006" target="_blank">
+                        Chat with us
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">📧</div>
+                <div>
+                    <h4>Email</h4>
+                    <a href="mailto:info@inspectcar.ai">
+                        info@inspectcar.ai
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">📍</div>
+                <div>
+                    <h4>Service Area</h4>
+                    <p>Bangalore, Karnataka</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="contact-right">
+
+        <form>
+
+            <h3>Book Inspection</h3>
+
+            <input type="text" placeholder="Full Name" required>
+
+            <input type="tel" placeholder="Mobile Number" required>
+
+            <input type="email" placeholder="Email Address">
+
+            <input type="text" placeholder="Vehicle Make & Model">
+
+            <textarea rows="5" placeholder="Inspection Address"></textarea>
+
+            <button type="submit">
+                Book Inspection
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+<!-- ===========================
+        PREMIUM FOOTER
+=========================== -->
+
+<footer class="footer" data-aos="fade-up">
+
+    <div class="footer-glow"></div>
+
+    <div class="footer-container">
+
+        <!-- Brand -->
+
+        <div class="footer-brand">
+
+            <div class="logo-box">
+                <img src="images/Logo.png" alt="InspectCars-AI">
+            </div>
+
+            <p>
+                AI-powered vehicle inspections helping buyers make confident decisions with
+                transparent reports, certified experts and advanced diagnostics.
+            </p>
+
+            <div class="social-icons">
+
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+
+                <a href="#"><i class="fab fa-instagram"></i></a>
+
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+                <a href="#"><i class="fab fa-youtube"></i></a>
+
+            </div>
+
+        </div>
+
+        <!-- Company -->
+
+        <div class="footer-column">
+
+            <h3>Company</h3>
+
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#packages">Packages</a>
+            <a href="#whyus">Why Choose Us</a>
+            <a href="#contact">Contact</a>
+
+        </div>
+
+        <!-- Services -->
+
+        <div class="footer-column">
+
+            <h3>Inspection</h3>
+
+            <a href="#">Used Car Inspection</a>
+            <a href="#">Luxury Inspection</a>
+            <a href="#">Engine Diagnostics</a>
+            <a href="#">AI Vehicle Score</a>
+            <a href="#">OBD Scan</a>
+
+        </div>
+
+        <!-- Contact -->
+
+        <div class="footer-column">
+
+            <h3>Contact</h3>
+
+            <span>📞 +91 99003 68006</span>
+
+            <span>📧 info@inspectcar.in</span>
+
+            <span>📍 Bangalore, Karnataka</span>
+
+            <a class="footer-btn"
+               href="https://wa.me/919900368006"
+               target="_blank">
+
+               Book on WhatsApp →
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        <div>
+
+            © 2026 <strong>InspectCar</strong>. All Rights Reserved.
+
+        </div>
+
+        <div>
+
+            Designed with ❤️ in Bangalore
+
+        </div>
+
+    </div>
+
 </footer>
-</body></html>
+
+<script>
+
+const reveals = document.querySelectorAll(".reveal");
+
+function revealSections(){
+
+    reveals.forEach(section=>{
+
+        const windowHeight = window.innerHeight;
+
+        const top = section.getBoundingClientRect().top;
+
+        if(top < windowHeight - 120){
+
+            section.classList.add("active");
+
+        }
+
+    });
+
+}
+
+window.addEventListener("scroll", revealSections);
+
+revealSections();
+
+</script>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+AOS.init({
+    duration:900,
+    easing:"ease-out",
+    once:true,
+    offset:120
+});
+</script>
+<script>
+
+window.addEventListener("scroll",()=>{
+
+    const navbar=document.querySelector(".navbar");
+
+    if(window.scrollY>80){
+
+        navbar.classList.add("scrolled");
+
+    }else{
+
+        navbar.classList.remove("scrolled");
+
+    }
+
+});
+
+</script>
+<script>
+const counters = document.querySelectorAll(".counter");
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+
+        if (!entry.isIntersecting) return;
+
+        const counter = entry.target;
+        const target = +counter.dataset.target;
+
+        let current = 0;
+        const increment = target / 100;
+
+        const updateCounter = () => {
+
+            current += increment;
+
+            if (current < target) {
+
+                counter.innerText = Math.floor(current);
+
+                requestAnimationFrame(updateCounter);
+
+            } else {
+
+                counter.innerText = target + "+";
+
+            }
+        };
+
+        updateCounter();
+
+        observer.unobserve(counter);
+
+    });
+},{
+    threshold:0.5
+});
+
+counters.forEach(counter=>{
+    observer.observe(counter);
+});
+</script>
+<a href="https://wa.me/919900368006"
+   class="floating-whatsapp"
+   target="_blank"
+   aria-label="Chat on WhatsApp">
+
+    <i class="fab fa-whatsapp"></i>
+    <span>Chat with an Expert</span>
+
+</a>
+
+<script>
+document.querySelectorAll(".faq-question").forEach(question => {
+
+    question.addEventListener("click", () => {
+
+        const item = question.parentElement;
+
+        document.querySelectorAll(".faq-item").forEach(faq => {
+
+            if (faq !== item) {
+                faq.classList.remove("active");
+            }
+
+        });
+
+        item.classList.toggle("active");
+
+    });
+
+});
+</script>
+
+<script>
+window.addEventListener("load", () => {
+
+    const loader = document.getElementById("loader");
+
+    if(loader){
+
+        setTimeout(() => {
+
+            loader.classList.add("hide");
+
+        }, 1200);
+
+    }
+
+});
+</script>
+<script>
+window.addEventListener("scroll", () => {
+
+    const scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+
+    const scrollHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+    const progress = (scrollTop / scrollHeight) * 100;
+
+    document.getElementById("scroll-progress").style.width =
+        progress + "%";
+
+});
+</script>
+<script>
+const cards = document.querySelectorAll(
+".service-card,.package-card,.why-card,.testimonial-card"
+);
+
+cards.forEach(card=>{
+
+    card.addEventListener("mousemove",(e)=>{
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const rotateY = ((x / rect.width)-0.5)*12;
+        const rotateX = ((rect.height/2-y)/rect.height)*12;
+
+        card.style.transform =
+            `perspective(1000px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             translateY(-8px)`;
+
+    });
+
+    card.addEventListener("mouseleave",()=>{
+
+        card.style.transform =
+            "perspective(1000px) rotateX(0) rotateY(0) translateY(0)";
+
+    });
+
+});
+</script>
+<script>
+const heroCar = document.querySelector(".hero-car");
+
+window.addEventListener("mousemove",(e)=>{
+
+    if(!heroCar) return;
+
+    const x = (e.clientX / window.innerWidth - 0.5) * 20;
+    const y = (e.clientY / window.innerHeight - 0.5) * 12;
+
+    heroCar.style.transform =
+        `translate(${x}px,${y}px)`;
+});
+</script>
+<script>
+
+const menuToggle = document.getElementById("menuToggle");
+const navLinks = document.getElementById("navLinks");
+
+menuToggle.addEventListener("click",()=>{
+
+    menuToggle.classList.toggle("active");
+    navLinks.classList.toggle("active");
+
+});
+
+document.querySelectorAll(".nav-links a").forEach(link=>{
+
+    link.addEventListener("click",()=>{
+
+        menuToggle.classList.remove("active");
+        navLinks.classList.remove("active");
+
+    });
+
+});
+
+</script>
+<script>
+const menu = document.getElementById("menuToggle");
+const nav = document.getElementById("navLinks");
+
+menu.addEventListener("click", () => {
+    nav.classList.toggle("active");
+});
+</script>
+</body>
+</html>
