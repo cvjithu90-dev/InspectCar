@@ -92,6 +92,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
     </button>
 
 </nav>
+<div class="menu-overlay" id="menuOverlay"></div>
 
 </header>
 
@@ -118,9 +119,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
         <div class="hero-buttons">
 
-            <a href="#" class="primary-btn">
-                Book Inspection
-            </a>
+            <a href="https://wa.me/919900368006?text=Hi%20InspectCar,%20I%20would%20like%20to%20book%20a%20vehicle%20inspection."
+target="_blank"
+class="primary-btn">
+Book Inspection
+</a>
 
             <a href="#packages" class="secondary-btn">
               View Packages
@@ -1220,35 +1223,38 @@ window.addEventListener("mousemove",(e)=>{
 </script>
 <script>
 
-const menuToggle = document.getElementById("menuToggle");
-const navLinks = document.getElementById("navLinks");
-
-menuToggle.addEventListener("click",()=>{
-
-    menuToggle.classList.toggle("active");
-    navLinks.classList.toggle("active");
-
-});
-
-document.querySelectorAll(".nav-links a").forEach(link=>{
-
-    link.addEventListener("click",()=>{
-
-        menuToggle.classList.remove("active");
-        navLinks.classList.remove("active");
-
-    });
-
-});
-
-</script>
-<script>
 const menu = document.getElementById("menuToggle");
 const nav = document.getElementById("navLinks");
+const overlay = document.getElementById("menuOverlay");
 
 menu.addEventListener("click", () => {
+
+    menu.classList.toggle("active");
     nav.classList.toggle("active");
+    overlay.classList.toggle("active");
+
+    document.body.classList.toggle("menu-open");
+
 });
+
+overlay.addEventListener("click", closeMenu);
+
+document.querySelectorAll(".nav-links a").forEach(link => {
+
+    link.addEventListener("click", closeMenu);
+
+});
+
+function closeMenu(){
+
+    menu.classList.remove("active");
+    nav.classList.remove("active");
+    overlay.classList.remove("active");
+
+    document.body.classList.remove("menu-open");
+
+}
+
 </script>
 </body>
 </html>
