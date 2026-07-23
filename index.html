@@ -270,10 +270,6 @@ Book Inspection
             <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/citroen/default.svg" alt="citroen">
             <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/amg/default.svg" alt="amg">
             <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/abarth/default.svg" alt="abarth">
-            
-            
-
-
 
             <!-- Duplicate logos for infinite loop -->
 
@@ -573,7 +569,6 @@ Book Inspection
         <p>
             Trusted by car buyers across Bangalore for transparent and professional inspections.
         </p>
-
     </div>
 
     <div class="testimonial-grid">
@@ -1213,6 +1208,7 @@ const heroCar = document.querySelector(".hero-car");
 window.addEventListener("mousemove",(e)=>{
 
     if(!heroCar) return;
+    if(window.innerWidth <= 992) return;
 
     const x = (e.clientX / window.innerWidth - 0.5) * 20;
     const y = (e.clientY / window.innerHeight - 0.5) * 12;
