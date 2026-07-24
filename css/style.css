@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 *{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 html,body{width:100%;overflow-x:hidden;}
 body{font-family:'Inter',sans-serif;background:#fff;}
 
@@ -53,8 +54,8 @@ backdrop-filter:blur(30px);box-shadow:0 20px 45px rgba(15,23,42,.12);
 }
 
 .logo{display:flex;align-items:center;}
-.logo img{height:90px;width:auto;transition:.35s;}
-.navbar.scrolled .logo img{height:48px;}
+.logo img{height:128px;width:auto;transition:.35s;}
+.navbar.scrolled .logo img{height:66px;}
 
 .nav-links{display:flex;align-items:center;gap:34px;list-style:none;margin:0;padding:0;}
 .nav-links a{position:relative;text-decoration:none;color:#475569;font-size:15px;font-weight:600;transition:.3s;}
@@ -236,26 +237,73 @@ box-shadow:0 20px 40px rgba(15,23,42,.06);border:1px solid rgba(0,56,255,.08);
 /* ===========================
    PACKAGES
 =========================== */
-.packages{width:min(1200px,92%);margin:140px auto;}
-.package-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:35px;}
+.packages{width:min(1080px,92%);margin:140px auto;}
+.package-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+
+/* Glass finish card — translucent + blurred backdrop instead of flat white */
 .package-card{
-position:relative;background:white;border-radius:28px;padding:45px 35px;
-box-shadow:0 20px 45px rgba(15,23,42,.06);transition:.35s;border:1px solid rgba(0,56,255,.08);
+position:relative;
+background:linear-gradient(160deg,rgba(255,255,255,.8),rgba(255,255,255,.45));
+backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+border-radius:22px;padding:32px 26px 26px;
+box-shadow:0 18px 40px rgba(15,23,42,.08);
+transition:.35s;border:1px solid rgba(255,255,255,.7);
 }
-.package-card:hover{transform:translateY(-12px);box-shadow:0 30px 70px rgba(0,56,255,.18);}
-.package-card h3{font-size:26px;font-weight:800;line-height:1.2;letter-spacing:-0.5px;margin-bottom:16px;color:#111827;}
-.price{font-size:48px;font-weight:900;color:#0038FF;margin-bottom:28px;line-height:1;}
-.package-card ul{list-style:none;margin-bottom:40px;}
-.package-card li{padding:12px 0;color:#475569;border-bottom:1px solid #eef2ff;}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .package-card{background:rgba(255,255,255,.94);}
+}
+.package-card:hover{transform:translateY(-10px);box-shadow:0 25px 55px rgba(0,56,255,.18);}
+
+/* Small eyebrow label above the title */
+.package-card::before{
+content:"Inspection Plan";
+display:block;font-size:10.5px;font-weight:800;letter-spacing:1.8px;
+color:#0038FF;text-transform:uppercase;margin-bottom:12px;
+}
+
+/* Specially styled title — accent underline, tighter tracking */
+.package-card h3{
+font-size:21px;font-weight:800;color:#0F172A;letter-spacing:-.3px;
+margin-bottom:16px;position:relative;display:inline-block;padding-bottom:9px;
+}
+.package-card h3::after{
+content:"";position:absolute;left:0;bottom:0;width:34px;height:3px;border-radius:3px;
+background:linear-gradient(90deg,#0038FF,#8B5CF6);
+}
+
+/* Specially styled price — gradient number, smaller currency symbol, per-inspection suffix */
+.price{
+font-size:34px;font-weight:800;margin-bottom:22px;
+display:inline-flex;align-items:baseline;gap:6px;
+background:linear-gradient(135deg,#0038FF,#6C63FF);
+background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.price::first-letter{font-size:.55em;font-weight:700;}
+.price::after{
+content:"/ inspection";
+-webkit-text-fill-color:#64748B;color:#64748B;background:none;
+font-size:12px;font-weight:600;letter-spacing:.2px;
+}
+
+.package-card ul{list-style:none;margin-bottom:28px;}
+.package-card li{padding:9px 0;color:#475569;border-bottom:1px solid rgba(0,56,255,.08);font-size:14px;}
+
 .package-btn{
-display:block;text-align:center;padding:18px;border-radius:16px;
+display:block;text-align:center;padding:15px;border-radius:14px;
 background:linear-gradient(135deg,#0038FF,#5B5CF7,#8B5CF6);color:white;text-decoration:none;font-weight:700;
+box-shadow:0 12px 26px rgba(0,56,255,.22);font-size:14.5px;
 }
-.featured{transform:scale(1.05);border:2px solid #0038FF;}
-.featured:hover{transform:scale(1.08);}
+
+.featured{
+transform:scale(1.04);border:2px solid rgba(0,56,255,.55);
+background:linear-gradient(160deg,rgba(232,239,255,.9),rgba(255,255,255,.55));
+}
+.featured:hover{transform:scale(1.06) translateY(-6px);}
 .popular{
-position:absolute;top:-16px;left:50%;transform:translateX(-50%);
-background:#0038FF;color:white;padding:8px 20px;border-radius:50px;font-size:13px;font-weight:700;
+position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+background:linear-gradient(135deg,#0038FF,#6C63FF);color:white;padding:7px 18px;border-radius:50px;
+font-size:11.5px;font-weight:700;letter-spacing:.4px;box-shadow:0 10px 24px rgba(0,56,255,.3);
+white-space:nowrap;
 }
 
 /* ===========================
@@ -495,7 +543,7 @@ transform-style:preserve-3d;transition:transform .25s ease,box-shadow .25s ease;
 .menu-toggle{
 display:none;width:42px;height:42px;border:none;border-radius:12px;background:#fff;cursor:pointer;
 justify-content:center;align-items:center;flex-direction:column;gap:5px;
-box-shadow:0 10px 25px rgba(0,0,0,.08);transition:.3s;z-index:10002;
+box-shadow:0 10px 25px rgba(0,0,0,.08);transition:.3s;z-index:100001;
 }
 .menu-toggle:active{transform:scale(.9);}
 .menu-toggle span{width:20px;height:2px;background:#0038FF;border-radius:10px;transition:.35s ease;}
@@ -505,9 +553,9 @@ box-shadow:0 10px 25px rgba(0,0,0,.08);transition:.3s;z-index:10002;
 
 .menu-overlay{
 position:fixed;inset:0;background:rgba(15,23,42,.35);backdrop-filter:blur(2px);
-opacity:0;visibility:hidden;transition:.35s;z-index:9998;
+opacity:0;visibility:hidden;pointer-events:none;transition:.35s;z-index:9990;
 }
-.menu-overlay.active{opacity:1;visibility:visible;}
+.menu-overlay.active{opacity:1;visibility:visible;pointer-events:auto;}
 body.menu-open{overflow:hidden;}
 
 /* =====================================================================
@@ -534,11 +582,11 @@ body.menu-open{overflow:hidden;}
   .hero-buttons{display:flex;justify-content:center;gap:16px;margin-top:35px;flex-wrap:wrap;}
   .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:45px;}
 
-  .package-grid{grid-template-columns:1fr;gap:25px;}
+  .package-grid{grid-template-columns:1fr;gap:22px;max-width:380px;margin:0 auto;}
   .featured{transform:none;}
   .featured:hover{transform:translateY(-8px);}
-  .package-card{padding:35px 25px;}
-  .price{font-size:42px;}
+  .package-card{padding:28px 24px 22px;}
+  .price{font-size:32px;}
 
   /* Process cards: wrap instead of squeezing 5 across */
   .process-container{flex-wrap:wrap;justify-content:center;row-gap:50px;}
@@ -552,30 +600,37 @@ body.menu-open{overflow:hidden;}
   html,body{overflow-x:hidden;}
 
   /* Navbar */
-  .navbar{width:94%;padding:12px 16px;border-radius:18px;}
-  .logo img{height:30px;}
+  .navbar{width:94%;padding:12px 16px;border-radius:18px;isolation:isolate;}
+  .logo img{height:46px;}
   .nav-actions{display:none;}
   .menu-toggle{display:flex;}
 
-  /* Compact glass dropdown menu (not a full-height side drawer) */
+  /* Compact glass dropdown menu (not a full-height side drawer).
+     Background is near-solid (not just a light tint) so it reads
+     clean even on browsers/devices that ignore backdrop-filter —
+     a thin transparent tint alone let the hero text bleed through
+     and look "blurred"/unreadable underneath the menu labels. */
   .nav-links{
     position:fixed;top:86px;right:4%;width:min(260px,80vw);
     display:flex;flex-direction:column;gap:2px;
     list-style:none;margin:0;padding:0 20px;
 
-    max-height:0;opacity:0;visibility:hidden;overflow:hidden;
-    background:rgba(255,255,255,.82);
+    max-height:0;opacity:0;visibility:hidden;overflow:hidden;pointer-events:none;
+    background:rgba(255,255,255,.97);
     backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-    border:1px solid rgba(255,255,255,.55);
+    border:1px solid rgba(255,255,255,.7);
     border-radius:22px;
-    box-shadow:0 25px 60px rgba(15,23,42,.18);
+    box-shadow:0 25px 60px rgba(15,23,42,.22);
     transform:translateY(-14px) scale(.95);
     transform-origin:top right;
     transition:max-height .35s ease, opacity .25s ease, transform .3s ease, padding .35s ease, visibility 0s linear .35s;
-    z-index:10001;
+    z-index:100000;
+  }
+  @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+    .nav-links{background:#ffffff;}
   }
   .nav-links.active{
-    max-height:70vh;opacity:1;visibility:visible;
+    max-height:70vh;opacity:1;visibility:visible;pointer-events:auto;
     padding:16px 20px;transform:translateY(0) scale(1);
     overflow-y:auto;
     transition:max-height .35s ease, opacity .25s ease, transform .3s ease, padding .35s ease;
@@ -656,11 +711,13 @@ body.menu-open{overflow:hidden;}
   .info-card{padding:16px;border-radius:16px;}
 
   /* Packages */
-  .package-card{padding:26px 20px;border-radius:22px;}
-  .package-card h3{font-size:22px;}
-  .price{font-size:32px;margin-bottom:22px;}
-  .package-card li{padding:9px 0;font-size:14px;}
-  .package-btn{padding:15px;}
+  .package-card{padding:22px 18px 18px;border-radius:20px;}
+  .package-card::before{font-size:10px;margin-bottom:9px;}
+  .package-card h3{font-size:19px;margin-bottom:12px;}
+  .price{font-size:28px;margin-bottom:18px;}
+  .price::after{font-size:11px;}
+  .package-card li{padding:8px 0;font-size:13.5px;}
+  .package-btn{padding:14px;font-size:14px;}
 
   /* Footer already handled at 900px breakpoint above */
 
@@ -672,7 +729,7 @@ body.menu-open{overflow:hidden;}
 /* ---------- SMALL MOBILE (<=480px) ---------- */
 @media (max-width:480px){
   .navbar{width:96%;}
-  .logo img{height:28px;}
+  .logo img{height:40px;}
   .hero h1{font-size:33px;line-height:1.15;}
   .hero p{font-size:14.5px;}
   .hero-right img{max-width:300px;}
