@@ -141,20 +141,20 @@ Book Inspection
 
             <div class="stat-card">
                 <div class="stat-icon">🚗</div>
-                <h2 class="counter" data-target="500">0</h2>
+                <h2 class="counter" data-target="5000">0</h2>
                 <p>Cars Inspected</p>
             </div>
 
             <div class="stat-card">
                 <div class="stat-icon">⭐</div>
-                <h2 class="counter" data-target="450">0</h2>
+                <h2 class="counter" data-target="98">0</h2>
                 <p>Customer Satisfaction</p>
             </div>
 
             <div class="stat-card">
                 <div class="stat-icon">⚡</div>
                 <h2 class="counter" data-target="4">0</h2>
-                <p>Hours<br>Report Delivery</p>
+                <p>Report Delivery</p>
             </div>
 
         </div>
@@ -1237,7 +1237,22 @@ overlay.addEventListener("click", closeMenu);
 
 document.querySelectorAll(".nav-links a").forEach(link => {
 
-    link.addEventListener("click", closeMenu);
+    link.addEventListener("click", (e) => {
+
+        e.preventDefault();
+
+        const targetId = link.getAttribute("href");
+        const target = targetId ? document.querySelector(targetId) : null;
+
+        closeMenu();
+
+        if(target){
+            setTimeout(() => {
+                target.scrollIntoView({behavior:"smooth", block:"start"});
+            }, 300);
+        }
+
+    });
 
 });
 
