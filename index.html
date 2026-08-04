@@ -450,14 +450,15 @@
 
     <div class="package-grid">
 
-        <!-- Super Value  -->
+        <!-- Expert-Drive -->
 
         <div class="package-card">
 
-            <h3>Super Value</h3>
+            <h3>Expert-Drive</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: -6px; margin-bottom: 12px; font-weight: 500;">Used car</p>
 
             <div class="price">
-                ₹2,500
+                ₹2,699
             </div>
 
             <ul>
@@ -482,7 +483,7 @@
 
         </div>
 
-        <!-- Luxury Expert -->
+        <!-- Lux-Drive -->
 
         <div class="package-card featured">
 
@@ -490,10 +491,11 @@
                 MOST POPULAR
             </div>
 
-            <h3>Luxury Expert</h3>
+            <h3>Lux-Drive</h3>
+            <p style="font-size: 13px; color: var(--accent-light); margin-top: -6px; margin-bottom: 12px; font-weight: 600;">Premium Used Car</p>
 
             <div class="price">
-                ₹3,599
+                ₹3,999
             </div>
 
             <ul>
@@ -526,14 +528,15 @@
 
         </div>
 
-        <!-- Quick Delivery-New Car -->
+        <!-- Pre-Drive -->
 
         <div class="package-card">
 
-            <h3>Quick Delivery-New Car</h3>
+            <h3>Pre-Drive</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: -6px; margin-bottom: 12px; font-weight: 500;">New Car PDI</p>
 
             <div class="price">
-                ₹2,000
+                ₹1,999
             </div>
 
             <ul>
@@ -1189,12 +1192,12 @@
                 </div>
 
                 <div class="booking-package-grid">
-                    <!-- Super Value -->
-                    <div class="booking-package-card" data-pkg="super-value">
+                    <!-- Expert-Drive -->
+                    <div class="booking-package-card" data-pkg="expert-drive">
                         <div class="pkg-radio"></div>
-                        <span class="pkg-badge">Standard</span>
-                        <div class="pkg-title">Super Value</div>
-                        <div class="pkg-price">₹2,500</div>
+                        <span class="pkg-badge">Used car</span>
+                        <div class="pkg-title">Expert-Drive</div>
+                        <div class="pkg-price">₹2,699</div>
                         <ul class="pkg-features">
                             <li><i class="fas fa-check-circle"></i> 300+ Inspection Points</li>
                             <li><i class="fas fa-check-circle"></i> Engine Health Check</li>
@@ -1203,12 +1206,12 @@
                         </ul>
                     </div>
 
-                    <!-- Luxury Expert -->
-                    <div class="booking-package-card selected" data-pkg="luxury-expert">
+                    <!-- Lux-Drive -->
+                    <div class="booking-package-card selected" data-pkg="lux-drive">
                         <div class="pkg-radio"></div>
-                        <span class="pkg-badge">Most Popular</span>
-                        <div class="pkg-title">Luxury Expert</div>
-                        <div class="pkg-price">₹3,599</div>
+                        <span class="pkg-badge">Premium Used Car</span>
+                        <div class="pkg-title">Lux-Drive</div>
+                        <div class="pkg-price">₹3,999</div>
                         <ul class="pkg-features">
                             <li><i class="fas fa-check-circle"></i> 300+ Points + AI Score</li>
                             <li><i class="fas fa-check-circle"></i> Paint Thickness Meter Test</li>
@@ -1217,12 +1220,12 @@
                         </ul>
                     </div>
 
-                    <!-- Quick Delivery -->
-                    <div class="booking-package-card" data-pkg="quick-delivery">
+                    <!-- Pre-Drive -->
+                    <div class="booking-package-card" data-pkg="pre-drive">
                         <div class="pkg-radio"></div>
                         <span class="pkg-badge">New Car PDI</span>
-                        <div class="pkg-title">Quick Delivery - New Car</div>
-                        <div class="pkg-price">₹2,000</div>
+                        <div class="pkg-title">Pre-Drive</div>
+                        <div class="pkg-price">₹1,999</div>
                         <ul class="pkg-features">
                             <li><i class="fas fa-check-circle"></i> Pre-Delivery Inspection</li>
                             <li><i class="fas fa-check-circle"></i> Paint & Scratch Audit</li>
@@ -1240,25 +1243,25 @@
                     <p>Tell us about the car you are planning to inspect.</p>
                 </div>
 
-                <div class="form-grid-2">
+                <div class="form-row-2">
                     <div class="form-group">
-                        <label>Vehicle Make *</label>
-                        <select id="inputMake" class="form-select">
-                            <option value="">— Select Make —</option>
+                        <label>Vehicle Make / Brand *</label>
+                        <select id="selectBrand" class="form-select" required>
+                            <option value="">Select Brand...</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Vehicle Model *</label>
-                        <select id="inputModel" class="form-select" disabled>
-                            <option value="">— Select Make First —</option>
+                        <select id="selectModel" class="form-select" required disabled>
+                            <option value="">Select Brand First</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="form-grid-2">
+                <div class="form-row-2">
                     <div class="form-group">
-                        <label>Manufacturing Year</label>
-                        <select id="inputYear" class="form-select">
+                        <label>Manufacturing Year *</label>
+                        <select id="selectYear" class="form-select" required>
                             <option value="2025">2025</option>
                             <option value="2024">2024</option>
                             <option value="2023">2023</option>
@@ -1268,17 +1271,17 @@
                             <option value="2019">2019</option>
                             <option value="2018">2018</option>
                             <option value="2017">2017</option>
-                            <option value="Older">2016 or Older</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015 &amp; Older</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Fuel Type</label>
-                        <select id="inputFuel" class="form-select">
+                        <label>Fuel Type *</label>
+                        <select id="selectFuel" class="form-select" required>
                             <option value="Petrol" selected>Petrol</option>
                             <option value="Diesel">Diesel</option>
-                            <option value="CNG">CNG</option>
-                            <option value="Electric (EV)">Electric (EV)</option>
-                            <option value="Hybrid">Hybrid</option>
+                            <option value="CNG">CNG / Hybrid</option>
+                            <option value="Electric">Electric (EV)</option>
                         </select>
                     </div>
                 </div>
@@ -1289,7 +1292,7 @@
                 </div>
 
                 <div id="luxury-notice" style="display:none; background: linear-gradient(135deg,rgba(99,102,241,0.15),rgba(139,92,246,0.1)); border:1px solid rgba(99,102,241,0.4); border-radius:10px; padding:10px 14px; font-size:12.5px; color:#a78bfa; margin-top:4px;">
-                    <i class="fas fa-gem" style="color:#a78bfa;margin-right:4px;"></i> <strong>Luxury Expert</strong> — All premium brands (BMW, Mercedes, Audi, Porsche & more) are available.
+                    <i class="fas fa-gem" style="color:#a78bfa;margin-right:4px;"></i> <strong>Lux-Drive</strong> — All premium brands (BMW, Mercedes, Audi, Porsche &amp; more) are available.
                 </div>
             </div>
 

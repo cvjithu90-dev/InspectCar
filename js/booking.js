@@ -105,7 +105,7 @@ const LUXURY_MAKES = {
 };
 
 // Packages that get ALL brands
-const LUXURY_PACKAGES = ['luxury-expert'];
+const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
 
 // ============================================================
 
@@ -114,15 +114,20 @@ const LUXURY_PACKAGES = ['luxury-expert'];
 
   // Packages definition
   const PACKAGES = {
-    'super-value': { name: 'Super Value', price: 2500, points: '300+ Checkpoints' },
-    'luxury-expert': { name: 'Luxury Expert', price: 3599, points: '300+ Points + AI Score + Paint Gauge' },
-    'quick-delivery': { name: 'Quick Delivery - New Car', price: 2000, points: 'Pre-Delivery Inspection' }
+    'expert-drive': { name: 'Expert-Drive (Used car)', price: 2699, points: '300+ Checkpoints' },
+    'lux-drive': { name: 'Lux-Drive (Premium Used Car)', price: 3999, points: '300+ Points + AI Score + Paint Gauge' },
+    'pre-drive': { name: 'Pre-Drive (New Car PDI)', price: 1999, points: 'Pre-Delivery Inspection' },
+
+    // Backwards compatibility aliases
+    'super-value': { name: 'Expert-Drive (Used car)', price: 2699, points: '300+ Checkpoints' },
+    'luxury-expert': { name: 'Lux-Drive (Premium Used Car)', price: 3999, points: '300+ Points + AI Score + Paint Gauge' },
+    'quick-delivery': { name: 'Pre-Drive (New Car PDI)', price: 1999, points: 'Pre-Delivery Inspection' }
   };
 
   // State object
   const state = {
     currentStep: 1,
-    packageId: 'luxury-expert',
+    packageId: 'lux-drive',
     brand: '',
     model: '',
     year: '2022',
@@ -331,9 +336,9 @@ const LUXURY_PACKAGES = ['luxury-expert'];
         const pkgCard = btn.closest('.package-card');
         if (pkgCard) {
           const title = pkgCard.querySelector('h3')?.innerText || '';
-          if (title.includes('Super Value')) state.packageId = 'super-value';
-          else if (title.includes('Luxury Expert')) state.packageId = 'luxury-expert';
-          else if (title.includes('Quick Delivery')) state.packageId = 'quick-delivery';
+          if (title.includes('Expert-Drive') || title.includes('Super Value')) state.packageId = 'expert-drive';
+          else if (title.includes('Lux-Drive') || title.includes('Luxury Expert')) state.packageId = 'lux-drive';
+          else if (title.includes('Pre-Drive') || title.includes('Quick Delivery')) state.packageId = 'pre-drive';
         }
 
         openModal();
