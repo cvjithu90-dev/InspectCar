@@ -186,10 +186,10 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
 
   // Map package ID to Supabase boolean column name
   function pkgToDbField(pkgId) {
-    if (pkgId === 'super-value') return 'super_value';
-    if (pkgId === 'luxury-expert') return 'luxury_expert';
-    if (pkgId === 'quick-delivery') return 'quick_delivery';
-    return 'luxury_expert'; // default
+    if (pkgId === 'super-value' || pkgId === 'expert-drive') return 'super_value';
+    if (pkgId === 'luxury-expert' || pkgId === 'lux-drive') return 'luxury_expert';
+    if (pkgId === 'quick-delivery' || pkgId === 'pre-drive') return 'quick_delivery';
+    return 'super_value'; // default
   }
 
   async function populateMakeDropdown() {
@@ -224,30 +224,32 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
         });
         makes.sort((a, b) => a.name.localeCompare(b.name));
 
-        makeSelect.innerHTML = '<option value="">— Select Make —</option>';
-        makes.forEach(make => {
-          const opt = document.createElement('option');
-          opt.value = make.name; // store name not UUID for DB insert
-          opt.dataset.id = make.id;
-          opt.textContent = make.name;
-          if (make.name === state.brand) opt.selected = true;
-          makeSelect.appendChild(opt);
-        });
+        if (makes.length > 0) {
+          makeSelect.innerHTML = '<option value="">— Select Make —</option>';
+          makes.forEach(make => {
+            const opt = document.createElement('option');
+            opt.value = make.name; // store name not UUID for DB insert
+            opt.dataset.id = make.id;
+            opt.textContent = make.name;
+            if (make.name === state.brand) opt.selected = true;
+            makeSelect.appendChild(opt);
+          });
 
-        // Re-populate models if brand still valid
-        if (state.brand) {
-          const selectedOpt = [...makeSelect.options].find(o => o.value === state.brand);
-          if (selectedOpt) await populateModelDropdown(state.brand, selectedOpt.dataset.id);
-          else { state.brand = ''; state.model = ''; }
+          // Re-populate models if brand still valid
+          if (state.brand) {
+            const selectedOpt = [...makeSelect.options].find(o => o.value === state.brand);
+            if (selectedOpt) await populateModelDropdown(state.brand, selectedOpt.dataset.id);
+            else { state.brand = ''; state.model = ''; }
+          }
+          return;
         }
-        return;
       }
     } catch(e) {
       console.warn('Supabase fetch failed, using fallback:', e);
     }
 
     // FALLBACK: use hardcoded data
-    const makes = state.packageId === 'luxury-expert'
+    const makes = (state.packageId === 'luxury-expert' || state.packageId === 'lux-drive')
       ? { ...MAINSTREAM_MAKES, ...LUXURY_MAKES }
       : { ...MAINSTREAM_MAKES };
 
@@ -309,7 +311,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
   function populateFallbackModels(makeName) {
     const modelSelect = document.getElementById('inputModel');
     if (!modelSelect) return;
-    const allMakes = state.packageId === 'luxury-expert'
+    const allMakes = (state.packageId === 'luxury-expert' || state.packageId === 'lux-drive')
       ? { ...MAINSTREAM_MAKES, ...LUXURY_MAKES }
       : { ...MAINSTREAM_MAKES };
     const models = allMakes[makeName] || [];
