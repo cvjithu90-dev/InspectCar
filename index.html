@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>InspectCar | AI Powered Used Car Inspection in Bangalore</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/booking.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<!-- Supabase SDK for live booking capture -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Razorpay Checkout SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<style>
+/* Remove main-page glare / sheen effects & force instant visibility */
+.hero-right::before,
+.hero-right::after,
+.hero-car::before,
+.hero-car::after,
+.glass-card::before,
+.glass-card::after,
+.hotspot .glass-card::before,
+.hotspot .glass-card::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    animation: none !important;
+    transform: none !important;
+}
+.hero-right,
+.hero-car,
+.glass-card,
+.hotspot .glass-card {
+    filter: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+[data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+}
+</style>
+
+</head>
+
+<body>
+    <div id="scroll-progress"></div>
+    <div id="loader">
+
+    <div class="loader-content">
+
+        <div class="loader-logo">
+            <img src="images/Logo.webp" alt="InspectCar">
+        </div>
+
+        <h2>InspectCar</h2>
+
+        <p>AI Powered Used Car Inspection</p>
+
+    </div>
+
+</div>
+
+<div class="bg-gradient"></div>
+<div class="bg-purple"></div>
+<div class="bg-blue"></div>
+<div class="bg-light1"></div>
+<div class="bg-light2"></div>
+<div class="bg-light3"></div>
+
+<!-- ===========================
+        HEADER
+=========================== -->
+
+<header>
+
+   <nav class="navbar">
+
+    <!-- Logo -->
+    <a href="#home" class="logo">
+        <img src="images/Logo.webp" alt="InspectCar">
+    </a>
+
+    <!-- Navigation -->
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#whyus">Why Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <!-- Right Icons -->
+    <div class="nav-actions">
+
+        <a href="tel:+919900368006"
+           class="nav-circle call-circle"
+           aria-label="Call">
+            <i class="fas fa-phone"></i>
+        </a>
+
+        <a href="https://wa.me/919900368006"
+           target="_blank"
+           class="nav-circle whatsapp-circle"
+           aria-label="WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+    </div>
+
+    <!-- Mobile Menu -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Open Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+</nav>
+<div class="menu-overlay" id="menuOverlay"></div>
+
+</header>
+
+<section class="hero" id="home">
+
+    <!-- LEFT SIDE -->
+    <div class="hero-left">
+
+        <span class="tag">
+            AI Powered Vehicle Inspection Platform
+        </span>
+
+        <h1>
+            Buy Smarter.<br>
+            Drive with
+            <span>Confidence.</span>
+        </h1>
+
+        <p>
+            AI-powered 300+ point used car inspections with engine diagnostics,
+            OBD scanning, service history verification, chassis analysis,
+            paint inspection, and detailed reports—helping you buy with complete confidence.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button class="primary-btn open-booking-modal" onclick="if(window.openBookingModal) window.openBookingModal();">
+                Book Inspection
+            </button>
+
+            <a href="#packages" class="secondary-btn">
+                View Packages
+            </a>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-clipboard-list" style="color: var(--accent-light);"></i></div>
+                <h2 class="counter" data-target="300">300+</h2>
+                <p>Inspection Points</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-car" style="color: var(--accent-secondary);"></i></div>
+                <h2 class="counter" data-target="500">500+</h2>
+                <p>Cars Inspected</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-user-check" style="color: #c084fc;"></i></div>
+                <h2 class="counter" data-target="470">470+</h2>
+                <p>Satisfied Customers</p>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-bolt" style="color: #38bdf8;"></i></div>
+                <h2 class="counter" data-target="4" data-prefix=">" data-suffix=" Hrs">>4 Hrs</h2>
+                <p>Report Delivery</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="hero-right" id="heroRight">
+
+        <div class="hero-car-wrapper" id="heroCarWrapper">
+            <img src="images/shield-watermark.webp"
+                 alt=""
+                 aria-hidden="true"
+                 class="shield-watermark">
+
+            <img src="images/hero-car1.webp"
+                 alt="Premium Vehicle Inspection"
+                 class="hero-car"
+                 id="heroCarImg">
+
+            <!-- Target Hotspot Dots on Car Parts -->
+            <div class="car-target-dot" id="dotEngine" style="top: 40%; left: 34%;" title="Engine Health"></div>
+            <div class="car-target-dot" id="dotObd" style="top: 54%; left: 24%;" title="OBD Scan"></div>
+            <div class="car-target-dot" id="dotPaint" style="top: 48%; left: 66%;" title="Paint Thickness"></div>
+            <div class="car-target-dot" id="dotHistory" style="top: 28%; left: 44%;" title="Service History"></div>
+            <div class="car-target-dot" id="dotScore" style="top: 22%; left: 58%;" title="AI Vehicle Score"></div>
+            <div class="car-target-dot" id="dotChassis" style="top: 68%; left: 48%;" title="Chassis"></div>
+        </div>
+
+        <!-- SVG Line Layer -->
+        <svg class="connecting-lines-svg" id="connectingSvg">
+            <defs>
+                <linearGradient id="neonGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.85"/>
+                    <stop offset="50%" stop-color="#a78bfa" stop-opacity="1"/>
+                    <stop offset="100%" stop-color="#6366f1" stop-opacity="0.85"/>
+                </linearGradient>
+                <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="3.5" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <!-- 6 Neon Curves -->
+            <path id="pathEngine" class="guide-path" />
+            <path id="pathObd" class="guide-path" />
+            <path id="pathPaint" class="guide-path" />
+            <path id="pathHistory" class="guide-path" />
+            <path id="pathScore" class="guide-path" />
+            <path id="pathChassis" class="guide-path" />
+
+            <!-- Traveling Animated Neon Dots -->
+            <circle class="neon-light-dot" id="neonDotEngine" r="4.5" fill="#38bdf8" filter="url(#neonGlow)">
+                <animateMotion id="animEngine" dur="2.6s" repeatCount="indefinite" rotate="auto" />
+            </circle>
+            <circle class="neon-light-dot" id="neonDotObd" r="4.5" fill="#a78bfa" filter="url(#neonGlow)">
+                <animateMotion id="animObd" dur="3.4s" repeatCount="indefinite" rotate="auto" />
+            </circle>
+            <circle class="neon-light-dot" id="neonDotPaint" r="4.5" fill="#6366f1" filter="url(#neonGlow)">
+                <animateMotion id="animPaint" dur="2.9s" repeatCount="indefinite" rotate="auto" />
+            </circle>
+            <circle class="neon-light-dot" id="neonDotHistory" r="4.5" fill="#38bdf8" filter="url(#neonGlow)">
+                <animateMotion id="animHistory" dur="3.8s" repeatCount="indefinite" rotate="auto" />
+            </circle>
+            <circle class="neon-light-dot" id="neonDotScore" r="4.5" fill="#a78bfa" filter="url(#neonGlow)">
+                <animateMotion id="animScore" dur="3.1s" repeatCount="indefinite" rotate="auto" />
+            </circle>
+            <circle class="neon-light-dot" id="neonDotChassis" r="4.5" fill="#6366f1" filter="url(#neonGlow)">
+                <animateMotion id="animChassis" dur="2.4s" repeatCount="indefinite" rotate="auto" />
+            </circle>
+        </svg>
+
+        <!-- HOTSPOTS COLUMN ON RIGHT -->
+        <div class="hotspots-column">
+            <div class="glass-card-item" id="cardEngine">
+                <div class="card-icon"><i class="fas fa-microchip"></i></div>
+                <div class="card-info">
+                    <h4>Engine Health</h4>
+                    <p>AI Diagnostics</p>
+                </div>
+            </div>
+
+            <div class="glass-card-item" id="cardObd">
+                <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+                <div class="card-info">
+                    <h4>OBD Scan</h4>
+                    <p>Fault Detection</p>
+                </div>
+            </div>
+
+            <div class="glass-card-item" id="cardPaint">
+                <div class="card-icon"><i class="fas fa-spray-can"></i></div>
+                <div class="card-info">
+                    <h4>Paint Thickness</h4>
+                    <p>Factory Finish</p>
+                </div>
+            </div>
+
+            <div class="glass-card-item" id="cardHistory">
+                <div class="card-icon"><i class="fas fa-history"></i></div>
+                <div class="card-info">
+                    <h4>Service History</h4>
+                    <p>Verified Records</p>
+                </div>
+            </div>
+
+            <div class="glass-card-item" id="cardScore">
+                <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
+                <div class="card-info">
+                    <h4>AI Vehicle Score</h4>
+                    <p>300+ Point Analysis</p>
+                </div>
+            </div>
+
+            <div class="glass-card-item" id="cardChassis">
+                <div class="card-icon"><i class="fas fa-cubes"></i></div>
+                <div class="card-info">
+                    <h4>Chassis</h4>
+                    <p>Structural Check</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="brands">
+
+    <div class="section-header">
+        <span>MULTI-BRAND EXPERTISE</span>
+
+        <h2>We Inspect Every Major Car Brand</h2>
+
+        <p>
+            From Maruti to Mercedes-Benz, our certified experts inspect every vehicle
+            using advanced AI diagnostics and a 300+ point inspection process.
+        </p>
+    </div>
+
+    <div class="brand-slider">
+
+        <div class="brand-track">
+
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/suzuki/mono.svg" alt="Maruti Suzuki" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/hyundai/default.svg" alt="Hyundai" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/honda/mono.svg" alt="Honda" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/toyota/mono.svg" alt="Toyota" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/tata/mono.svg" alt="Tata" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mahindra/mono.svg" alt="Mahindra" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/kia/mono.svg" alt="Kia" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mg/mono.svg" alt="MG" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/skoda/mono.svg" alt="Skoda" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/volkswagen/mono.svg" alt="Volkswagen" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bmw/default.svg" alt="BMW" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mercedes-benz/default.svg" alt="Mercedes-Benz" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/audi/mono.svg" alt="Audi" loading="lazy">
+
+            <!-- Duplicate logos for loop -->
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/suzuki/mono.svg" alt="Maruti Suzuki" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/hyundai/default.svg" alt="Hyundai" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/honda/mono.svg" alt="Honda" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/toyota/mono.svg" alt="Toyota" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/tata/mono.svg" alt="Tata" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mahindra/mono.svg" alt="Mahindra" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/kia/mono.svg" alt="Kia" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mg/mono.svg" alt="MG" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/skoda/mono.svg" alt="Skoda" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/volkswagen/mono.svg" alt="Volkswagen" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/bmw/default.svg" alt="BMW" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/mercedes-benz/default.svg" alt="Mercedes-Benz" loading="lazy">
+            <img src="https://cdn.jsdelivr.net/gh/glincker/thesvg@main/public/icons/audi/mono.svg" alt="Audi" loading="lazy">
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     SERVICES SECTION
+=========================== -->
+
+<section id="services" class="services">
+
+<div class="section-header">
+
+        <span>OUR SERVICES</span>
+
+        <h2>Everything We Check Before You Buy</h2>
+
+        <p>
+            Every inspection includes advanced diagnostics,
+            AI-powered analysis and a detailed report
+            so you know exactly what you're buying.
+        </p>
+
+    </div>
+
+    <div class="services-grid">
+
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-wrench" style="color: var(--accent-light);"></i></div>
+            <h3>Engine Diagnostics</h3>
+            <p>Complete engine health analysis with AI-assisted diagnostics.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-laptop-code" style="color: var(--accent-secondary);"></i></div>
+            <h3>OBD Computer Scan</h3>
+            <p>Read hidden fault codes directly from the vehicle ECU.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-spray-can-sparkles" style="color: #c084fc;"></i></div>
+            <h3>Paint Thickness Test</h3>
+            <p>Identify repainting, accident repairs and bodywork.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-shield-halved" style="color: #38bdf8;"></i></div>
+            <h3>Chassis Inspection</h3>
+            <p>Detect structural repairs and frame damage.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-file-contract" style="color: #34d399;"></i></div>
+            <h3>Service History Verification</h3>
+            <p>Verify maintenance records wherever available.</p>
+        </div>
+
+        <div class="service-card">
+            <div class="icon"><i class="fas fa-brain" style="color: #fbbf24;"></i></div>
+            <h3>AI Vehicle Score</h3>
+            <p>Easy-to-understand vehicle health score based on 300+ inspection points.</p>
+        </div>
+
+    </div>
+
+</section>
+<!-- ===========================
+     PACKAGES
+=========================== -->
+
+<section class="packages" id="packages">
+
+    <div class="section-header">
+
+        <span>OUR PACKAGES</span>
+
+        <h2>Choose Your Inspection</h2>
+
+        <p>
+            Designed for every type of buyer—from budget hatchbacks to premium luxury cars.
+        </p>
+
+    </div>
+
+    <div class="package-grid">
+
+        <!-- Super Value  -->
+
+        <div class="package-card">
+
+            <h3>Super Value</h3>
+
+            <div class="price">
+                ₹2,500
+            </div>
+
+            <ul>
+
+                <li>✔ 300+ Inspection Points</li>
+
+                <li>✔ Engine Health Check</li>
+
+                <li>✔ OBD Scan</li>
+
+                <li>✔ Suspension Check</li>
+
+                <li>✔ Brake Inspection</li>
+
+                <li>✔ Digital Report</li>
+
+            </ul>
+
+            <button class="package-btn open-booking-modal">
+                Book Now
+            </button>
+
+        </div>
+
+        <!-- Luxury Expert -->
+
+        <div class="package-card featured">
+
+            <div class="popular">
+                MOST POPULAR
+            </div>
+
+            <h3>Luxury Expert</h3>
+
+            <div class="price">
+                ₹3,599
+            </div>
+
+            <ul>
+
+                <li>✔ 300+ Inspection Points</li>
+
+                <li>✔ AI Vehicle Score</li>
+
+                <li>✔ Engine Diagnostics</li>
+
+                <li>✔ Paint Thickness Test</li>
+
+                <li>✔ Chassis Inspection</li>
+
+                <li>✔ Odometer Verification</li>
+
+                <li>✔ Complete AI Report</li>
+
+                <li>✔ Luxury Car Specialist</li>
+
+                <li>✔ Priority Support</li>
+
+                <li>✔ Same Day Report</li>
+
+            </ul>
+
+            <button class="package-btn open-booking-modal">
+                Book Now
+            </button>
+
+        </div>
+
+        <!-- Quick Delivery-New Car -->
+
+        <div class="package-card">
+
+            <h3>Quick Delivery-New Car</h3>
+
+            <div class="price">
+                ₹2,000
+            </div>
+
+            <ul>
+
+                <li>✔ Premium Vehicle Inspection</li>
+
+                <li>✔ 300+ Inspection Points</li>
+
+                <li>✔ Advanced Diagnostics</li>
+
+                <li>✔ Complete AI Report</li>
+
+                <li>✔ Priority Support</li>
+
+            </ul>
+
+            <button class="package-btn open-booking-modal">
+                Book Now
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     WHY CHOOSE US
+=========================== -->
+
+<section class="why-us" id="whyus">
+
+    <div class="section-header">
+
+        <span>WHY INSPECTCAR</span>
+
+        <h2>Why Thousands of Buyers Trust InspectCar</h2>
+
+        <p>
+            We combine expert inspectors with advanced AI technology to give
+            you complete confidence before purchasing your next vehicle.
+        </p>
+
+    </div>
+
+    <div class="why-grid">
+
+        <div class="why-card">
+            <div class="why-icon"><i class="fas fa-microchip" style="color: var(--accent-light);"></i></div>
+            <h3>AI Powered Inspection</h3>
+            <p>Advanced diagnostics and intelligent analysis for accurate vehicle assessment.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon"><i class="fas fa-user-gear" style="color: var(--accent-secondary);"></i></div>
+            <h3>Certified Experts</h3>
+            <p>Every inspection is performed by experienced automotive professionals.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon"><i class="fas fa-file-pdf" style="color: #34d399;"></i></div>
+            <h3>Transparent Reports</h3>
+            <p>Easy-to-understand reports with photos, recommendations and health scores.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon"><i class="fas fa-bolt" style="color: #38bdf8;"></i></div>
+            <h3>Same-Day Reports</h3>
+            <p>Receive your complete inspection report within hours.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon"><i class="fas fa-shield-check" style="color: #c084fc;"></i></div>
+            <h3>300+ Point Inspection</h3>
+            <p>Every important component is professionally inspected.</p>
+        </div>
+
+        <div class="why-card">
+            <div class="why-icon"><i class="fas fa-location-dot" style="color: #f43f5e;"></i></div>
+            <h3>On-Site Inspection</h3>
+            <p>We inspect the vehicle wherever it is located across Bangalore.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     TESTIMONIALS
+=========================== -->
+
+<section class="testimonials">
+
+    <div class="section-header">
+
+        <span>TESTIMONIALS</span>
+
+        <h2>What Our Customers Say</h2>
+
+        <p>
+            Trusted by car buyers across Bangalore for transparent and professional inspections.
+        </p>
+    </div>
+
+    <div class="testimonial-grid">
+
+        <div class="testimonial-card">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                "The inspection report helped me avoid buying a car with hidden accident damage. Worth every rupee."
+            </p>
+
+            <div class="customer">
+
+                <div class="avatar">R</div>
+
+                <div>
+                    <h4>Rahul Sharma</h4>
+                    <span>Verified Customer</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="testimonial-card featured-review">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                "Professional team, detailed report, and excellent support during price negotiation. Highly recommended."
+            </p>
+
+            <div class="customer">
+
+                <div class="avatar">A</div>
+
+                <div>
+                    <h4>Arjun Nair</h4>
+                    <span>Verified Customer</span>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="testimonial-card">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                "Booked online in minutes. The inspector arrived on time and explained everything clearly."
+            </p>
+
+            <div class="customer">
+
+                <div class="avatar">S</div>
+
+                <div>
+                    <h4>Sneha R</h4>
+                    <span>Verified Customer</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     INSPECTION PROCESS
+=========================== -->
+
+<section class="process">
+
+    <div class="section-header">
+
+        <span>HOW IT WORKS</span>
+
+        <h2>Your Car Inspection Journey</h2>
+
+        <p>
+            A simple, transparent process designed to help you make the right buying decision.
+        </p>
+
+    </div>
+
+    <div class="process-container">
+
+        <div class="process-step">
+            <div class="step-number">1</div>
+            <div class="step-icon"><i class="fas fa-calendar-check"></i></div>
+            <h3>Book Inspection</h3>
+            <p>Schedule an inspection online or via WhatsApp at your preferred date and time.</p>
+        </div>
+
+        <div class="process-step">
+            <div class="step-number">2</div>
+            <div class="step-icon"><i class="fas fa-user-check"></i></div>
+            <h3>Inspector Visits</h3>
+            <p>Our certified inspector reaches the seller's location anywhere in Bangalore.</p>
+        </div>
+
+        <div class="process-step">
+            <div class="step-number">3</div>
+            <div class="step-icon"><i class="fas fa-magnifying-glass"></i></div>
+            <h3>300+ Point Inspection</h3>
+            <p>Complete mechanical, electrical, structural and diagnostic inspection.</p>
+        </div>
+
+        <div class="process-step">
+            <div class="step-number">4</div>
+            <div class="step-icon"><i class="fas fa-sliders"></i></div>
+            <h3>AI Analysis</h3>
+            <p>AI evaluates the inspection data and generates an overall vehicle health score.</p>
+        </div>
+
+        <div class="process-step">
+            <div class="step-number">5</div>
+            <div class="step-icon"><i class="fas fa-file-circle-check"></i></div>
+            <h3>Detailed Report</h3>
+            <p>Receive a professional report with photos, findings, repair estimates and buying recommendations.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="faq" id="faq">
+
+    <div class="section-header">
+        <span>FAQ</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>
+            Everything you need to know before booking your vehicle inspection.
+        </p>
+    </div>
+
+    <div class="faq-container">
+
+        <div class="faq-item active">
+            <button class="faq-question">
+                <span>How long does a car inspection take?</span>
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    A complete used car inspection usually takes 60–90 minutes,
+                    depending on the vehicle and package selected.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Do you inspect the car at the seller's location?</span>
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Yes. Our inspector travels to the seller's location anywhere
+                    in Bangalore for maximum convenience.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Will I receive a detailed inspection report?</span>
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Yes. You'll receive a detailed digital report with photos,
+                    observations, AI-assisted analysis, and our recommendation.
+                </p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Do you inspect luxury cars?</span>
+                <i class="fas fa-plus"></i>
+            </button>
+
+            <div class="faq-answer">
+                <p>
+                    Yes. We inspect premium brands including Mercedes-Benz, BMW,
+                    Audi, Jaguar, Land Rover, Porsche and more.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<!-- ===========================
+     CONTACT
+=========================== -->
+
+<section class="contact" id="contact">
+
+    <div class="contact-left">
+
+        <span class="section-tag">GET IN TOUCH</span>
+
+        <h2>Ready to Buy Your Next Car?</h2>
+
+        <p>
+            Book your professional vehicle inspection today and purchase with complete confidence.
+            Our certified experts are available across Bangalore.
+        </p>
+
+        <div class="contact-info">
+
+            <div class="info-card">
+                <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                <div>
+                    <h4>Call Us</h4>
+                    <a href="tel:+919900368006">+91 99003 68006</a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
+                <div>
+                    <h4>WhatsApp</h4>
+                    <a href="https://wa.me/919900368006" target="_blank">
+                        Chat with us
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                <div>
+                    <h4>Email</h4>
+                    <a href="mailto:info@inspectcar.in">
+                        info@inspectcar.in
+                    </a>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon"><i class="fas fa-location-dot"></i></div>
+                <div>
+                    <h4>Service Area</h4>
+                    <p>Bangalore, Karnataka</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="contact-right">
+
+        <form onsubmit="event.preventDefault();">
+
+            <h3>Book Inspection</h3>
+
+            <input type="text" placeholder="Full Name" required>
+
+            <input type="tel" placeholder="Mobile Number" required>
+
+            <input type="email" placeholder="Email Address">
+
+            <input type="text" placeholder="Vehicle Make & Model">
+
+            <textarea rows="5" placeholder="Inspection Address"></textarea>
+
+            <button type="button" class="open-booking-modal">
+                Book Inspection
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+<!-- ===========================
+        PREMIUM FOOTER
+=========================== -->
+
+<footer class="footer">
+
+    <div class="footer-container">
+
+        <!-- Brand -->
+
+        <div class="footer-brand">
+
+            <div class="logo-box">
+                <img src="images/Logo.webp" alt="InspectCars-AI">
+            </div>
+
+            <p>
+                AI-powered vehicle inspections helping buyers make confident decisions with
+                transparent reports, certified experts and advanced diagnostics.
+            </p>
+
+            <div class="social-icons">
+
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+
+                <a href="#"><i class="fab fa-instagram"></i></a>
+
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+                <a href="#"><i class="fab fa-youtube"></i></a>
+
+            </div>
+
+        </div>
+
+        <!-- Company -->
+
+        <div class="footer-column">
+
+            <h3>Company</h3>
+
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#packages">Packages</a>
+            <a href="#whyus">Why Choose Us</a>
+            <a href="#contact">Contact</a>
+
+        </div>
+
+        <!-- Services -->
+
+        <div class="footer-column">
+
+            <h3>Inspection</h3>
+
+            <a href="#">Used Car Inspection</a>
+            <a href="#">Luxury Inspection</a>
+            <a href="#">Engine Diagnostics</a>
+            <a href="#">AI Vehicle Score</a>
+            <a href="#">OBD Scan</a>
+
+        </div>
+
+        <!-- Contact -->
+
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <span><i class="fas fa-phone" style="color:var(--accent-3);margin-right:6px;"></i> +91 99003 68006</span>
+            <span><i class="fas fa-envelope" style="color:var(--accent-3);margin-right:6px;"></i> info@inspectcar.in</span>
+            <span><i class="fas fa-location-dot" style="color:var(--accent-3);margin-right:6px;"></i> Bangalore, Karnataka</span>
+            <a class="footer-btn open-booking-modal" href="#">
+               Book Inspection <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom" style="justify-content:center; flex-direction:column; align-items:center; gap:10px; text-align:center;">
+        <div>
+            © 2026 <strong>InspectCar</strong>. All Rights Reserved.
+        </div>
+        <div class="footer-legal-links" style="justify-content:center;">
+            <a href="#" onclick="openPolicyModal('terms'); return false;">Terms &amp; Conditions</a>
+            <span style="color:rgba(255,255,255,0.2);">|</span>
+            <a href="#" onclick="openPolicyModal('privacy'); return false;">Privacy Policy</a>
+            <span style="color:rgba(255,255,255,0.2);">|</span>
+            <span>Designed with <i class="fas fa-heart" style="color:#ef4444;"></i> in Bangalore</span>
+        </div>
+    </div>
+
+    </div>
+
+</footer>
+
+<!-- ============================================================
+     TERMS & CONDITIONS / PRIVACY POLICY MODALS
+============================================================ -->
+
+<div class="policy-modal-overlay" id="policyModal" onclick="if(event.target===this)closePolicyModal()" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(5,5,20,0.85);backdrop-filter:blur(8px);overflow-y:auto;padding:30px 16px;">
+  <div class="policy-modal-box" style="max-width:760px;margin:0 auto;background:#161625;border:1px solid rgba(99,102,241,0.25);border-radius:20px;padding:40px 36px;position:relative;">
+    <button onclick="closePolicyModal()" style="position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.07);border:none;color:#aaa;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;"><i class="fas fa-times"></i></button>
+
+    <!-- TERMS & CONDITIONS -->
+    <div id="policyContentTerms">
+      <h2 style="color:#fff;font-size:22px;margin-bottom:6px;">📄 Terms &amp; Conditions</h2>
+      <p style="color:#6b7280;font-size:13px;margin-bottom:28px;">Last updated: July 2026 &nbsp;·&nbsp; InspectCar, Bangalore</p>
+
+      <div class="policy-section">
+        <h4>1. Service Overview</h4>
+        <p>InspectCar provides pre-purchase vehicle inspection services in Bangalore, Karnataka. By booking an inspection, you agree to these Terms &amp; Conditions in full. Our inspections are advisory in nature and do not constitute a guarantee of the vehicle's condition.</p>
+      </div>
+      <div class="policy-section">
+        <h4>2. Booking &amp; Confirmation</h4>
+        <p>All bookings are subject to inspector availability. A booking is confirmed only after you receive a confirmation message on WhatsApp/Email. InspectCar reserves the right to reschedule or cancel a booking in case of unavoidable circumstances, with prior notice to the customer.</p>
+      </div>
+      <div class="policy-section">
+        <h4>3. Cancellation &amp; Rescheduling</h4>
+        <p>Customers may cancel or reschedule a booking at least <strong>4 hours before</strong> the scheduled inspection time by contacting us on WhatsApp at <strong>+91 99003 68006</strong>. Cancellations made within 4 hours of the appointment may not be eligible for a refund.</p>
+      </div>
+      <div class="policy-section">
+        <h4>4. Refund Policy</h4>
+        <ul>
+          <li><strong>Pre-paid bookings cancelled 4+ hours in advance:</strong> Full refund within 5–7 business days.</li>
+          <li><strong>Cancellations within 4 hours:</strong> No refund, but booking may be rescheduled once at no extra charge.</li>
+          <li><strong>Inspector unable to reach / access denied:</strong> Full refund processed within 5 business days.</li>
+          <li><strong>Pay on Inspection:</strong> No advance payment collected; nothing is charged if the booking is cancelled.</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h4>5. Inspection Report</h4>
+        <p>The inspection report is provided digitally within 2 hours of the completed inspection. The report reflects the condition of the vehicle at the time of inspection only. InspectCar is not liable for any defects discovered after the inspection that were not visible or accessible during the inspection.</p>
+      </div>
+      <div class="policy-section">
+        <h4>6. Limitation of Liability</h4>
+        <p>InspectCar's liability is limited to the inspection fee paid. We are not responsible for any purchase decisions made by customers based on the inspection report. We do not guarantee the vehicle's fitness for purchase.</p>
+      </div>
+      <div class="policy-section">
+        <h4>7. Governing Law</h4>
+        <p>These terms are governed by the laws of India and the jurisdiction of courts in Bangalore, Karnataka.</p>
+      </div>
+      <div class="policy-section">
+        <h4>8. Contact Us</h4>
+        <p>For any queries regarding these Terms, contact us at <strong>info@inspectcar.in</strong> or call <strong>+91 99003 68006</strong>.</p>
+      </div>
+    </div>
+
+    <!-- PRIVACY POLICY -->
+    <div id="policyContentPrivacy" style="display:none;">
+      <h2 style="color:#fff;font-size:22px;margin-bottom:6px;">🔒 Privacy Policy</h2>
+      <p style="color:#6b7280;font-size:13px;margin-bottom:28px;">Last updated: July 2026 &nbsp;·&nbsp; InspectCar, Bangalore</p>
+
+      <div class="policy-section">
+        <h4>1. Information We Collect</h4>
+        <p>When you book an inspection, we collect: your name, phone number, email address, vehicle details, and location (area/address). We may also collect location data if you use the GPS or Google Maps link feature during booking.</p>
+      </div>
+      <div class="policy-section">
+        <h4>2. How We Use Your Information</h4>
+        <ul>
+          <li>To confirm, schedule and assign your inspection booking.</li>
+          <li>To send booking confirmations and reminders via WhatsApp and email.</li>
+          <li>To generate and deliver your digital inspection report.</li>
+          <li>To improve our services and customer experience.</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h4>3. Data Sharing</h4>
+        <p>We do <strong>not sell</strong> your personal information to third parties. Your details are only shared with the assigned inspector for the purpose of conducting your inspection. We use Supabase (a secure cloud database) to store booking data.</p>
+      </div>
+      <div class="policy-section">
+        <h4>4. WhatsApp Communication</h4>
+        <p>By providing your phone number, you consent to receiving booking confirmations, inspection updates, and report links via WhatsApp. You may opt out at any time by messaging us at <strong>+91 99003 68006</strong>.</p>
+      </div>
+      <div class="policy-section">
+        <h4>5. Data Retention</h4>
+        <p>We retain your booking and vehicle data for up to <strong>2 years</strong> for service quality purposes. You may request deletion of your data by emailing <strong>info@inspectcar.in</strong>.</p>
+      </div>
+      <div class="policy-section">
+        <h4>6. Cookies</h4>
+        <p>Our website may use session storage to temporarily remember your booking progress within a browser session. No tracking cookies or advertising cookies are used.</p>
+      </div>
+      <div class="policy-section">
+        <h4>7. Data Security</h4>
+        <p>We implement industry-standard security measures to protect your personal data. However, no internet transmission is 100% secure. We encourage you not to share sensitive financial details over chat.</p>
+      </div>
+      <div class="policy-section">
+        <h4>8. Your Rights</h4>
+        <p>You have the right to access, correct, or request deletion of your personal data at any time. Contact us at <strong>info@inspectcar.in</strong> to exercise these rights.</p>
+      </div>
+      <div class="policy-section">
+        <h4>9. Contact</h4>
+        <p>For privacy-related questions, contact: <strong>info@inspectcar.in</strong> or <strong>+91 99003 68006</strong>.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .footer-legal-links { display:flex; align-items:center; gap:10px; flex-wrap:wrap; font-size:13px; }
+  .footer-legal-links a { color:#a78bfa; text-decoration:none; font-weight:600; transition:color 0.2s; }
+  .footer-legal-links a:hover { color:#fff; text-decoration:underline; }
+  .policy-section { margin-bottom:24px; }
+  .policy-section h4 { color:#a78bfa; font-size:14px; font-weight:700; margin-bottom:8px; }
+  .policy-section p, .policy-section ul { color:#c4c4d4; font-size:13.5px; line-height:1.75; margin:0; }
+  .policy-section ul { padding-left:18px; }
+  .policy-section ul li { margin-bottom:6px; }
+</style>
+
+<!-- ============================================================
+     INTERACTIVE BOOKING MODAL & CALENDAR FLOW
+============================================================ -->
+<div class="booking-modal-overlay" id="bookingModal">
+    <div class="booking-modal-container">
+
+        <!-- Modal Header -->
+        <div class="booking-modal-header">
+            <div class="booking-modal-title">
+                <img src="images/Logo.webp" alt="InspectCar">
+                <h3><span>Booking</span></h3>
+            </div>
+            <button class="booking-close-btn" id="bookingModalClose" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Progress Steps Bar -->
+        <div class="booking-progress-wrapper">
+            <div class="booking-steps-bar">
+                <div class="booking-progress-fill" id="bookingProgressFill"></div>
+
+                <div class="step-node active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Package</div>
+                </div>
+
+                <div class="step-node" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Vehicle</div>
+                </div>
+
+                <div class="step-node" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Date & Slot</div>
+                </div>
+
+                <div class="step-node" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Location</div>
+                </div>
+
+                <div class="step-node" data-step="5">
+                    <div class="step-circle">5</div>
+                    <div class="step-label">Review</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Body Content -->
+        <div class="booking-modal-body">
+
+            <!-- STEP 1: PACKAGE SELECTOR -->
+            <div class="booking-step-content active" id="stepContent1">
+                <div class="step-heading">
+                    <h4>Select Inspection Package</h4>
+                    <p>Choose the inspection depth that fits your vehicle category.</p>
+                </div>
+
+                <div class="booking-package-grid">
+                    <!-- Super Value -->
+                    <div class="booking-package-card" data-pkg="super-value">
+                        <div class="pkg-radio"></div>
+                        <span class="pkg-badge">Standard</span>
+                        <div class="pkg-title">Super Value</div>
+                        <div class="pkg-price">₹2,500</div>
+                        <ul class="pkg-features">
+                            <li><i class="fas fa-check-circle"></i> 300+ Inspection Points</li>
+                            <li><i class="fas fa-check-circle"></i> Engine Health Check</li>
+                            <li><i class="fas fa-check-circle"></i> OBD Scanner Test</li>
+                            <li><i class="fas fa-check-circle"></i> Digital Health Report</li>
+                        </ul>
+                    </div>
+
+                    <!-- Luxury Expert -->
+                    <div class="booking-package-card selected" data-pkg="luxury-expert">
+                        <div class="pkg-radio"></div>
+                        <span class="pkg-badge">Most Popular</span>
+                        <div class="pkg-title">Luxury Expert</div>
+                        <div class="pkg-price">₹3,599</div>
+                        <ul class="pkg-features">
+                            <li><i class="fas fa-check-circle"></i> 300+ Points + AI Score</li>
+                            <li><i class="fas fa-check-circle"></i> Paint Thickness Meter Test</li>
+                            <li><i class="fas fa-check-circle"></i> Structural Chassis Check</li>
+                            <li><i class="fas fa-check-circle"></i> Same-Day Delivery</li>
+                        </ul>
+                    </div>
+
+                    <!-- Quick Delivery -->
+                    <div class="booking-package-card" data-pkg="quick-delivery">
+                        <div class="pkg-radio"></div>
+                        <span class="pkg-badge">New Car PDI</span>
+                        <div class="pkg-title">Quick Delivery - New Car</div>
+                        <div class="pkg-price">₹2,000</div>
+                        <ul class="pkg-features">
+                            <li><i class="fas fa-check-circle"></i> Pre-Delivery Inspection</li>
+                            <li><i class="fas fa-check-circle"></i> Paint & Scratch Audit</li>
+                            <li><i class="fas fa-check-circle"></i> Electrical & ECU Audit</li>
+                            <li><i class="fas fa-check-circle"></i> Priority Specialist</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: VEHICLE DETAILS -->
+            <div class="booking-step-content" id="stepContent2">
+                <div class="step-heading">
+                    <h4>Vehicle Details</h4>
+                    <p>Tell us about the car you are planning to inspect.</p>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Vehicle Make *</label>
+                        <select id="inputMake" class="form-select">
+                            <option value="">— Select Make —</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Vehicle Model *</label>
+                        <select id="inputModel" class="form-select" disabled>
+                            <option value="">— Select Make First —</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Manufacturing Year</label>
+                        <select id="inputYear" class="form-select">
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                            <option value="2023">2023</option>
+                            <option value="2022" selected>2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="Older">2016 or Older</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fuel Type</label>
+                        <select id="inputFuel" class="form-select">
+                            <option value="Petrol" selected>Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="CNG">CNG</option>
+                            <option value="Electric (EV)">Electric (EV)</option>
+                            <option value="Hybrid">Hybrid</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Registration No / City (Optional)</label>
+                    <input type="text" id="inputReg" class="form-input" placeholder="e.g. KA-01-MJ-1234">
+                </div>
+
+                <div id="luxury-notice" style="display:none; background: linear-gradient(135deg,rgba(99,102,241,0.15),rgba(139,92,246,0.1)); border:1px solid rgba(99,102,241,0.4); border-radius:10px; padding:10px 14px; font-size:12.5px; color:#a78bfa; margin-top:4px;">
+                    <i class="fas fa-gem" style="color:#a78bfa;margin-right:4px;"></i> <strong>Luxury Expert</strong> — All premium brands (BMW, Mercedes, Audi, Porsche & more) are available.
+                </div>
+            </div>
+
+
+            <!-- STEP 3: INTERACTIVE CALENDAR & TIME SLOTS -->
+            <div class="booking-step-content" id="stepContent3">
+                <div class="step-heading">
+                    <h4>Select Inspection Date & Slot</h4>
+                    <p>Pick a date on the calendar and your preferred doorstep arrival window.</p>
+                </div>
+
+                <div class="calendar-time-container">
+                    <!-- Calendar Picker -->
+                    <div class="calendar-card">
+                        <div class="calendar-header">
+                            <button class="calendar-nav-btn" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <div class="calendar-month-title" id="calendarMonthYear">July 2026</div>
+                            <button class="calendar-nav-btn" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <div>Su</div><div>Mo</div><div>Tu</div><div>We</div><div>Th</div><div>Fr</div><div>Sa</div>
+                        </div>
+                        <div class="calendar-days-grid" id="calendarDaysGrid">
+                            <!-- Generated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Time Slot Selector -->
+                    <div class="time-slots-card">
+                        <div class="slots-group-title"><i class="fas fa-sun"></i> Morning Slots</div>
+                        <div class="slots-grid">
+                            <div class="time-slot-pill selected" data-time="9:00 AM - 11:00 AM">
+                                9:00 AM - 11:00 AM <span class="sub">Available</span>
+                            </div>
+                            <div class="time-slot-pill" data-time="11:00 AM - 1:00 PM">
+                                11:00 AM - 1:00 PM <span class="sub">Available</span>
+                            </div>
+                        </div>
+
+                        <div class="slots-group-title" style="margin-top: 10px;"><i class="fas fa-cloud-sun"></i> Afternoon Slots</div>
+                        <div class="slots-grid">
+                            <div class="time-slot-pill" data-time="1:00 PM - 3:00 PM">
+                                1:00 PM - 3:00 PM <span class="sub">Available</span>
+                            </div>
+                            <div class="time-slot-pill" data-time="3:00 PM - 5:00 PM">
+                                3:00 PM - 5:00 PM <span class="sub">Available</span>
+                            </div>
+                        </div>
+
+                        <div class="slots-group-title" style="margin-top: 10px;"><i class="fas fa-moon"></i> Evening & Night Slots</div>
+                        <div class="slots-grid">
+                            <div class="time-slot-pill" data-time="5:00 PM - 7:00 PM">
+                                5:00 PM - 7:00 PM <span class="sub">Available</span>
+                            </div>
+                            <div class="time-slot-pill" data-time="7:00 PM - 10:00 PM">
+                                7:00 PM - 10:00 PM <span class="sub">(On Demand Night)</span>
+                            </div>
+                        </div>
+
+                        <div class="slot-notice-badge">
+                            <i class="fas fa-bolt"></i> Certified Inspector assigned within 15 min of booking.
+                        </div>
+
+                        <div class="slot-whatsapp-notice" style="margin-top: 10px; padding: 10px 12px; background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.25); border-radius: 10px; font-size: 11.5px; color: var(--text-muted); display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                            <span><i class="fab fa-whatsapp" style="color: #25D366; font-size: 14px; margin-right: 5px;"></i> Have a custom timing preference? Let us know on WhatsApp!</span>
+                            <a href="https://wa.me/919900368006?text=Hi%20InspectCar!%20I%20have%20a%20specific%20time%20preference%20for%20my%20car%20inspection." target="_blank" rel="noopener" style="color: #25D366; font-weight: 700; text-decoration: none; white-space: nowrap;">Chat Now &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 4: LOCATION & CONTACT -->
+            <div class="booking-step-content" id="stepContent4">
+                <div class="step-heading">
+                    <h4>Inspection Location & Contact</h4>
+                    <p>Where should our inspector arrive in Bangalore?</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Location Type</label>
+                    <div class="location-type-selector">
+                        <div class="location-type-btn selected" data-type="Seller Yard / House">
+                            <i class="fas fa-home"></i> Seller House
+                        </div>
+                        <div class="location-type-btn" data-type="Used Car Dealership">
+                            <i class="fas fa-store"></i> Dealership Yard
+                        </div>
+                        <div class="location-type-btn" data-type="My Home / Office">
+                            <i class="fas fa-briefcase"></i> My Address
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Customer Name *</label>
+                        <input type="text" id="inputName" class="form-input" placeholder="Your Full Name">
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp / Phone Number *</label>
+                        <input type="tel" id="inputPhone" class="form-input" placeholder="+91 98765 43210">
+                    </div>
+                </div>
+
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Email Address (For PDF Report Delivery)</label>
+                        <input type="email" id="inputEmail" class="form-input" placeholder="name@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Area / Locality in Bangalore *</label>
+                        <input type="text" id="inputArea" class="form-input" placeholder="e.g. Indiranagar, HSR Layout, Koramangala">
+                    </div>
+                </div>
+
+                <!-- Google Maps Search & Link Paste -->
+                <div class="form-group" style="position: relative;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+                        <label style="margin: 0; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                            <i class="fab fa-google" style="color: #4285F4;"></i> Google Maps Link or Search Landmark
+                        </label>
+                        <button type="button" id="btnDetectLocation" onclick="detectGPSLocation()" style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.35); color: var(--accent-light); padding: 4px 10px; border-radius: 8px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; font-weight: 600;">
+                            <i class="fas fa-crosshairs" style="color: #38bdf8;"></i> GPS Locate
+                        </button>
+                    </div>
+                    <div style="position: relative;">
+                        <input type="text" id="inputGmapsSearch" class="form-input" placeholder="Paste Google Maps link (e.g. https://maps.app.goo.gl/...) or type landmark..." autocomplete="off">
+                        <span id="gmapsLoadingSpinner" class="hidden" style="position: absolute; right: 12px; top: 12px; color: var(--accent-light);">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </div>
+                    <div id="gmapsSuggestions" class="gmaps-suggestions-dropdown hidden"></div>
+                    <div id="gmapsCapturedBadge" class="hidden" style="margin-top: 6px; padding: 6px 10px; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; font-size: 11px; color: #34d399; display: flex; align-items: center; justify-content: space-between;">
+                        <span><i class="fas fa-check-circle"></i> Captured: <strong id="gmapsCapturedText"></strong></span>
+                        <a id="gmapsCapturedLink" href="#" target="_blank" rel="noopener" style="color: #60a5fa; text-decoration: underline; font-weight: 600;">View Map &nearr;</a>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Complete Doorstep Address / Dealer Name *</label>
+                    <textarea id="inputAddress" class="form-textarea" rows="2" placeholder="Building name, landmark, plot no."></textarea>
+                </div>
+            </div>
+
+            <!-- STEP 5: ORDER REVIEW & CONFIRMATION -->
+            <div class="booking-step-content" id="stepContent5">
+                <div class="step-heading">
+                    <h4>Review & Confirm Booking</h4>
+                    <p>Verify your details before scheduling your certified inspection.</p>
+                </div>
+
+                <div class="summary-container">
+                    <div class="booking-summary-card">
+                        <div class="summary-row">
+                            <span class="label">Package</span>
+                            <span class="value" id="sumPkgName">Luxury Expert</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Vehicle</span>
+                            <span class="value" id="sumVehicle">Maruti Swift (2022)</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Date & Slot</span>
+                            <span class="value" id="sumDateTime">Tomorrow @ 9:00 AM - 11:00 AM</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Location</span>
+                            <span class="value" id="sumLocation">HSR Layout, Bangalore</span>
+                        </div>
+                        <div class="summary-row" id="sumGmapsRow" style="display: none;">
+                            <span class="label">Google Maps</span>
+                            <span class="value" id="sumGmapsVal"><a id="sumGmapsLink" href="#" target="_blank" rel="noopener" style="color: #60a5fa; text-decoration: underline;">Open Map &nearr;</a></span>
+                        </div>
+
+                        <div class="summary-row" style="margin-top: 10px;">
+                            <span class="label">Base Price</span>
+                            <span class="value" id="sumBasePrice">₹3,599</span>
+                        </div>
+
+                        <div class="summary-row" id="sumDiscountRow" style="display: none;">
+                            <span class="label" style="color: #34d399;">Promo Discount</span>
+                            <span class="value" style="color: #34d399;" id="sumDiscountVal">- ₹0</span>
+                        </div>
+
+                        <div class="summary-row total-row">
+                            <span class="label" style="color:#fff; font-weight:800;">Total Inspection Fee</span>
+                            <span class="value" id="sumTotalPrice">₹3,599</span>
+                        </div>
+
+                        <!-- Dynamic Payment Breakdown -->
+                        <div class="summary-row" id="sumPayNowRow" style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed rgba(255,255,255,0.15);">
+                            <span class="label" id="sumPayNowLabel" style="color: #38bdf8; font-weight: 700;">Pay Now Advance</span>
+                            <span class="value" id="sumPayNowVal" style="color: #38bdf8; font-weight: 700;">₹199</span>
+                        </div>
+                        <div class="summary-row" id="sumBalanceRow">
+                            <span class="label" id="sumBalanceLabel" style="color: #fbbf24; font-weight: 600;">Pay at Site (Before Inspection)</span>
+                            <span class="value" id="sumBalanceVal" style="color: #fbbf24; font-weight: 600;">₹3,400</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;">Have a Promo Code?</div>
+                        <div class="promo-box">
+                            <input type="text" id="promoInput" class="promo-input" placeholder="Enter promo code">
+                            <button type="button" class="apply-promo-btn" id="applyPromoBtn">Apply</button>
+                        </div>
+                        <div class="promo-status" id="promoStatus"></div>
+
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text-muted); margin: 16px 0 8px;">Payment Preference</div>
+                        <div class="payment-choice-grid">
+                            <div class="payment-choice-card selected" data-pay="token-199">
+                                <h5>Pay ₹199 Booking Token</h5>
+                                <p>Pay ₹199 advance now to lock slot; pay balance at inspection site</p>
+                            </div>
+                            <div class="payment-choice-card" data-pay="full-online">
+                                <h5>Full Online Payment</h5>
+                                <p>Pay 100% online now via Razorpay UPI / Cards / NetBanking</p>
+                            </div>
+                        </div>
+
+                        <!-- 100% Secure Payments Guarantee Tag -->
+                        <div style="margin-top: 10px; padding: 9px 12px; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 11.5px; color: #34d399;">
+                            <div style="display: flex; align-items: center; gap: 7px;">
+                                <i class="fas fa-shield-alt" style="font-size: 15px; color: #34d399;"></i>
+                                <span><strong>100% Secure Payments</strong> · 256-Bit Encrypted via <strong>Razorpay</strong></span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #94a3b8;">
+                                <i class="fab fa-google-pay" title="GPay"></i>
+                                <i class="fas fa-qrcode" title="UPI"></i>
+                                <i class="fab fa-cc-visa" title="Visa"></i>
+                                <i class="fab fa-cc-mastercard" title="Mastercard"></i>
+                            </div>
+                        </div>
+
+                        <!-- Confused / Need Help Chat Banner -->
+                        <div style="margin-top: 10px; padding: 10px 14px; background: rgba(37, 211, 102, 0.08); border: 1px solid rgba(37, 211, 102, 0.25); border-radius: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12.5px;">
+                            <span style="color: #e2e8f0; font-weight: 500;">
+                                <i class="fas fa-question-circle" style="color: #38bdf8; margin-right: 4px;"></i> Confused? Have questions?
+                            </span>
+                            <a href="https://wa.me/919900368006?text=Hi%20InspectCar!%20I%20have%20a%20question%20about%20booking%20my%20car%20inspection." target="_blank" rel="noopener" style="background: #25D366; color: #fff; padding: 5px 12px; border-radius: 20px; font-weight: 700; font-size: 11.5px; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;">
+                                <i class="fab fa-whatsapp"></i> Let's connect over chat
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Modal Footer Buttons -->
+        <div class="booking-modal-footer">
+            <button class="booking-btn-prev" id="bookingBtnPrev" style="display: none;">
+                <i class="fas fa-chevron-left"></i> Back
+            </button>
+            <div></div>
+            <button class="booking-btn-next" id="bookingBtnNext">
+                Continue <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+// Passive scroll listener for navbar background toggle
+window.addEventListener("scroll", () => {
+    const navbar = document.querySelector(".navbar");
+    if (!navbar) return;
+    if (window.scrollY > 60) {
+        navbar.classList.add("scrolled");
+    } else {
+        navbar.classList.remove("scrolled");
+    }
+}, { passive: true });
+</script>
+
+<div class="floating-whatsapp" onclick="window.open('https://wa.me/919900368006','_blank')">
+    <i class="fab fa-whatsapp"></i>
+    <span>Chat with an Expert</span>
+</div>
+
+<script>
+// FAQ Accordion
+document.querySelectorAll(".faq-question").forEach(question => {
+    question.addEventListener("click", () => {
+        const item = question.parentElement;
+        document.querySelectorAll(".faq-item").forEach(faq => {
+            if (faq !== item) faq.classList.remove("active");
+        });
+        item.classList.toggle("active");
+    });
+});
+</script>
+
+<script>
+// Loader hide
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    if(loader) {
+        setTimeout(() => loader.classList.add("hide"), 200);
+    }
+});
+</script>
+
+<script>
+// Scroll Progress Bar
+window.addEventListener("scroll", () => {
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    const progressBar = document.getElementById("scroll-progress");
+    if (progressBar) progressBar.style.width = progress + "%";
+}, { passive: true });
+</script>
+
+<script>
+// Mobile Navigation — defined fully before use
+function closeMenu() {
+    const menuBtn = document.getElementById("menuToggle");
+    const navEl   = document.getElementById("navLinks");
+    const ovEl    = document.getElementById("menuOverlay");
+    if(menuBtn) menuBtn.classList.remove("active");
+    if(navEl)   navEl.classList.remove("active");
+    if(ovEl)    ovEl.classList.remove("active");
+    document.body.classList.remove("menu-open");
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const menuBtn = document.getElementById("menuToggle");
+    const navEl   = document.getElementById("navLinks");
+    const ovEl    = document.getElementById("menuOverlay");
+
+    if(!menuBtn || !navEl || !ovEl) return;
+
+    // Toggle open / close
+    menuBtn.addEventListener("click", function() {
+        const isOpen = navEl.classList.contains("active");
+        if(isOpen) {
+            closeMenu();
+        } else {
+            menuBtn.classList.add("active");
+            navEl.classList.add("active");
+            ovEl.classList.add("active");
+        }
+    });
+
+    // Close when overlay tapped
+    ovEl.addEventListener("click", closeMenu);
+
+    // Nav link clicks — close menu then scroll to section
+    navEl.querySelectorAll("a").forEach(function(link) {
+        link.addEventListener("click", function(e) {
+            const href = link.getAttribute("href");
+            if(href && href.startsWith("#")) {
+                e.preventDefault();      // stop default jump
+                closeMenu();             // close dropdown
+                const target = document.querySelector(href);
+                if(target) {
+                    // Wait for menu close animation, then scroll
+                    setTimeout(function() {
+                        const navbarH = 70;
+                        const top = target.getBoundingClientRect().top + window.scrollY - navbarH;
+                        window.scrollTo({ top: top, behavior: "smooth" });
+                    }, 320);
+                }
+            } else {
+                closeMenu();
+            }
+        });   // ← correctly closes link.addEventListener
+    });       // ← correctly closes forEach
+});
+</script>
+
+<script src="js/booking.js"></script>
+
+<script>
+  function openPolicyModal(type) {
+    const modal = document.getElementById('policyModal');
+    document.getElementById('policyContentTerms').style.display = type === 'terms' ? 'block' : 'none';
+    document.getElementById('policyContentPrivacy').style.display = type === 'privacy' ? 'block' : 'none';
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    modal.scrollTop = 0;
+  }
+  function closePolicyModal() {
+    document.getElementById('policyModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePolicyModal();
+  });
+</script>
+
+<script>
+function drawConnectingLines() {
+    const heroRight = document.getElementById('heroRight');
+    const svg = document.getElementById('connectingSvg');
+    if (!heroRight || !svg || window.innerWidth <= 992) return;
+
+    const rectHero = heroRight.getBoundingClientRect();
+
+    const pairs = [
+        { dotId: 'dotEngine', cardId: 'cardEngine', pathId: 'pathEngine', animId: 'animEngine' },
+        { dotId: 'dotObd', cardId: 'cardObd', pathId: 'pathObd', animId: 'animObd' },
+        { dotId: 'dotPaint', cardId: 'cardPaint', pathId: 'pathPaint', animId: 'animPaint' },
+        { dotId: 'dotHistory', cardId: 'cardHistory', pathId: 'pathHistory', animId: 'animHistory' },
+        { dotId: 'dotScore', cardId: 'cardScore', pathId: 'pathScore', animId: 'animScore' },
+        { dotId: 'dotChassis', cardId: 'cardChassis', pathId: 'pathChassis', animId: 'animChassis' }
+    ];
+
+    pairs.forEach(pair => {
+        const dot = document.getElementById(pair.dotId);
+        const card = document.getElementById(pair.cardId);
+        const path = document.getElementById(pair.pathId);
+        const anim = document.getElementById(pair.animId);
+
+        if (dot && card && path) {
+            const rectDot = dot.getBoundingClientRect();
+            const rectCard = card.getBoundingClientRect();
+
+            const x1 = (rectDot.left + rectDot.width / 2) - rectHero.left;
+            const y1 = (rectDot.top + rectDot.height / 2) - rectHero.top;
+
+            const x2 = rectCard.left - rectHero.left;
+            const y2 = (rectCard.top + rectCard.height / 2) - rectHero.top;
+
+            const cx1 = x1 + (x2 - x1) * 0.45;
+            const cy1 = y1;
+            const cx2 = x1 + (x2 - x1) * 0.65;
+            const cy2 = y2;
+
+            const dStr = `M ${x1.toFixed(1)},${y1.toFixed(1)} C ${cx1.toFixed(1)},${cy1.toFixed(1)} ${cx2.toFixed(1)},${cy2.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
+
+            path.setAttribute('d', dStr);
+            if (anim) {
+                anim.setAttribute('path', dStr);
+            }
+        }
+    });
+}
+
+window.addEventListener('load', drawConnectingLines);
+window.addEventListener('resize', drawConnectingLines);
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(drawConnectingLines, 200);
+});
+</script>
+<!-- PAY BALANCE MODAL OVERLAY -->
+<div id="payBalanceModal" class="booking-modal-overlay" style="display: none; z-index: 100005;">
+    <div class="booking-modal-container" style="max-width: 460px; padding: 28px 24px;">
+        <button class="booking-modal-close" onclick="closePayBalanceModal()">&times;</button>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="images/Logo.webp" alt="InspectCar" style="height: 36px; margin-bottom: 12px;">
+            <h3 style="font-size: 20px; font-weight: 800; color: #fff; margin-bottom: 4px;">Complete Balance Payment</h3>
+            <p style="color: var(--text-muted); font-size: 13px;">InspectCar Vehicle Inspection</p>
+        </div>
+
+        <div style="background: rgba(22, 22, 37, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; padding: 16px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+                <span style="color: var(--text-muted);">Booking Reference:</span>
+                <strong style="color: var(--accent-3);" id="balModalRef">IC-2026-XXXX</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px;">
+                <span style="color: var(--text-muted);">Customer:</span>
+                <strong style="color: #fff;" id="balModalName">Customer</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 15px; font-weight: 800; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 10px; margin-top: 10px;">
+                <span style="color: #fff;">Balance Amount Due:</span>
+                <span style="color: #fbbf24;" id="balModalAmt">₹0</span>
+            </div>
+        </div>
+
+        <button id="btnPayBalanceNow" style="width: 100%; padding: 14px; background: var(--accent-grad); border: none; border-radius: 12px; color: #fff; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);">
+            Pay <span id="balModalBtnAmt">₹0</span> via Razorpay <i class="fas fa-lock" style="margin-left: 6px;"></i>
+        </button>
+
+        <div style="text-align: center; margin-top: 12px; font-size: 11px; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 5px;">
+            <i class="fas fa-shield-alt" style="color: #34d399;"></i> 256-Bit Encrypted Secure Checkout by Razorpay
+        </div>
+    </div>
+</div>
+
+<script>
+function triggerRazorpayForBalance(ref, amt, name) {
+    if (typeof Razorpay === 'undefined') {
+        setTimeout(() => triggerRazorpayForBalance(ref, amt, name), 500);
+        return;
+    }
+    const RAZORPAY_KEY = window.RAZORPAY_KEY_ID || 'rzp_live_TJRDVu6qlB1ZbO';
+    const options = {
+        key: RAZORPAY_KEY,
+        amount: Number(amt) * 100,
+        currency: 'INR',
+        name: 'InspectCar',
+        description: `Balance Payment for Booking ${ref}`,
+        image: 'images/Logo.webp',
+        theme: { color: '#6366f1' },
+        handler: async function(response) {
+            const paymentId = response.razorpay_payment_id;
+            if (window.supabaseClient) {
+                try {
+                    await window.supabaseClient.from('bookings').update({
+                        payment_status: 'paid',
+                        notes: `Balance Paid online: ₹${amt} (Ref: ${paymentId})`
+                    }).eq('booking_ref', ref);
+                } catch(e) {}
+            }
+            const modal = document.getElementById('payBalanceModal');
+            if (modal) modal.style.display = 'none';
+            alert(`✅ Payment Successful!\n\nThank you ${decodeURIComponent(name)}. Your balance payment of ₹${amt} (Ref: ${paymentId}) has been received.`);
+        }
+    };
+    try {
+        const rzp = new Razorpay(options);
+        rzp.open();
+    } catch(e) {
+        console.error(e);
+    }
+}
+
+function checkPayBalanceHash() {
+    const hash = window.location.hash;
+    if (hash && hash.includes('pay-balance')) {
+        const urlParams = new URLSearchParams(hash.split('?')[1] || '');
+        const ref = urlParams.get('ref') || 'IC-BOOKING';
+        const amt = urlParams.get('amt') || '0';
+        const name = urlParams.get('name') || 'Valued Customer';
+
+        document.getElementById('balModalRef').innerText = ref;
+        document.getElementById('balModalName').innerText = decodeURIComponent(name);
+        document.getElementById('balModalAmt').innerText = `₹${Number(amt).toLocaleString('en-IN')}`;
+        document.getElementById('balModalBtnAmt').innerText = `₹${Number(amt).toLocaleString('en-IN')}`;
+
+        const modal = document.getElementById('payBalanceModal');
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        document.getElementById('btnPayBalanceNow').onclick = function() {
+            triggerRazorpayForBalance(ref, amt, name);
+        };
+
+        // Auto-open Razorpay Checkout popup immediately!
+        setTimeout(() => {
+            triggerRazorpayForBalance(ref, amt, name);
+        }, 400);
+    }
+}
+function closePayBalanceModal() {
+    document.getElementById('payBalanceModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+window.addEventListener('load', checkPayBalanceHash);
+window.addEventListener('hashchange', checkPayBalanceHash);
+</script>
+</body>
+</html>
