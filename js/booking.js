@@ -114,14 +114,14 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
 
   // Packages definition
   const PACKAGES = {
-    'expert-drive': { name: 'Expert-Drive (Used car)', price: 2699, points: '300+ Checkpoints' },
-    'lux-drive': { name: 'Lux-Drive (Premium Used Car)', price: 3999, points: '300+ Points + AI Score + Paint Gauge' },
-    'pre-drive': { name: 'Pre-Drive (New Car PDI)', price: 1999, points: 'Pre-Delivery Inspection' },
+    'expert-drive': { name: 'Expert-Drive (Used car)', price: 2699, points: 'OBD Diagnostics, Fault Code Analysis, Underbody, Odometer & History Check' },
+    'lux-drive': { name: 'Lux-Drive (Premium Used Car)', price: 3999, points: 'Full Diagnostics, Advanced Electronic Systems, Originality, Paint & Senior Inspector Review' },
+    'pre-drive': { name: 'Pre-Drive (New Car PDI)', price: 1999, points: 'Paint Quality, Engine Bay, Tyre & Wheel, Flood Check & Delivery Readiness' },
 
     // Backwards compatibility aliases
-    'super-value': { name: 'Expert-Drive (Used car)', price: 2699, points: '300+ Checkpoints' },
-    'luxury-expert': { name: 'Lux-Drive (Premium Used Car)', price: 3999, points: '300+ Points + AI Score + Paint Gauge' },
-    'quick-delivery': { name: 'Pre-Drive (New Car PDI)', price: 1999, points: 'Pre-Delivery Inspection' }
+    'super-value': { name: 'Expert-Drive (Used car)', price: 2699, points: 'OBD Diagnostics, Fault Code Analysis, Underbody, Odometer & History Check' },
+    'luxury-expert': { name: 'Lux-Drive (Premium Used Car)', price: 3999, points: 'Full Diagnostics, Advanced Electronic Systems, Originality, Paint & Senior Inspector Review' },
+    'quick-delivery': { name: 'Pre-Drive (New Car PDI)', price: 1999, points: 'Paint Quality, Engine Bay, Tyre & Wheel, Flood Check & Delivery Readiness' }
   };
 
   // State object
