@@ -1791,18 +1791,19 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
 <script>
-function triggerRazorpayForBalance(ref, amt, name) {
+function triggerRazorpayForBalance(ref, amt, name, desc) {
     if (typeof Razorpay === 'undefined') {
-        setTimeout(() => triggerRazorpayForBalance(ref, amt, name), 500);
+        setTimeout(() => triggerRazorpayForBalance(ref, amt, name, desc), 500);
         return;
     }
     const RAZORPAY_KEY = window.RAZORPAY_KEY_ID || 'rzp_live_TJRDVu6qlB1ZbO';
+    const description = desc ? decodeURIComponent(desc) : `Balance Payment for Booking ${ref}`;
     const options = {
         key: RAZORPAY_KEY,
         amount: Number(amt) * 100,
         currency: 'INR',
         name: 'InspectCar',
-        description: `Balance Payment for Booking ${ref}`,
+        description: description,
         image: 'images/Logo.webp',
         theme: { color: '#6366f1' },
         handler: async function(response) {
@@ -1811,13 +1812,13 @@ function triggerRazorpayForBalance(ref, amt, name) {
                 try {
                     await window.supabaseClient.from('bookings').update({
                         payment_status: 'paid',
-                        notes: `Balance Paid online: ₹${amt} (Ref: ${paymentId})`
+                        notes: `${description}: ₹${amt} (Ref: ${paymentId})`
                     }).eq('booking_ref', ref);
                 } catch(e) {}
             }
             const modal = document.getElementById('payBalanceModal');
             if (modal) modal.style.display = 'none';
-            alert(`✅ Payment Successful!\n\nThank you ${decodeURIComponent(name)}. Your balance payment of ₹${amt} (Ref: ${paymentId}) has been received.`);
+            alert(`✅ Payment Successful!\n\nThank you ${decodeURIComponent(name)}. Your payment of ₹${amt} (Ref: ${paymentId}) has been received.`);
         }
     };
     try {
@@ -1835,6 +1836,7 @@ function checkPayBalanceHash() {
         const ref = urlParams.get('ref') || 'IC-BOOKING';
         const amt = urlParams.get('amt') || '0';
         const name = urlParams.get('name') || 'Valued Customer';
+        const desc = urlParams.get('desc') || '';
 
         document.getElementById('balModalRef').innerText = ref;
         document.getElementById('balModalName').innerText = decodeURIComponent(name);
@@ -1846,12 +1848,12 @@ function checkPayBalanceHash() {
         document.body.style.overflow = 'hidden';
 
         document.getElementById('btnPayBalanceNow').onclick = function() {
-            triggerRazorpayForBalance(ref, amt, name);
+            triggerRazorpayForBalance(ref, amt, name, desc);
         };
 
         // Auto-open Razorpay Checkout popup immediately!
         setTimeout(() => {
-            triggerRazorpayForBalance(ref, amt, name);
+            triggerRazorpayForBalance(ref, amt, name, desc);
         }, 400);
     }
 }
