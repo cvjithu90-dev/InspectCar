@@ -1358,18 +1358,22 @@
                     <div class="form-group">
                         <label>Manufacturing Year *</label>
                         <select id="inputYear" class="form-select" required>
-                            <option value="2025">2025</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
-                            <option value="2022" selected>2022</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015 &amp; Older</option>
+                            <!-- Populated dynamically by the inline script below so it's always up-to-date -->
                         </select>
+                        <script>
+                          (function() {
+                            const sel = document.getElementById('inputYear');
+                            const curYear = new Date().getFullYear();
+                            const maxYear = curYear + 1; // Allow next-year models (new car PDI)
+                            for (let y = maxYear; y >= 2000; y--) {
+                              const opt = document.createElement('option');
+                              opt.value = y;
+                              opt.textContent = y === 2000 ? '2000 & Older' : String(y);
+                              if (y === curYear) opt.selected = true; // Default to current year
+                              sel.appendChild(opt);
+                            }
+                          })();
+                        </script>
                     </div>
                     <div class="form-group">
                         <label>Fuel Type *</label>
