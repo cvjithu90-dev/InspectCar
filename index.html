@@ -1104,9 +1104,20 @@
      TERMS & CONDITIONS / PRIVACY POLICY MODALS
 ============================================================ -->
 
-<div class="policy-modal-overlay" id="policyModal" onclick="if(event.target===this)closePolicyModal()" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(5,5,20,0.85);backdrop-filter:blur(8px);overflow-y:auto;padding:30px 16px;">
-  <div class="policy-modal-box" style="max-width:760px;margin:0 auto;background:#161625;border:1px solid rgba(99,102,241,0.25);border-radius:20px;padding:40px 36px;position:relative;">
-    <button onclick="closePolicyModal()" style="position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.07);border:none;color:#aaa;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;"><i class="fas fa-times"></i></button>
+<div class="policy-modal-overlay" id="policyModal" onclick="if(event.target===this)closePolicyModal()" style="display:none;position:fixed;inset:0;z-index:100010;background:rgba(5,5,20,0.88);backdrop-filter:blur(10px);overflow-y:auto;padding:30px 16px;">
+  <div class="policy-modal-box" style="max-width:760px;margin:0 auto;background:#161625;border:1px solid rgba(99,102,241,0.25);border-radius:20px;padding:40px 36px 36px;position:relative;">
+
+    <!-- Top bar: Back button + X close -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+      <button onclick="closePolicyModal()" id="policyBackBtn"
+        style="display:flex;align-items:center;gap:8px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.35);color:#a78bfa;padding:8px 16px;border-radius:10px;cursor:pointer;font-size:13.5px;font-weight:700;transition:all 0.2s;">
+        <i class="fas fa-arrow-left"></i> Back to Booking
+      </button>
+      <button onclick="closePolicyModal()"
+        style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:#9ca3af;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;transition:all 0.2s;">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
 
     <!-- TERMS & CONDITIONS -->
     <div id="policyContentTerms">
@@ -1797,15 +1808,26 @@ document.addEventListener("DOMContentLoaded", function() {
 <script>
   function openPolicyModal(type) {
     const modal = document.getElementById('policyModal');
-    document.getElementById('policyContentTerms').style.display = type === 'terms' ? 'block' : 'none';
+    document.getElementById('policyContentTerms').style.display  = type === 'terms'   ? 'block' : 'none';
     document.getElementById('policyContentPrivacy').style.display = type === 'privacy' ? 'block' : 'none';
     modal.style.display = 'block';
-    document.body.style.overflow = 'hidden';
     modal.scrollTop = 0;
+    // Label the back button correctly based on context
+    const bookingOpen = document.querySelector('.booking-modal-overlay.active');
+    const backBtn = document.getElementById('policyBackBtn');
+    if (backBtn) {
+      backBtn.innerHTML = bookingOpen
+        ? '<i class="fas fa-arrow-left"></i> Back to Booking'
+        : '<i class="fas fa-times"></i> Close';
+    }
+    // Only lock body scroll if the booking modal is NOT already open
+    if (!bookingOpen) document.body.style.overflow = 'hidden';
   }
   function closePolicyModal() {
     document.getElementById('policyModal').style.display = 'none';
-    document.body.style.overflow = 'auto';
+    // Only restore scroll if the booking modal is also closed
+    const bookingOpen = document.querySelector('.booking-modal-overlay.active');
+    if (!bookingOpen) document.body.style.overflow = 'auto';
   }
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closePolicyModal();
