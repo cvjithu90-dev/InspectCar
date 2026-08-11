@@ -1089,19 +1089,29 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
 
     let bookedTimes = new Set();
 
-    // 1. Fetch live active bookings from Supabase (Single Source of Truth)
+    // ── 1. Fetch confirmed bookings from Supabase (Single Source of Truth) ──────
+    // IMPORTANT: Only statuses that mean the slot is truly reserved are included.
+    // 'pending' alone (user started booking but never paid/completed) must NOT block slots.
+    // 'confirmed'       = website booking after successful payment
+    // 'assigned'        = admin booking with inspector allocated
+    // 'inspection_done' = inspection completed, report pending
+    // 'report_ready'    = report generated
+    // 'completed'       = fully done
+    // 'pending_balance' = token paid, balance due at site
+    const BLOCKING_STATUSES = ['confirmed', 'assigned', 'inspection_done', 'report_ready', 'completed', 'pending_balance'];
+
     if (supabaseClient) {
       try {
         const { data, error } = await supabaseClient
           .from('bookings')
           .select('inspection_time, status')
           .eq('inspection_date', dateStr)
-          .neq('status', 'cancelled');
+          .in('status', BLOCKING_STATUSES);   // ← only real confirmed bookings block slots
 
         if (!error && data) {
           data.forEach(b => {
             if (b.inspection_time) {
-              bookedTimes.add(b.inspection_time.trim());
+              bookedTimes.add(b.inspection_time.trim()); // exact slot string e.g. "9:00 AM - 11:00 AM"
             }
           });
         }
@@ -1109,7 +1119,8 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
         console.warn('Error checking slot availability from Supabase:', e);
       }
     } else {
-      // 2. Fallback to local session storage only if Supabase is disconnected
+      // ── 2. Fallback: local session storage (only if Supabase disconnected) ───
+      // Session storage is only written after a CONFIRMED booking completes.
       try {
         const localBooked = JSON.parse(sessionStorage.getItem('ic_local_booked') || '[]');
         localBooked.forEach(lb => {
@@ -1130,18 +1141,10 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       // Check if slot has already passed today
       const isPast = isToday && (currentHour >= startHour);
 
-      // Check if booked (matches exact slot name or legacy partial string)
-      const isBooked = bookedTimes.has(slotTime) || [...bookedTimes].some(bt => {
-        if (!bt) return false;
-        if (bt === slotTime) return true;
-        if (slotTime.startsWith('9:00 AM') && (bt.includes('9:00') || bt.includes('09:00') || bt.includes('10:30'))) return true;
-        if (slotTime.startsWith('11:00 AM') && (bt.includes('11:00') || bt.includes('10:30'))) return true;
-        if (slotTime.startsWith('1:00 PM') && (bt.includes('1:30') || bt.includes('13:30') || bt.includes('1:00'))) return true;
-        if (slotTime.startsWith('3:00 PM') && (bt.includes('3:00') || bt.includes('15:00'))) return true;
-        if (slotTime.startsWith('5:00 PM') && (bt.includes('5:00') || bt.includes('17:00'))) return true;
-        if (slotTime.startsWith('7:00 PM') && (bt.includes('6:30') || bt.includes('7:00') || bt.includes('18:30'))) return true;
-        return false;
-      });
+      // ── EXACT MATCH ONLY ─────────────────────────────────────────────────────
+      // We store and compare the full slot string e.g. "9:00 AM - 11:00 AM".
+      // No partial/substring matching — that was causing adjacent slots to appear booked.
+      const isBooked = bookedTimes.has(slotTime);
 
       if (isPast) {
         pill.classList.add('booked', 'disabled');
@@ -1153,7 +1156,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
         if (subSpan) subSpan.innerHTML = '<span style="color:#ef4444;font-weight:700;">Booked</span>';
       } else {
         pill.classList.remove('booked', 'disabled');
-        const isNight = slotTime.startsWith('7:00 PM');
+        const isNight = slotTime && slotTime.startsWith('7:00 PM');
         if (subSpan) subSpan.innerText = isNight ? '(On Demand Night)' : 'Available';
 
         if (state.selectedTime === slotTime) {
@@ -1386,7 +1389,9 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
             notes:           notesWithPayment,
             payment_method:  paymentInfo.paymentMethod,
             payment_status:  paymentInfo.paymentStatus,
-            status:          'pending',
+            // ✅ 'confirmed' = slot is truly reserved. Only set here, after payment succeeds.
+            // Unfinished flows never call finalizeBooking(), so they never write any row.
+            status:          'confirmed',
             source:          'website'
           });
         if (error) console.error('Supabase insert error:', error);
