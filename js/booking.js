@@ -141,8 +141,9 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     customerName: '',
     customerPhone: '',
     customerEmail: '',
-    promoCode: '',
-    discount: 0,
+    consentTC: false,
+    consentPP: false,
+    consentTimestamp: null,
     paymentMethod: 'token-199',
     bookingRef: '',
     calendarDate: new Date(),
@@ -883,6 +884,28 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
         alert('Please fill out your Name, Phone Number, and Inspection Address.');
         return false;
       }
+
+      // ── Consent validation ──────────────────────────────────────────────
+      const consentTC = document.getElementById('consentTC')?.checked;
+      const consentPP = document.getElementById('consentPP')?.checked;
+      const errEl    = document.getElementById('consentErrorMsg');
+      const badgeEl  = document.getElementById('consentStatusBadge');
+
+      if (!consentTC || !consentPP) {
+        if (errEl)   errEl.style.display   = 'flex';
+        if (badgeEl) badgeEl.style.display = 'none';
+        // Highlight unchecked boxes
+        if (!consentTC) document.getElementById('consentTCLabel').style.borderColor = 'rgba(239,68,68,0.7)';
+        if (!consentPP) document.getElementById('consentPPLabel').style.borderColor = 'rgba(239,68,68,0.7)';
+        document.getElementById('consentSection')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      }
+      if (errEl)   errEl.style.display   = 'none';
+
+      // Record timestamp of consent
+      state.consentTimestamp = new Date().toISOString();
+      state.consentTC        = true;
+      state.consentPP        = true;
     }
     return true;
   }
@@ -1370,6 +1393,28 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       } catch (err) {
         console.warn('Supabase save failed, WhatsApp still works:', err);
       }
+
+      // ── Consent Log: separate table entry keyed by booking_ref & customer ──
+      try {
+        const consentPayload = {
+          booking_ref:           state.bookingRef,
+          customer_name:         state.customerName,
+          customer_phone:        state.customerPhone,
+          customer_email:        state.customerEmail || null,
+          terms_agreed:          state.consentTC === true,
+          privacy_agreed:        state.consentPP === true,
+          consent_timestamp_ist: state.consentTimestamp,          // ISO 8601 UTC
+          consent_timestamp_utc: state.consentTimestamp,
+          ip_hint:               null,                            // enriched server-side if needed
+          user_agent:            navigator.userAgent.substring(0, 200)
+        };
+        const { error: consentErr } = await supabaseClient
+          .from('consent_logs')
+          .insert(consentPayload);
+        if (consentErr) console.warn('Consent log insert error:', consentErr);
+      } catch (cErr) {
+        console.warn('Consent log save failed:', cErr);
+      }
     }
 
     const dateStr = state.selectedDate
@@ -1483,3 +1528,25 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
   }
 
 })();
+
+// ── Global helper: update consent checkbox visual feedback ────────────────────
+window.updateConsentUI = function(type) {
+  const consentTC = document.getElementById('consentTC')?.checked;
+  const consentPP = document.getElementById('consentPP')?.checked;
+  const tcLabel   = document.getElementById('consentTCLabel');
+  const ppLabel   = document.getElementById('consentPPLabel');
+  const badge     = document.getElementById('consentStatusBadge');
+  const errEl     = document.getElementById('consentErrorMsg');
+
+  // Reset border highlights
+  if (tcLabel) tcLabel.style.borderColor = consentTC ? 'rgba(52,211,153,0.55)' : 'rgba(255,255,255,0.08)';
+  if (ppLabel) ppLabel.style.borderColor = consentPP ? 'rgba(52,211,153,0.55)' : 'rgba(255,255,255,0.08)';
+
+  // Show success badge when both ticked
+  if (consentTC && consentPP) {
+    if (badge)  badge.style.display  = 'flex';
+    if (errEl)  errEl.style.display  = 'none';
+  } else {
+    if (badge)  badge.style.display  = 'none';
+  }
+};

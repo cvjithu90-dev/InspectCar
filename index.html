@@ -1520,6 +1520,47 @@
                     <label>Complete Doorstep Address / Dealer Name *</label>
                     <textarea id="inputAddress" class="form-textarea" rows="2" placeholder="Building name, landmark, plot no."></textarea>
                 </div>
+
+                <!-- ============================================================
+                     CONSENT SECTION — Terms & Conditions + Privacy Policy
+                ============================================================ -->
+                <div id="consentSection" style="margin-top:20px;padding:18px 20px;background:rgba(99,102,241,0.07);border:1px solid rgba(99,102,241,0.25);border-radius:16px;">
+                    <div style="font-size:13px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:14px;display:flex;align-items:center;gap:7px;">
+                        <i class="fas fa-shield-check" style="color:#6366f1;"></i> Consent &amp; Agreement
+                    </div>
+
+                    <!-- Checkbox 1: Terms & Conditions -->
+                    <label id="consentTCLabel" for="consentTC" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-bottom:14px;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;transition:border-color 0.2s;">
+                        <input type="checkbox" id="consentTC" name="consentTC"
+                            style="width:18px;height:18px;min-width:18px;margin-top:2px;accent-color:#6366f1;cursor:pointer;"
+                            onchange="updateConsentUI('TC')">
+                        <span style="font-size:13.5px;line-height:1.6;color:#e2e8f0;">
+                            I agree to the
+                            <a href="#" onclick="openPolicyModal('terms'); return false;" style="color:#a78bfa;font-weight:700;text-decoration:underline;">Terms &amp; Conditions</a>
+                            of InspectCar. I understand that the inspection report is advisory and does not constitute a warranty or guarantee.
+                        </span>
+                    </label>
+
+                    <!-- Checkbox 2: Privacy Policy -->
+                    <label id="consentPPLabel" for="consentPP" style="display:flex;align-items:flex-start;gap:12px;cursor:pointer;margin-bottom:16px;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;transition:border-color 0.2s;">
+                        <input type="checkbox" id="consentPP" name="consentPP"
+                            style="width:18px;height:18px;min-width:18px;margin-top:2px;accent-color:#6366f1;cursor:pointer;"
+                            onchange="updateConsentUI('PP')">
+                        <span style="font-size:13.5px;line-height:1.6;color:#e2e8f0;">
+                            I have read and accept the
+                            <a href="#" onclick="openPolicyModal('privacy'); return false;" style="color:#a78bfa;font-weight:700;text-decoration:underline;">Privacy Policy</a>.
+                            I consent to InspectCar collecting, storing, and processing my personal data for the purpose of this inspection booking.
+                        </span>
+                    </label>
+
+                    <!-- Consent status indicator -->
+                    <div id="consentStatusBadge" style="display:none;font-size:12px;color:#34d399;display:flex;align-items:center;gap:6px;font-weight:600;">
+                        <i class="fas fa-check-circle"></i> Consent recorded — timestamp will be saved with your booking.
+                    </div>
+                    <div id="consentErrorMsg" style="display:none;font-size:12.5px;color:#f87171;margin-top:6px;display:flex;align-items:center;gap:6px;">
+                        <i class="fas fa-exclamation-circle"></i> Please agree to both Terms &amp; Conditions and Privacy Policy to continue.
+                    </div>
+                </div>
             </div>
 
             <!-- STEP 5: ORDER REVIEW & CONFIRMATION -->
