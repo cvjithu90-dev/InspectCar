@@ -576,6 +576,10 @@
   gap: 6px;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* GOOGLE MAPS LOCATION AUTOCOMPLETE & BADGES */
 .gmaps-suggestions-dropdown {
   position: absolute;
@@ -590,6 +594,11 @@
   max-height: 200px;
   overflow-y: auto;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.gmaps-suggestions-dropdown.hidden,
+#gmapsSuggestions.hidden {
+  display: none !important;
 }
 
 .gmaps-suggestion-item {

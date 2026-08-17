@@ -20,6 +20,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
 html,body{width:100%;overflow-x:hidden;}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;}
+.hidden{display:none !important;}
 
 /* Force instant visibility - no AOS hiding */
 [data-aos]{opacity:1 !important;transform:none !important;}

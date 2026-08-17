@@ -563,6 +563,15 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
 
   let gmapsSearchDebounce = null;
 
+  window.closeGmapsSuggestions = function() {
+    const box = document.getElementById('gmapsSuggestions');
+    if (box) {
+      box.classList.add('hidden');
+      box.style.display = 'none';
+      box.innerHTML = '';
+    }
+  };
+
   function initGmapsAutocomplete() {
     const input = document.getElementById('inputGmapsSearch');
     const suggestionsBox = document.getElementById('gmapsSuggestions');
@@ -577,12 +586,12 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       if (val.startsWith('http://') || val.startsWith('https://') || val.includes('maps.google') || val.includes('goo.gl/maps') || val.includes('maps.app.goo.gl')) {
         state.gmapsLink = originalVal;
         showGmapsCapturedBadge('Pasted Google Maps Link', state.gmapsLink);
-        suggestionsBox.classList.add('hidden');
+        window.closeGmapsSuggestions();
         return;
       }
 
       if (val.length < 2) {
-        suggestionsBox.classList.add('hidden');
+        window.closeGmapsSuggestions();
         return;
       }
 
@@ -596,9 +605,9 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
         p.name.toLowerCase().includes(val) || p.area.toLowerCase().includes(val)
       );
 
-      const headerHtml = '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);font-size:10.5px;color:var(--text-muted);">' +
+      const headerHtml = '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.1);font-size:10.5px;color:var(--text-muted);">' +
         '<span><i class="fas fa-map-marker-alt" style="color:var(--accent-light);margin-right:4px;"></i> Select Landmark / Area</span>' +
-        '<button type="button" onclick="event.stopPropagation();document.getElementById(\'gmapsSuggestions\').classList.add(\'hidden\')" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:#cbd5e1;cursor:pointer;font-size:10px;padding:2px 6px;">✕ Close</button>' +
+        '<button type="button" onclick="event.stopPropagation();window.closeGmapsSuggestions()" style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);border-radius:4px;color:#fff;cursor:pointer;font-size:11px;padding:3px 8px;font-weight:600;">✕ Close</button>' +
       '</div>';
 
       let html = '';
@@ -615,7 +624,10 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       }
 
       suggestionsBox.innerHTML = headerHtml + html;
-      if (html) suggestionsBox.classList.remove('hidden');
+      if (html) {
+        suggestionsBox.classList.remove('hidden');
+        suggestionsBox.style.display = 'block';
+      }
 
       // 2. FAST API FETCH FALLBACK (100ms debounce)
       clearTimeout(gmapsSearchDebounce);
@@ -651,6 +663,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
 
                 suggestionsBox.innerHTML = headerHtml + html + olaItems;
                 suggestionsBox.classList.remove('hidden');
+                suggestionsBox.style.display = 'block';
                 return;
               }
             } catch(e) {
@@ -684,6 +697,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
 
             suggestionsBox.innerHTML = headerHtml + html + apiItems;
             suggestionsBox.classList.remove('hidden');
+            suggestionsBox.style.display = 'block';
           }
         } catch(err) {
           if (spinner) spinner.classList.add('hidden');
@@ -695,13 +709,14 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     input.addEventListener('focus', () => {
       if (input.value.trim().length >= 2 && suggestionsBox.children.length > 1) {
         suggestionsBox.classList.remove('hidden');
+        suggestionsBox.style.display = 'block';
       }
     });
 
     // Dismiss on Escape key
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        suggestionsBox.classList.add('hidden');
+        window.closeGmapsSuggestions();
       }
     });
 
@@ -721,36 +736,29 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     if (areaIn) areaIn.addEventListener('input', updateFromTextInputs);
     if (addrIn) addrIn.addEventListener('input', updateFromTextInputs);
 
-    // Hide suggestions immediately when focusing any other input, textarea, select, or button
-    const hideSuggestions = () => {
-      if (suggestionsBox && !suggestionsBox.classList.contains('hidden')) {
-        suggestionsBox.classList.add('hidden');
-      }
-    };
-
-    if (areaIn) areaIn.addEventListener('focus', hideSuggestions);
-    if (addrIn) addrIn.addEventListener('focus', hideSuggestions);
+    if (areaIn) areaIn.addEventListener('focus', window.closeGmapsSuggestions);
+    if (addrIn) addrIn.addEventListener('focus', window.closeGmapsSuggestions);
     document.querySelectorAll('#bookingModal input, #bookingModal textarea, #bookingModal select, #bookingModal button').forEach(el => {
       if (el !== input) {
-        el.addEventListener('focus', hideSuggestions);
+        el.addEventListener('focus', window.closeGmapsSuggestions);
       }
     });
 
     // Close suggestions if clicked / tapped anywhere outside
     document.addEventListener('pointerdown', (evt) => {
       if (!input.contains(evt.target) && !suggestionsBox.contains(evt.target)) {
-        hideSuggestions();
+        window.closeGmapsSuggestions();
       }
     }, true);
 
     document.addEventListener('click', (evt) => {
       if (!input.contains(evt.target) && !suggestionsBox.contains(evt.target)) {
-        hideSuggestions();
+        window.closeGmapsSuggestions();
       }
     }, true);
 
     window.addEventListener('keydown', (evt) => {
-      if (evt.key === 'Escape') hideSuggestions();
+      if (evt.key === 'Escape') window.closeGmapsSuggestions();
     });
   }
 
@@ -758,7 +766,6 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     const areaInput = document.getElementById('inputArea');
     const addressInput = document.getElementById('inputAddress');
     const gmapsSearchInput = document.getElementById('inputGmapsSearch');
-    const suggestionsBox = document.getElementById('gmapsSuggestions');
 
     if (gmapsSearchInput) gmapsSearchInput.value = mainName;
     if (areaInput) areaInput.value = fullAddress || mainName;
@@ -772,7 +779,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     state.gmapsLink = mapLink;
     showGmapsCapturedBadge(mainName, mapLink);
 
-    if (suggestionsBox) suggestionsBox.classList.add('hidden');
+    window.closeGmapsSuggestions();
   };
 
   // LIGHTNING FAST GPS DETECTION
