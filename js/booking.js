@@ -596,6 +596,11 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
         p.name.toLowerCase().includes(val) || p.area.toLowerCase().includes(val)
       );
 
+      const headerHtml = '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 12px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);font-size:10.5px;color:var(--text-muted);">' +
+        '<span><i class="fas fa-map-marker-alt" style="color:var(--accent-light);margin-right:4px;"></i> Select Landmark / Area</span>' +
+        '<button type="button" onclick="event.stopPropagation();document.getElementById(\'gmapsSuggestions\').classList.add(\'hidden\')" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:4px;color:#cbd5e1;cursor:pointer;font-size:10px;padding:2px 6px;">✕ Close</button>' +
+      '</div>';
+
       let html = '';
       if (localMatches.length > 0) {
         html += localMatches.slice(0, 6).map(p => `
@@ -609,7 +614,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
         `).join('');
       }
 
-      suggestionsBox.innerHTML = html;
+      suggestionsBox.innerHTML = headerHtml + html;
       if (html) suggestionsBox.classList.remove('hidden');
 
       // 2. FAST API FETCH FALLBACK (100ms debounce)
@@ -644,7 +649,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
                   `;
                 }).join('');
 
-                suggestionsBox.innerHTML = html + olaItems;
+                suggestionsBox.innerHTML = headerHtml + html + olaItems;
                 suggestionsBox.classList.remove('hidden');
                 return;
               }
@@ -677,13 +682,27 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
               `;
             }).join('');
 
-            suggestionsBox.innerHTML = html + apiItems;
+            suggestionsBox.innerHTML = headerHtml + html + apiItems;
             suggestionsBox.classList.remove('hidden');
           }
         } catch(err) {
           if (spinner) spinner.classList.add('hidden');
         }
       }, 100);
+    });
+
+    // Re-open if input already has text and is focused
+    input.addEventListener('focus', () => {
+      if (input.value.trim().length >= 2 && suggestionsBox.children.length > 1) {
+        suggestionsBox.classList.remove('hidden');
+      }
+    });
+
+    // Dismiss on Escape key
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        suggestionsBox.classList.add('hidden');
+      }
     });
 
     // Also auto-capture when user types in Area or Address fields directly
@@ -702,11 +721,36 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     if (areaIn) areaIn.addEventListener('input', updateFromTextInputs);
     if (addrIn) addrIn.addEventListener('input', updateFromTextInputs);
 
-    // Close suggestions if clicked outside
-    document.addEventListener('click', (evt) => {
-      if (!input.contains(evt.target) && !suggestionsBox.contains(evt.target)) {
+    // Hide suggestions immediately when focusing any other input, textarea, select, or button
+    const hideSuggestions = () => {
+      if (suggestionsBox && !suggestionsBox.classList.contains('hidden')) {
         suggestionsBox.classList.add('hidden');
       }
+    };
+
+    if (areaIn) areaIn.addEventListener('focus', hideSuggestions);
+    if (addrIn) addrIn.addEventListener('focus', hideSuggestions);
+    document.querySelectorAll('#bookingModal input, #bookingModal textarea, #bookingModal select, #bookingModal button').forEach(el => {
+      if (el !== input) {
+        el.addEventListener('focus', hideSuggestions);
+      }
+    });
+
+    // Close suggestions if clicked / tapped anywhere outside
+    document.addEventListener('pointerdown', (evt) => {
+      if (!input.contains(evt.target) && !suggestionsBox.contains(evt.target)) {
+        hideSuggestions();
+      }
+    }, true);
+
+    document.addEventListener('click', (evt) => {
+      if (!input.contains(evt.target) && !suggestionsBox.contains(evt.target)) {
+        hideSuggestions();
+      }
+    }, true);
+
+    window.addEventListener('keydown', (evt) => {
+      if (evt.key === 'Escape') hideSuggestions();
     });
   }
 
