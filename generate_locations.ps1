@@ -1,4 +1,4 @@
-$locations = @(
+﻿$locations = @(
     @("Whitefield", "whitefield", "IT hub", "hatchbacks and compact SUVs"),
     @("Electronic City", "electronic-city", "major tech park area", "sedans and premium SUVs"),
     @("Sarjapur Road", "sarjapur", "fast-growing residential corridor", "family SUVs and EVs"),
@@ -46,7 +46,7 @@ $template = @"
   "name": "InspectCar",
   "description": "Professional car inspection service in {location}, Bangalore",
   "url": "https://inspectcar.in",
-  "telephone": "+91-99003-68006",
+  "telephone": "+91 9900368006",
   "email": "info@inspectcar.in",
   "areaServed": "{location}, Bangalore, Karnataka",
   "address": { "@type": "PostalAddress", "addressLocality": "Bangalore", "addressRegion": "Karnataka", "addressCountry": "IN" },

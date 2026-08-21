@@ -1,4 +1,4 @@
-import json
+﻿import json
 import os
 
 pages = [
@@ -400,7 +400,7 @@ body {{ font-family: 'Inter', sans-serif; background: #0E0E1C; color: #F4F4F6; }
     </div>
     <div class="footer-column">
       <h3>Contact</h3>
-      <span><i class="fas fa-phone" style="color:#A78BFA;margin-right:6px;"></i> +91 99003 68006</span>
+      <span><i class="fas fa-phone" style="color:#A78BFA;margin-right:6px;"></i> +91 9900368006</span>
       <span><i class="fas fa-envelope" style="color:#A78BFA;margin-right:6px;"></i> info@inspectcar.in</span>
       <span><i class="fas fa-location-dot" style="color:#A78BFA;margin-right:6px;"></i> Bangalore, Karnataka</span>
     </div>
