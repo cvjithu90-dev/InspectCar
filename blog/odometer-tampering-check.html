@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -38,7 +38,7 @@ body { font-family:'Inter',sans-serif; background:#0E0E1C; color:#F4F4F6; margin
 .nav-circle { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:14px; }
 .call-circle { background:rgba(99,102,241,0.2); color:#818CF8; border:1px solid rgba(99,102,241,0.3); }
 .whatsapp-circle { background:#25D366; color:#fff; }
-.article-header { padding:120px 20px 48px; max-width:800px; margin:0 auto; }
+.article-header { padding:120px 20px 30px; max-width:800px; margin:0 auto; text-align:left; position:relative; z-index:1; }
 .article-tag { display:inline-block; background:rgba(99,102,241,0.15); color:#A78BFA; padding:4px 14px; border-radius:20px; font-size:12px; font-weight:600; margin-bottom:16px; }
 .article-header h1 { font-size:clamp(24px,4vw,42px); font-weight:800; line-height:1.25; margin-bottom:16px; }
 .article-meta { color:#6B7280; font-size:14px; }
@@ -67,26 +67,29 @@ body { font-family:'Inter',sans-serif; background:#0E0E1C; color:#F4F4F6; margin
 </style>
 </head>
 <body>
+<header>
 <nav class="navbar">
-  <a href="/" class="logo"><img src="../images/Logo.webp" alt="InspectCar"></a>
+  <a href="../index.html" class="logo"><img src="../images/Logo.webp" alt="InspectCar"></a>
   <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/#packages">Packages</a></li>
-    <li><a href="/blogs.html">Blog</a></li>
-    <li><a href="/#contact">Contact</a></li>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../index.html#services">Services</a></li>
+    <li><a href="../index.html#packages">Packages</a></li>
+    <li><a href="../index.html#whyus">Why Us</a></li>
+    <li><a href="../blogs.html">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
     <a href="tel:+919900368006" class="nav-circle call-circle"><i class="fas fa-phone"></i></a>
     <a href="https://wa.me/919900368006" target="_blank" class="nav-circle whatsapp-circle"><i class="fab fa-whatsapp"></i></a>
   </div>
 </nav>
+</header>
 
-<header class="article-header">
+<div class="article-header">
   <span class="article-tag">Car Inspection</span>
   <h1>How to Check Whether a Car's Odometer Has Been Tampered With</h1>
   <div class="article-meta">Published on Jan 1, 2025 • 6 min read</div>
-</header>
+</div>
 
 <main class="article-body">
   <p>The allure of a low-mileage used car is hard to resist. It promises less wear and tear, a longer remaining lifespan, and better value for your money. Unfortunately, this high demand makes low-mileage cars a prime target for fraudsters. Odometer tampering, commonly known as "clocking" or "rolling back," is rampant in the Indian used car market. What you think is a lightly-used gem might actually be an exhausted, heavily-driven vehicle in disguise.</p>

@@ -40,10 +40,10 @@ body { font-family:'Inter',sans-serif; background:#0E0E1C; color:#F4F4F6; margin
 .nav-circle { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:14px; }
 .call-circle { background:rgba(99,102,241,0.2); color:#818CF8; border:1px solid rgba(99,102,241,0.3); }
 .whatsapp-circle { background:#25D366; color:#fff; }
-.hero { padding:130px 20px 80px; text-align:center; background:radial-gradient(circle at 50% 0%,rgba(99,102,241,0.22),transparent 60%); }
-.hero h1 { font-size:clamp(28px,5vw,50px); font-weight:800; margin-bottom:16px; }
-.hero h1 span { background:linear-gradient(135deg,#6366F1,#8B5CF6,#A78BFA); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero p { font-size:17px; color:#9CA3AF; max-width:680px; margin:0 auto 32px; line-height:1.7; }
+.location-hero { padding:130px 20px 60px; text-align:center; background:radial-gradient(circle at 50% 0%,rgba(99,102,241,0.22),transparent 60%); position:relative; z-index:1; }
+.location-hero h1 { font-size:clamp(28px,5vw,50px); font-weight:800; margin-bottom:16px; color:#F4F4F6; }
+.location-hero h1 span { background:linear-gradient(135deg,#6366F1,#8B5CF6,#A78BFA); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.location-hero p { font-size:17px; color:#9CA3AF; max-width:680px; margin:0 auto 32px; line-height:1.7; }
 .cta-btn { display:inline-block; background:linear-gradient(135deg,#6366F1,#8B5CF6); color:#fff; padding:14px 36px; border-radius:50px; font-weight:700; font-size:15px; text-decoration:none; }
 .content { max-width:880px; margin:0 auto; padding:60px 20px; }
 .content h2 { font-size:26px; font-weight:700; color:#A78BFA; margin-bottom:14px; }
@@ -75,22 +75,25 @@ body { font-family:'Inter',sans-serif; background:#0E0E1C; color:#F4F4F6; margin
 </style>
 </head>
 <body>
+<header>
 <nav class="navbar">
-  <a href="/" class="logo"><img src="../images/Logo.webp" alt="InspectCar"></a>
+  <a href="../index.html" class="logo"><img src="../images/Logo.webp" alt="InspectCar"></a>
   <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/#services">Services</a></li>
-    <li><a href="/#packages">Packages</a></li>
-    <li><a href="/blogs.html">Blog</a></li>
-    <li><a href="/#contact">Contact</a></li>
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../index.html#services">Services</a></li>
+    <li><a href="../index.html#packages">Packages</a></li>
+    <li><a href="../index.html#whyus">Why Us</a></li>
+    <li><a href="../blogs.html">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
   </ul>
   <div class="nav-actions">
     <a href="tel:+919900368006" class="nav-circle call-circle"><i class="fas fa-phone"></i></a>
     <a href="https://wa.me/919900368006" target="_blank" class="nav-circle whatsapp-circle"><i class="fab fa-whatsapp"></i></a>
   </div>
 </nav>
+</header>
 
-<div class="hero">
+<div class="location-hero">
   <h1>Used Car Inspection in <span>Electronic City</span></h1>
   <p>Looking to buy a used car in Electronic City? Our expert mechanics provide thorough doorstep pre-purchase vehicle inspections in this major tech park area. Don't leave your car purchase to chance.</p>
   <a href="https://inspectcar.in/#packages" class="cta-btn">Book an Inspection</a>
