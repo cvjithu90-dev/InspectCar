@@ -143,6 +143,17 @@ HERO — fluid sizing with clamp()
 }
 .secondary-btn:hover{transform:translateY(-3px);border-color:var(--accent-2);}
 
+.track-booking-btn{
+  padding:clamp(12px,2vw,16px) clamp(20px,3vw,30px);border-radius:14px;
+  background:transparent;color:var(--accent-3);
+  border:2px solid var(--accent-2);
+  font-weight:700;cursor:pointer;font-size:clamp(13px,2vw,15px);
+  transition:transform .2s ease, background .2s, color .2s;
+  font-family:'Inter',sans-serif;
+}
+.track-booking-btn:hover{transform:translateY(-3px);background:rgba(139,92,246,0.12);}
+
+
 /* Stats — compact sizing */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px;}
 .stat-card{
