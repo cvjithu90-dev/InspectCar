@@ -2234,86 +2234,142 @@ window.addEventListener('hashchange', checkPayBalanceHash);
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.78);
+  background: rgba(0,0,0,0.82);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 99999;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 #trackBookingModal.open { display: flex; }
 
 .tbm-box {
   background: #161625;
   border: 1px solid rgba(139,92,246,0.35);
-  border-radius: 22px;
+  border-radius: 20px;
   width: 100%;
-  max-width: 480px;
-  padding: 36px 32px 30px;
+  max-width: 460px;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px 22px 24px;
   position: relative;
+  box-sizing: border-box;
+  margin: auto;
   box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 60px rgba(99,102,241,0.12);
-  animation: tbmIn .3s cubic-bezier(.34,1.56,.64,1);
+  animation: tbmIn .25s cubic-bezier(.34,1.56,.64,1);
 }
-@keyframes tbmIn { from { opacity:0; transform:scale(.88) translateY(16px); } to { opacity:1; transform:scale(1) translateY(0); } }
+@keyframes tbmIn { from { opacity:0; transform:scale(.92) translateY(12px); } to { opacity:1; transform:scale(1) translateY(0); } }
+
+.tbm-box * {
+  box-sizing: border-box;
+}
 
 .tbm-close {
-  position: absolute; top: 16px; right: 18px;
-  background: none; border: none; color: #6B7280; font-size: 20px; cursor: pointer; line-height: 1;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #9CA3AF;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  z-index: 10;
+  transition: all .2s;
 }
-.tbm-close:hover { color: #F4F4F6; }
+.tbm-close:hover, .tbm-close:active {
+  color: #F4F4F6;
+  background: rgba(255,255,255,0.12);
+}
 
-.tbm-title { font-size: 20px; font-weight: 800; color: #F4F4F6; margin-bottom: 4px; }
-.tbm-sub { font-size: 13px; color: #6B7280; margin-bottom: 24px; }
+.tbm-title {
+  font-size: clamp(17px, 4.5vw, 20px);
+  font-weight: 800;
+  color: #F4F4F6;
+  margin-bottom: 4px;
+  padding-right: 36px;
+  line-height: 1.3;
+}
+.tbm-sub {
+  font-size: 13px;
+  color: #9CA3AF;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
 
 .tbm-input-row {
-  display: flex; gap: 10px; align-items: center; margin-bottom: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  margin-bottom: 8px;
+  width: 100%;
 }
 .tbm-phone-input {
-  flex: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
   background: rgba(255,255,255,0.05);
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 12px;
-  padding: 12px 16px;
-  font-size: 15px;
+  padding: 12px 14px;
+  font-size: 14px;
   color: #F4F4F6;
   font-family: 'Inter', sans-serif;
   outline: none;
   transition: border-color .2s;
 }
-.tbm-phone-input:focus { border-color: #8B5CF6; }
-.tbm-phone-input::placeholder { color: #4B5563; }
+.tbm-phone-input:focus { border-color: #8B5CF6; background: rgba(255,255,255,0.08); }
+.tbm-phone-input::placeholder { color: #6B7280; font-size: 13px; }
 
 .tbm-search-btn {
+  flex: 0 0 auto;
   background: linear-gradient(135deg, #6366F1, #8B5CF6);
   color: #fff;
   border: none;
   border-radius: 12px;
-  padding: 12px 20px;
+  padding: 12px 18px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
   white-space: nowrap;
+  font-family: 'Inter', sans-serif;
   transition: transform .2s, opacity .2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .tbm-search-btn:hover { transform: translateY(-1px); }
 .tbm-search-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
 
-.tbm-error { font-size: 13px; color: #EF4444; margin-bottom: 14px; min-height: 18px; }
+.tbm-error { font-size: 12px; color: #EF4444; margin-bottom: 10px; min-height: 16px; line-height: 1.4; }
 
 /* ---- Tracker result ---- */
-.tbm-result { display: none; margin-top: 20px; }
+.tbm-result { display: none; margin-top: 14px; }
 .tbm-result.show { display: block; }
 
 .tbm-booking-id {
   background: rgba(99,102,241,0.1);
   border: 1px solid rgba(99,102,241,0.2);
   border-radius: 10px;
-  padding: 10px 14px;
+  padding: 10px 12px;
   font-size: 12px;
   color: #A78BFA;
   font-weight: 600;
-  margin-bottom: 20px;
-  letter-spacing: .5px;
+  margin-bottom: 18px;
+  letter-spacing: .4px;
+  word-break: break-word;
 }
 
 /* Vertical stage tracker */
@@ -2322,7 +2378,7 @@ window.addEventListener('hashchange', checkPayBalanceHash);
 .tbm-stage {
   display: flex;
   align-items: flex-start;
-  gap: 14px;
+  gap: 12px;
   position: relative;
 }
 
@@ -2330,8 +2386,8 @@ window.addEventListener('hashchange', checkPayBalanceHash);
 .tbm-stage:not(:last-child)::after {
   content: '';
   position: absolute;
-  left: 15px;
-  top: 34px;
+  left: 14px;
+  top: 32px;
   width: 2px;
   height: calc(100% - 6px);
   background: rgba(255,255,255,0.08);
@@ -2340,15 +2396,15 @@ window.addEventListener('hashchange', checkPayBalanceHash);
 .tbm-stage.amber:not(:last-child)::after { background: #D97706; }
 
 .tbm-dot {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   border: 2px solid rgba(255,255,255,0.12);
   background: #1C1C2E;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 12px;
   flex-shrink: 0;
   margin-top: 2px;
   transition: all .3s;
@@ -2378,9 +2434,9 @@ window.addEventListener('hashchange', checkPayBalanceHash);
   50% { box-shadow: 0 0 20px rgba(99,102,241,0.7); }
 }
 
-.tbm-stage-info { padding-bottom: 24px; flex: 1; }
+.tbm-stage-info { padding-bottom: 20px; flex: 1; min-width: 0; }
 .tbm-stage-label {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   color: #9CA3AF;
   line-height: 1.3;
@@ -2390,44 +2446,60 @@ window.addEventListener('hashchange', checkPayBalanceHash);
 .tbm-stage.active .tbm-stage-label { color: #A78BFA; }
 
 .tbm-stage-note {
-  font-size: 12px;
-  color: #4B5563;
+  font-size: 11.5px;
+  color: #6B7280;
   margin-top: 3px;
   line-height: 1.4;
+  word-break: break-word;
 }
-.tbm-stage.done .tbm-stage-note { color: #6B7280; }
-.tbm-stage.amber .tbm-stage-note { color: #92400E; color:#B45309; }
-.tbm-stage.active .tbm-stage-note { color: #7C3AED; color:#8B5CF6; }
+.tbm-stage.done .tbm-stage-note { color: #9CA3AF; }
+.tbm-stage.amber .tbm-stage-note { color: #F59E0B; }
+.tbm-stage.active .tbm-stage-note { color: #A78BFA; }
 
 .tbm-footer-note {
-  margin-top: 10px;
-  background: rgba(37,211,102,0.07);
-  border: 1px solid rgba(37,211,102,0.18);
+  margin-top: 6px;
+  background: rgba(37,211,102,0.08);
+  border: 1px solid rgba(37,211,102,0.2);
   border-radius: 10px;
-  padding: 12px 14px;
+  padding: 10px 12px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: flex-start;
 }
-.tbm-footer-note i { color: #25D366; font-size: 15px; margin-top: 2px; flex-shrink: 0; }
-.tbm-footer-note span { font-size: 12px; color: #9CA3AF; line-height: 1.5; }
+.tbm-footer-note i { color: #25D366; font-size: 14px; margin-top: 2px; flex-shrink: 0; }
+.tbm-footer-note span { font-size: 11.5px; color: #9CA3AF; line-height: 1.45; }
 
 /* Multiple bookings selector */
-.tbm-multi { margin-bottom: 16px; }
-.tbm-multi-label { font-size: 12px; color: #6B7280; margin-bottom: 8px; font-weight: 600; letter-spacing: .4px; }
-.tbm-booking-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.tbm-multi { margin-bottom: 14px; }
+.tbm-multi-label { font-size: 11px; color: #6B7280; margin-bottom: 6px; font-weight: 600; letter-spacing: .4px; }
+.tbm-booking-pills { display: flex; flex-wrap: wrap; gap: 6px; }
 .tbm-pill {
   background: rgba(99,102,241,0.1);
   border: 1px solid rgba(99,102,241,0.25);
-  border-radius: 20px;
-  padding: 6px 14px;
-  font-size: 12px;
+  border-radius: 16px;
+  padding: 5px 12px;
+  font-size: 11px;
   color: #A78BFA;
   cursor: pointer;
   transition: all .2s;
   font-weight: 600;
 }
 .tbm-pill:hover, .tbm-pill.selected { background: rgba(99,102,241,0.25); border-color: #8B5CF6; color: #fff; }
+
+@media (max-width: 480px) {
+  .tbm-box {
+    padding: 22px 16px 18px;
+    border-radius: 16px;
+  }
+  .tbm-search-btn {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .tbm-phone-input {
+    font-size: 14px;
+    padding: 12px 10px;
+  }
+}
 </style>
 
 <script>
