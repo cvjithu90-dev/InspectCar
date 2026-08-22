@@ -21,6 +21,7 @@ let supabaseClient = null;
 try {
   if (typeof supabase !== 'undefined' && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
     supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    window.supabaseClient = supabaseClient; // expose globally for other scripts
   }
 } catch(e) {
   console.warn('Supabase not loaded, booking will use WhatsApp only.', e);

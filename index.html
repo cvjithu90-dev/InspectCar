@@ -2462,7 +2462,7 @@ async function searchBookingByPhone() {
   errEl.textContent = '';
   res.classList.remove('show');
 
-  // Validate — 10 digits
+  // Strip everything except digits
   const digits = raw.replace(/\D/g, '');
   if (digits.length < 10) {
     errEl.textContent = 'Please enter a valid 10-digit mobile number.';
@@ -2473,38 +2473,76 @@ async function searchBookingByPhone() {
   btn.textContent = 'Searching…';
 
   try {
-    const client = window.supabaseClient || (typeof supabase !== 'undefined' ? supabase.createClient(
-      'https://fklauiwughygdpvfylwg.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrbGF1aXd1Z2h5Z2RwdmZ5bHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyMjA0MjIsImV4cCI6MjEwMDc5NjQyMn0.t4KEH1g9TZTW8DgG1rpAU0fFVHXvmcEv86s0w7_jHdA'
-    ) : null);
+    // Use the already-initialized client from booking.js (exposed via window.supabaseClient)
+    // Fallback: create a new one if not yet ready
+    const client = window.supabaseClient ||
+      (typeof supabase !== 'undefined'
+        ? supabase.createClient(
+            'https://fklauiwughygdpvfylwg.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrbGF1aXd1Z2h5Z2RwdmZ5bHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyMjA0MjIsImV4cCI6MjEwMDc5NjQyMn0.t4KEH1g9TZTW8DgG1rpAU0fFVHXvmcEv86s0w7_jHdA'
+          )
+        : null);
 
-    if (!client) { errEl.textContent = 'Service unavailable. Please try again.'; return; }
-
-    // Use last 10 digits with ilike — matches any storage format:
-    // 7760383385 | 917760383385 | +917760383385 | +91 7760383385
-    const phone10 = digits.slice(-10);
-
-    const { data, error } = await client
-      .from('bookings')
-      .select('id, booking_ref, status, payment_status, advance_paid, total_price, inspector_id, inspection_date, vehicle_brand, vehicle_model')
-      .ilike('customer_phone', `%${phone10}`)
-      .order('created_at', { ascending: false })
-      .limit(5);
-
-    if (error) throw error;
-
-    if (!data || data.length === 0) {
-      errEl.textContent = 'No booking found for this mobile number. Please check and try again.';
+    if (!client) {
+      errEl.textContent = 'Service unavailable. Please refresh the page and try again.';
       return;
     }
 
-    // Show first booking by default
+    const phone10 = digits.slice(-10);
+    const selectCols = 'id, booking_ref, status, payment_status, advance_paid, total_price, inspector_id, inspection_date, vehicle_brand, vehicle_model';
+
+    let data = null;
+
+    // Try each format in sequence until we get a result
+    const formats = [
+      phone10,           // 7760383385
+      '91' + phone10,    // 917760383385
+      '0' + phone10,     // 07760383385
+    ];
+
+    for (const fmt of formats) {
+      const { data: rows, error } = await client
+        .from('bookings')
+        .select(selectCols)
+        .eq('customer_phone', fmt)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (error) {
+        console.error('Supabase query error:', error);
+        continue; // try next format
+      }
+      if (rows && rows.length > 0) {
+        data = rows;
+        break;
+      }
+    }
+
+    // Final fallback: ilike pattern search
+    if (!data || data.length === 0) {
+      const { data: rows, error } = await client
+        .from('bookings')
+        .select(selectCols)
+        .ilike('customer_phone', `%${phone10}`)
+        .order('created_at', { ascending: false })
+        .limit(5);
+
+      if (!error && rows && rows.length > 0) {
+        data = rows;
+      }
+    }
+
+    if (!data || data.length === 0) {
+      errEl.textContent = 'No booking found for this mobile number. Please check and try again, or contact us at +91 9900368006.';
+      return;
+    }
+
     window._tbmBookings = data;
     renderTrackResult(data[0], data);
 
   } catch (e) {
-    console.error(e);
-    errEl.textContent = 'Something went wrong. Please try again later.';
+    console.error('Track booking error:', e);
+    errEl.textContent = 'Something went wrong: ' + (e.message || e). toString().slice(0, 80);
   } finally {
     btn.disabled = false;
     btn.textContent = 'Search';
