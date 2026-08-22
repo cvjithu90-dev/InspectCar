@@ -2480,15 +2480,14 @@ async function searchBookingByPhone() {
 
     if (!client) { errEl.textContent = 'Service unavailable. Please try again.'; return; }
 
-    // Try multiple phone formats
+    // Use last 10 digits with ilike — matches any storage format:
+    // 7760383385 | 917760383385 | +917760383385 | +91 7760383385
     const phone10 = digits.slice(-10);
-    const phone91 = '91' + phone10;
-    const phoneWA  = '+91' + phone10;
 
     const { data, error } = await client
       .from('bookings')
       .select('id, booking_ref, status, payment_status, advance_paid, total_price, inspector_id, inspection_date, vehicle_brand, vehicle_model')
-      .or(`customer_phone.eq.${phone10},customer_phone.eq.${phone91},customer_phone.eq.${phoneWA},customer_phone.eq.+91${phone10}`)
+      .ilike('customer_phone', `%${phone10}`)
       .order('created_at', { ascending: false })
       .limit(5);
 
