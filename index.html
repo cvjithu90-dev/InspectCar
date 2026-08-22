@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 
@@ -328,6 +328,10 @@
 
             <button class="primary-btn open-booking-modal" onclick="if(window.openBookingModal) window.openBookingModal();">
                 Book Inspection
+            </button>
+
+            <button class="primary-btn" onclick="openTrackBookingModal();" style="background:transparent; border:2px solid var(--accent-2); color:var(--accent-3); box-shadow:none;">
+                <i class="fas fa-search" style="margin-right:7px; font-size:13px;"></i> Track Booking
             </button>
 
             <a href="#packages" class="secondary-btn">
@@ -2198,5 +2202,471 @@ function closePayBalanceModal() {
 window.addEventListener('load', checkPayBalanceHash);
 window.addEventListener('hashchange', checkPayBalanceHash);
 </script>
+
+<!-- =============================================
+     TRACK BOOKING MODAL
+============================================= -->
+<div id="trackBookingModal" onclick="if(event.target===this) closeTrackModal();">
+  <div class="tbm-box">
+    <button class="tbm-close" onclick="closeTrackModal()"><i class="fas fa-times"></i></button>
+    <div class="tbm-title"><i class="fas fa-map-marker-alt" style="color:#8B5CF6;margin-right:8px;font-size:17px;"></i>Track Your Booking</div>
+    <div class="tbm-sub">Enter your registered mobile number to check your inspection status.</div>
+
+    <div class="tbm-input-row">
+      <input
+        id="tbmPhone"
+        class="tbm-phone-input"
+        type="tel"
+        placeholder="Enter 10-digit mobile number"
+        maxlength="13"
+        inputmode="numeric"
+      >
+      <button id="tbmSearchBtn" class="tbm-search-btn" onclick="searchBookingByPhone()">Search</button>
+    </div>
+    <div id="tbmError" class="tbm-error"></div>
+
+    <div id="tbmResult" class="tbm-result"></div>
+  </div>
+</div>
+
+<style>
+#trackBookingModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  backdrop-filter: blur(8px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#trackBookingModal.open { display: flex; }
+
+.tbm-box {
+  background: #161625;
+  border: 1px solid rgba(139,92,246,0.35);
+  border-radius: 22px;
+  width: 100%;
+  max-width: 480px;
+  padding: 36px 32px 30px;
+  position: relative;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 60px rgba(99,102,241,0.12);
+  animation: tbmIn .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes tbmIn { from { opacity:0; transform:scale(.88) translateY(16px); } to { opacity:1; transform:scale(1) translateY(0); } }
+
+.tbm-close {
+  position: absolute; top: 16px; right: 18px;
+  background: none; border: none; color: #6B7280; font-size: 20px; cursor: pointer; line-height: 1;
+}
+.tbm-close:hover { color: #F4F4F6; }
+
+.tbm-title { font-size: 20px; font-weight: 800; color: #F4F4F6; margin-bottom: 4px; }
+.tbm-sub { font-size: 13px; color: #6B7280; margin-bottom: 24px; }
+
+.tbm-input-row {
+  display: flex; gap: 10px; align-items: center; margin-bottom: 10px;
+}
+.tbm-phone-input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #F4F4F6;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color .2s;
+}
+.tbm-phone-input:focus { border-color: #8B5CF6; }
+.tbm-phone-input::placeholder { color: #4B5563; }
+
+.tbm-search-btn {
+  background: linear-gradient(135deg, #6366F1, #8B5CF6);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .2s, opacity .2s;
+}
+.tbm-search-btn:hover { transform: translateY(-1px); }
+.tbm-search-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.tbm-error { font-size: 13px; color: #EF4444; margin-bottom: 14px; min-height: 18px; }
+
+/* ---- Tracker result ---- */
+.tbm-result { display: none; margin-top: 20px; }
+.tbm-result.show { display: block; }
+
+.tbm-booking-id {
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #A78BFA;
+  font-weight: 600;
+  margin-bottom: 20px;
+  letter-spacing: .5px;
+}
+
+/* Vertical stage tracker */
+.tbm-stages { display: flex; flex-direction: column; gap: 0; }
+
+.tbm-stage {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  position: relative;
+}
+
+/* The connector line */
+.tbm-stage:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 34px;
+  width: 2px;
+  height: calc(100% - 6px);
+  background: rgba(255,255,255,0.08);
+}
+.tbm-stage.done:not(:last-child)::after { background: #10B981; }
+.tbm-stage.amber:not(:last-child)::after { background: #D97706; }
+
+.tbm-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.12);
+  background: #1C1C2E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all .3s;
+  color: #4B5563;
+}
+.tbm-stage.done .tbm-dot {
+  background: #10B981;
+  border-color: #10B981;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(16,185,129,0.4);
+}
+.tbm-stage.amber .tbm-dot {
+  background: #D97706;
+  border-color: #D97706;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(217,119,6,0.4);
+}
+.tbm-stage.active .tbm-dot {
+  background: #6366F1;
+  border-color: #6366F1;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(99,102,241,0.5);
+  animation: tbmPulse 1.5s ease-in-out infinite;
+}
+@keyframes tbmPulse {
+  0%,100% { box-shadow: 0 0 10px rgba(99,102,241,0.4); }
+  50% { box-shadow: 0 0 20px rgba(99,102,241,0.7); }
+}
+
+.tbm-stage-info { padding-bottom: 24px; flex: 1; }
+.tbm-stage-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #9CA3AF;
+  line-height: 1.3;
+}
+.tbm-stage.done .tbm-stage-label { color: #F4F4F6; }
+.tbm-stage.amber .tbm-stage-label { color: #FCD34D; }
+.tbm-stage.active .tbm-stage-label { color: #A78BFA; }
+
+.tbm-stage-note {
+  font-size: 12px;
+  color: #4B5563;
+  margin-top: 3px;
+  line-height: 1.4;
+}
+.tbm-stage.done .tbm-stage-note { color: #6B7280; }
+.tbm-stage.amber .tbm-stage-note { color: #92400E; color:#B45309; }
+.tbm-stage.active .tbm-stage-note { color: #7C3AED; color:#8B5CF6; }
+
+.tbm-footer-note {
+  margin-top: 10px;
+  background: rgba(37,211,102,0.07);
+  border: 1px solid rgba(37,211,102,0.18);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.tbm-footer-note i { color: #25D366; font-size: 15px; margin-top: 2px; flex-shrink: 0; }
+.tbm-footer-note span { font-size: 12px; color: #9CA3AF; line-height: 1.5; }
+
+/* Multiple bookings selector */
+.tbm-multi { margin-bottom: 16px; }
+.tbm-multi-label { font-size: 12px; color: #6B7280; margin-bottom: 8px; font-weight: 600; letter-spacing: .4px; }
+.tbm-booking-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.tbm-pill {
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: #A78BFA;
+  cursor: pointer;
+  transition: all .2s;
+  font-weight: 600;
+}
+.tbm-pill:hover, .tbm-pill.selected { background: rgba(99,102,241,0.25); border-color: #8B5CF6; color: #fff; }
+</style>
+
+<script>
+// ============================================================
+// TRACK BOOKING MODAL
+// ============================================================
+function openTrackBookingModal() {
+  const modal = document.getElementById('trackBookingModal');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('tbmPhone').value = '';
+  document.getElementById('tbmError').textContent = '';
+  document.getElementById('tbmResult').classList.remove('show');
+}
+
+function closeTrackModal() {
+  const modal = document.getElementById('trackBookingModal');
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('trackBookingModal').addEventListener('click', function(e) {
+  if (e.target === this) closeTrackModal();
+});
+
+async function searchBookingByPhone() {
+  const raw = document.getElementById('tbmPhone').value.trim();
+  const errEl = document.getElementById('tbmError');
+  const btn   = document.getElementById('tbmSearchBtn');
+  const res   = document.getElementById('tbmResult');
+
+  errEl.textContent = '';
+  res.classList.remove('show');
+
+  // Validate — 10 digits
+  const digits = raw.replace(/\D/g, '');
+  if (digits.length < 10) {
+    errEl.textContent = 'Please enter a valid 10-digit mobile number.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Searching…';
+
+  try {
+    const client = window.supabaseClient || (typeof supabase !== 'undefined' ? supabase.createClient(
+      'https://fklauiwughygdpvfylwg.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZrbGF1aXd1Z2h5Z2RwdmZ5bHdnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUyMjA0MjIsImV4cCI6MjEwMDc5NjQyMn0.t4KEH1g9TZTW8DgG1rpAU0fFVHXvmcEv86s0w7_jHdA'
+    ) : null);
+
+    if (!client) { errEl.textContent = 'Service unavailable. Please try again.'; return; }
+
+    // Try multiple phone formats
+    const phone10 = digits.slice(-10);
+    const phone91 = '91' + phone10;
+    const phoneWA  = '+91' + phone10;
+
+    const { data, error } = await client
+      .from('bookings')
+      .select('id, booking_ref, status, payment_status, advance_paid, total_price, inspector_id, inspection_date, vehicle_brand, vehicle_model')
+      .or(`customer_phone.eq.${phone10},customer_phone.eq.${phone91},customer_phone.eq.${phoneWA},customer_phone.eq.+91${phone10}`)
+      .order('created_at', { ascending: false })
+      .limit(5);
+
+    if (error) throw error;
+
+    if (!data || data.length === 0) {
+      errEl.textContent = 'No booking found for this mobile number. Please check and try again.';
+      return;
+    }
+
+    // Show first booking by default
+    window._tbmBookings = data;
+    renderTrackResult(data[0], data);
+
+  } catch (e) {
+    console.error(e);
+    errEl.textContent = 'Something went wrong. Please try again later.';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Search';
+  }
+}
+
+function renderTrackResult(booking, allBookings) {
+  const res = document.getElementById('tbmResult');
+  res.innerHTML = '';
+
+  // Multiple bookings selector
+  if (allBookings.length > 1) {
+    const multi = document.createElement('div');
+    multi.className = 'tbm-multi';
+    multi.innerHTML = `<div class="tbm-multi-label">FOUND ${allBookings.length} BOOKINGS — SELECT ONE</div><div class="tbm-booking-pills">` +
+      allBookings.map((b, i) =>
+        `<div class="tbm-pill${i===0?' selected':''}" onclick="selectTbmBooking(${i})" id="tbm-pill-${i}">
+          ${b.booking_ref || b.id.slice(0,8).toUpperCase()}
+        </div>`
+      ).join('') +
+      `</div>`;
+    res.appendChild(multi);
+  }
+
+  // Booking ID label
+  const idBox = document.createElement('div');
+  idBox.className = 'tbm-booking-id';
+  idBox.id = 'tbmBookingId';
+  idBox.innerHTML = `<i class="fas fa-hashtag" style="margin-right:5px;"></i>BOOKING ID: ${booking.booking_ref || booking.id.slice(0,8).toUpperCase()}`;
+  res.appendChild(idBox);
+
+  // Stages
+  const stagesWrap = document.createElement('div');
+  stagesWrap.className = 'tbm-stages';
+  stagesWrap.id = 'tbmStages';
+  res.appendChild(stagesWrap);
+
+  // Footer note
+  const noteEl = document.createElement('div');
+  noteEl.className = 'tbm-footer-note';
+  noteEl.innerHTML = `<i class="fab fa-whatsapp"></i><span>Once your inspection report is generated, you will receive it directly on your registered WhatsApp number. Please do not share your booking details with anyone.</span>`;
+  res.appendChild(noteEl);
+
+  res.classList.add('show');
+
+  renderStages(booking);
+}
+
+function renderStages(b) {
+  const wrap = document.getElementById('tbmStages');
+  if (!wrap) return;
+
+  const st = (b.status || '').toLowerCase();
+  const pst = (b.payment_status || '').toLowerCase();
+  const hasInspector = !!b.inspector_id;
+
+  // Determine payment state
+  let payState, payLabel, payNote;
+  if (pst === 'paid') {
+    payState = 'done';
+    payLabel = '✅ Fully Paid';
+    payNote = 'Your full payment has been received. Thank you!';
+  } else if (b.advance_paid && parseFloat(b.advance_paid) > 0) {
+    payState = 'amber';
+    payLabel = '⚡ Advance Paid';
+    payNote = 'Partial payment received. Balance to be paid on inspection day.';
+  } else {
+    payState = 'active';
+    payLabel = 'Payment Pending';
+    payNote = 'Advance payment pending. Please contact us to confirm.';
+  }
+
+  // Map status to stage index: 0=booked, 1=payment, 2=inspector, 3=inspection, 4=report
+  const stageMap = { pending:0, confirmed:1, assigned:2, in_progress:3, completed:4, report_draft:4, report_published:4 };
+  const currentStageIdx = stageMap[st] ?? 0;
+
+  const stages = [
+    {
+      icon: 'fa-check',
+      label: 'Booking Confirmed',
+      note: 'Your inspection has been successfully booked.',
+      stateKey: 'booked'
+    },
+    {
+      icon: pst === 'paid' ? 'fa-check' : (b.advance_paid && parseFloat(b.advance_paid) > 0 ? 'fa-bolt' : 'fa-clock'),
+      label: payLabel,
+      note: payNote,
+      stateKey: 'payment'
+    },
+    {
+      icon: hasInspector ? 'fa-user-check' : 'fa-user-clock',
+      label: hasInspector ? 'Inspector Assigned' : 'Waiting for Inspector Assignment',
+      note: hasInspector ? 'Your inspector is confirmed and will be at your location on time.' : 'We are assigning the best available inspector for your vehicle.',
+      stateKey: 'inspector'
+    },
+    {
+      icon: 'fa-car-side',
+      label: 'Inspection',
+      note: 'Our inspector will conduct a thorough 300+ point vehicle check.',
+      stateKey: 'inspection'
+    },
+    {
+      icon: 'fa-file-alt',
+      label: 'Report Generated',
+      note: 'Your detailed inspection report will be shared on WhatsApp.',
+      stateKey: 'report'
+    }
+  ];
+
+  function getStageState(idx) {
+    if (idx === 0) return 'done'; // Always done if booking exists
+    if (idx === 1) return payState;
+    if (idx === 2) {
+      if (currentStageIdx >= 3) return 'done';
+      if (hasInspector) return 'done';
+      if (currentStageIdx >= 2) return 'active';
+      return '';
+    }
+    if (idx === 3) {
+      if (currentStageIdx >= 4) return 'done';
+      if (currentStageIdx === 3) return 'active';
+      return '';
+    }
+    if (idx === 4) {
+      if (st === 'report_published' || st === 'completed') return 'done';
+      if (currentStageIdx >= 4) return 'active';
+      return '';
+    }
+    return '';
+  }
+
+  wrap.innerHTML = stages.map((s, i) => {
+    const state = getStageState(i);
+    return `<div class="tbm-stage ${state}">
+      <div class="tbm-dot"><i class="fas ${s.icon}"></i></div>
+      <div class="tbm-stage-info">
+        <div class="tbm-stage-label">${s.label}</div>
+        <div class="tbm-stage-note">${s.note}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selectTbmBooking(idx) {
+  // Update pill selection
+  document.querySelectorAll('.tbm-pill').forEach((p, i) => {
+    p.classList.toggle('selected', i === idx);
+  });
+  const b = window._tbmBookings[idx];
+  document.getElementById('tbmBookingId').innerHTML = `<i class="fas fa-hashtag" style="margin-right:5px;"></i>BOOKING ID: ${b.booking_ref || b.id.slice(0,8).toUpperCase()}`;
+  renderStages(b);
+}
+
+// Allow Enter key in phone input
+document.addEventListener('DOMContentLoaded', function() {
+  const inp = document.getElementById('tbmPhone');
+  if (inp) inp.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') searchBookingByPhone();
+  });
+});
+</script>
+
 </body>
 </html>
