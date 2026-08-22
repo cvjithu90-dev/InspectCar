@@ -2599,17 +2599,18 @@ function renderStages(b) {
   const pst = (b.payment_status || '').toLowerCase();
   const hasInspector = !!b.inspector_id;
 
-  // Determine payment state — based only on payment_status
+  // Determine payment state — values stored by admin: 'unpaid', 'token_paid', 'paid'
   let payState, payLabel, payNote;
   if (pst === 'paid') {
     payState = 'done';
     payLabel = 'Fully Paid';
     payNote = 'Your full payment has been received. Thank you!';
-  } else if (pst === 'partial' || pst === 'advance') {
+  } else if (pst === 'token_paid') {
     payState = 'amber';
-    payLabel = 'Advance Paid';
-    payNote = 'Partial payment received. Balance to be paid on inspection day.';
+    payLabel = 'Token / Advance Paid';
+    payNote = 'Advance payment received. Balance to be paid on inspection day.';
   } else {
+    // unpaid or anything else
     payState = 'active';
     payLabel = 'Payment Pending';
     payNote = 'Advance payment pending. Please contact us to confirm.';
@@ -2627,7 +2628,7 @@ function renderStages(b) {
       stateKey: 'booked'
     },
     {
-      icon: pst === 'paid' ? 'fa-check' : (pst === 'partial' || pst === 'advance' ? 'fa-bolt' : 'fa-clock'),
+      icon: pst === 'paid' ? 'fa-check' : (pst === 'token_paid' ? 'fa-bolt' : 'fa-clock'),
       label: payLabel,
       note: payNote,
       stateKey: 'payment'
