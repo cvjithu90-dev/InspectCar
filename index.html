@@ -2489,7 +2489,7 @@ async function searchBookingByPhone() {
     }
 
     const phone10 = digits.slice(-10);
-    const selectCols = 'id, booking_ref, status, payment_status, advance_paid, total_price, inspector_id, inspection_date, vehicle_brand, vehicle_model';
+    const selectCols = 'id, booking_ref, status, payment_status, total_price, inspector_id, inspection_date, vehicle_brand, vehicle_model';
 
     let data = null;
 
@@ -2599,15 +2599,15 @@ function renderStages(b) {
   const pst = (b.payment_status || '').toLowerCase();
   const hasInspector = !!b.inspector_id;
 
-  // Determine payment state
+  // Determine payment state — based only on payment_status
   let payState, payLabel, payNote;
   if (pst === 'paid') {
     payState = 'done';
-    payLabel = '✅ Fully Paid';
+    payLabel = 'Fully Paid';
     payNote = 'Your full payment has been received. Thank you!';
-  } else if (b.advance_paid && parseFloat(b.advance_paid) > 0) {
+  } else if (pst === 'partial' || pst === 'advance') {
     payState = 'amber';
-    payLabel = '⚡ Advance Paid';
+    payLabel = 'Advance Paid';
     payNote = 'Partial payment received. Balance to be paid on inspection day.';
   } else {
     payState = 'active';
@@ -2627,7 +2627,7 @@ function renderStages(b) {
       stateKey: 'booked'
     },
     {
-      icon: pst === 'paid' ? 'fa-check' : (b.advance_paid && parseFloat(b.advance_paid) > 0 ? 'fa-bolt' : 'fa-clock'),
+      icon: pst === 'paid' ? 'fa-check' : (pst === 'partial' || pst === 'advance' ? 'fa-bolt' : 'fa-clock'),
       label: payLabel,
       note: payNote,
       stateKey: 'payment'
