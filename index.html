@@ -348,6 +348,31 @@
                 View Packages
             </a>
 
+            <!-- Download Sample Report Dropdown -->
+            <div class="sample-report-wrapper" id="sampleReportWrapper">
+                <button class="sample-report-btn" onclick="toggleSampleDropdown(event)">
+                    <i class="fas fa-file-pdf" style="margin-right:7px; font-size:13px;"></i>
+                    Sample Report
+                    <i class="fas fa-chevron-down" id="sampleChevron" style="margin-left:6px; font-size:11px; transition: transform .2s;"></i>
+                </button>
+                <div class="sample-report-dropdown" id="sampleReportDropdown">
+                    <a href="/reports/InspectCar - Used Car - PDI - Sample.pdf" download="InspectCar — Used Car - PDI - Sample.pdf" class="sample-dropdown-item">
+                        <i class="fas fa-car"></i>
+                        <div>
+                            <span class="sdrop-title">Used Car Report</span>
+                            <span class="sdrop-sub">Pre-purchase & second-hand car PDI</span>
+                        </div>
+                    </a>
+                    <a href="/reports/InspectCar - New Car - PDI - Sample.pdf" download="InspectCar — New Car - PDI - Sample.pdf" class="sample-dropdown-item">
+                        <i class="fas fa-car-side"></i>
+                        <div>
+                            <span class="sdrop-title">New Car Report</span>
+                            <span class="sdrop-sub">New car PDI inspection sample</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
         </div>
 
         <div class="stats">
@@ -2785,6 +2810,28 @@ document.addEventListener('DOMContentLoaded', function() {
   if (inp) inp.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') searchBookingByPhone();
   });
+});
+</script>
+
+<script>
+// ── Sample Report Dropdown ───────────────────────────────────────
+function toggleSampleDropdown(e) {
+  e.stopPropagation();
+  const dropdown = document.getElementById('sampleReportDropdown');
+  const chevron  = document.getElementById('sampleChevron');
+  const isOpen   = dropdown.classList.contains('open');
+  dropdown.classList.toggle('open', !isOpen);
+  if (chevron) chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+// Close dropdown when clicking anywhere outside
+document.addEventListener('click', function(e) {
+  const wrapper = document.getElementById('sampleReportWrapper');
+  if (wrapper && !wrapper.contains(e.target)) {
+    const dropdown = document.getElementById('sampleReportDropdown');
+    const chevron  = document.getElementById('sampleChevron');
+    if (dropdown) dropdown.classList.remove('open');
+    if (chevron)  chevron.style.transform = 'rotate(0deg)';
+  }
 });
 </script>
 
