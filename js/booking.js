@@ -237,6 +237,15 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
             makeSelect.appendChild(opt);
           });
 
+          // Always append "Other / Not Listed"
+          if (!makes.some(m => m.name === 'Other / Not Listed')) {
+            const otherOpt = document.createElement('option');
+            otherOpt.value = 'Other / Not Listed';
+            otherOpt.textContent = 'Other / Not Listed';
+            if (state.brand === 'Other / Not Listed') otherOpt.selected = true;
+            makeSelect.appendChild(otherOpt);
+          }
+
           // Re-populate models if brand still valid
           if (state.brand) {
             const selectedOpt = [...makeSelect.options].find(o => o.value === state.brand);
@@ -274,6 +283,18 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
   async function populateModelDropdown(makeName, makeId) {
     const modelSelect = document.getElementById('inputModel');
     if (!modelSelect) return;
+
+    if (makeName === 'Other / Not Listed') {
+      modelSelect.innerHTML = '<option value="">— Select Model —</option>';
+      const opt = document.createElement('option');
+      opt.value = 'Other Model';
+      opt.textContent = 'Other Model';
+      opt.selected = true;
+      state.model = 'Other Model';
+      modelSelect.appendChild(opt);
+      modelSelect.disabled = false;
+      return;
+    }
 
     modelSelect.innerHTML = '<option value="">Loading models...</option>';
     modelSelect.disabled = true;
