@@ -1191,6 +1191,21 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       } catch(e) {
         console.warn('Error checking slot availability from Supabase:', e);
       }
+
+      // Also check admin-blocked slots
+      try {
+        const { data: blockedData } = await supabaseClient
+          .from('blocked_slots')
+          .select('block_time')
+          .eq('block_date', dateStr);
+        if (blockedData) {
+          blockedData.forEach(b => {
+            if (b.block_time) bookedTimes.add(b.block_time.trim());
+          });
+        }
+      } catch(e) {
+        // blocked_slots table may not exist yet — silently ignore
+      }
     } else {
       // ── 2. Fallback: local session storage (only if Supabase disconnected) ───
       // Session storage is only written after a CONFIRMED booking completes.
@@ -1389,7 +1404,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     }
   }
 
-  // FINALIZE BOOKING — Save to Supabase & Render Confirmation Screen
+    // FINALIZE BOOKING — Save to Supabase & Render Confirmation Screen
   async function finalizeBooking(paymentInfo) {
     state.isConfirmed = true;
     const randomNum = Math.floor(1000 + Math.random() * 9000);
@@ -1406,10 +1421,11 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     const step5 = document.getElementById('stepContent5');
     if (!step5) return;
 
+    // Show brief spinner
     step5.innerHTML = `
       <div style="text-align:center;padding:40px 20px;">
         <div style="font-size:36px;margin-bottom:16px;color:var(--accent-3);"><i class="fas fa-spinner fa-spin"></i></div>
-        <h4 style="color:#fff;margin-bottom:8px;">Saving your booking...</h4>
+        <h4 style="color:#fff;margin-bottom:8px;">Confirming your booking...</h4>
         <p style="color:var(--text-muted);font-size:13px;">Please wait a moment</p>
       </div>
     `;
@@ -1435,104 +1451,18 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     const notesWithPayment = (state.gmapsLink ? `Google Maps Link: ${state.gmapsLink}` : '') +
       ` | Charged: ₹${paymentInfo.chargedAmount} | Balance Due at Site: ₹${paymentInfo.balanceAmount} | Razorpay Ref: ${paymentInfo.paymentId}`;
 
-    if (supabaseClient) {
-      try {
-        const { error } = await supabaseClient
-          .from('bookings')
-          .insert({
-            booking_ref:     state.bookingRef,
-            customer_name:   state.customerName,
-            customer_phone:  state.customerPhone,
-            customer_email:  state.customerEmail || null,
-            vehicle_brand:   state.brand,
-            vehicle_model:   state.model,
-            vehicle_year:    state.year,
-            vehicle_fuel:    state.fuel,
-            vehicle_reg:     state.registration || null,
-            package_name:    pkg.name,
-            base_price:      basePrice,
-            discount:        discountAmt,
-            total_price:     totalPrice,
-            promo_code:      state.promoCode || null,
-            inspection_date: inspDate,
-            inspection_time: state.selectedTime,
-            location_type:   state.locationType,
-            address:         fullAddrWithMap,
-            area:            state.area,
-            notes:           notesWithPayment,
-            payment_method:  paymentInfo.paymentMethod,
-            payment_status:  paymentInfo.paymentStatus,
-            // ✅ 'confirmed' = slot is truly reserved. Only set here, after payment succeeds.
-            // Unfinished flows never call finalizeBooking(), so they never write any row.
-            status:          'confirmed',
-            source:          'website'
-          });
-        if (error) console.error('Supabase insert error:', error);
-      } catch (err) {
-        console.warn('Supabase save failed, WhatsApp still works:', err);
-      }
-
-      // ── Consent Log: separate table entry keyed by booking_ref & customer ──
-      try {
-        const consentPayload = {
-          booking_ref:           state.bookingRef,
-          customer_name:         state.customerName,
-          customer_phone:        state.customerPhone,
-          customer_email:        state.customerEmail || null,
-          terms_agreed:          state.consentTC === true,
-          privacy_agreed:        state.consentPP === true,
-          consent_timestamp_ist: state.consentTimestamp,          // ISO 8601 UTC
-          consent_timestamp_utc: state.consentTimestamp,
-          ip_hint:               null,                            // enriched server-side if needed
-          user_agent:            navigator.userAgent.substring(0, 200)
-        };
-        const { error: consentErr } = await supabaseClient
-          .from('consent_logs')
-          .insert(consentPayload);
-        if (consentErr) console.warn('Consent log insert error:', consentErr);
-      } catch (cErr) {
-        console.warn('Consent log save failed:', cErr);
-      }
-    }
-
     const dateStr = state.selectedDate
       ? state.selectedDate.toLocaleDateString('en-IN', { weekday:'long', month:'long', day:'numeric', year:'numeric' })
       : '';
 
-    // 1. AUTOMATED EMAIL NOTIFICATION to info@inspectcar.in & Customer
-    try {
-      fetch('https://formsubmit.co/ajax/info@inspectcar.in', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          _subject: `🚗 NEW BOOKING CONFIRMED: ${state.bookingRef} - ${state.customerName} (${state.brand} ${state.model})`,
-          _replyto: state.customerEmail || 'info@inspectcar.in',
-          _cc: state.customerEmail || undefined,
-          "Booking Ref": state.bookingRef,
-          "Customer Name": state.customerName,
-          "Customer Phone": state.customerPhone,
-          "Customer Email": state.customerEmail || 'Not Provided',
-          "Vehicle": `${state.brand} ${state.model} (${state.year} ${state.fuel})`,
-          "Vehicle Reg": state.registration || 'N/A',
-          "Inspection Package": pkg.name,
-          "Inspection Date": dateStr,
-          "Time Slot": state.selectedTime,
-          "Doorstep Address": `${state.address}, ${state.area}, Bangalore`,
-          "Google Maps Link": state.gmapsLink || 'N/A',
-          "Payment Status": paymentInfo.paymentStatus === 'token_paid' ? '₹199 Advance Paid (Token)' : '100% Paid Online',
-          "Razorpay Payment Ref": paymentInfo.paymentId,
-          "Advance Paid Now": `₹${paymentInfo.chargedAmount}`,
-          "Balance Payable at Site": `₹${paymentInfo.balanceAmount}`
-        })
-      }).catch(e => console.warn('Email dispatch warning:', e));
-    } catch (e) {}
+    const isToken = paymentInfo.paymentMethod && (paymentInfo.paymentMethod.includes('Token') || paymentInfo.paymentStatus === 'token_paid');
 
-    // 2. WHATSAPP NOTIFICATION TEXTS (Customer & Admin)
+    const paymentBadgeHtml = isToken
+      ? `<div style="margin-top:10px;padding:8px 14px;background:rgba(56,189,248,0.15);border:1px solid rgba(56,189,248,0.3);border-radius:10px;color:#38bdf8;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-check-circle"></i> ₹199 Token Paid via Razorpay (Ref: ${paymentInfo.paymentId}) &nbsp;·&nbsp; Balance ₹${paymentInfo.balanceAmount} Due at Site</div>`
+      : `<div style="margin-top:10px;padding:8px 14px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:10px;color:#34d399;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-check-circle"></i> Full Payment Verified via Razorpay (Ref: ${paymentInfo.paymentId})</div>`;
+
     const customerPhoneClean = (state.customerPhone || '').replace(/\D/g, '').slice(-10);
-    
+
     const customerWaText = encodeURIComponent(
       `Hi ${state.customerName}! 👋\n\n` +
       `Your InspectCar Vehicle Inspection is *CONFIRMED*! 🎉\n\n` +
@@ -1564,10 +1494,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     );
     const adminWaUrl = `https://wa.me/919900368006?text=${adminWaText}`;
 
-    const paymentBadgeHtml = isToken
-      ? `<div style="margin-top:10px;padding:8px 14px;background:rgba(56,189,248,0.15);border:1px solid rgba(56,189,248,0.3);border-radius:10px;color:#38bdf8;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-check-circle"></i> ₹199 Token Paid via Razorpay (Ref: ${paymentInfo.paymentId}) &nbsp;·&nbsp; Balance ₹${paymentInfo.balanceAmount} Due at Site</div>`
-      : `<div style="margin-top:10px;padding:8px 14px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);border-radius:10px;color:#34d399;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;"><i class="fas fa-check-circle"></i> Full Payment Verified via Razorpay (Ref: ${paymentInfo.paymentId})</div>`;
-
+    // ✅ RENDER SUCCESS SCREEN IMMEDIATELY — do NOT wait for DB inserts
     step5.innerHTML = `
       <div class="booking-success-view">
         <div class="success-icon-badge"><i class="fas fa-check"></i></div>
@@ -1603,9 +1530,105 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
         </div>
       </div>
     `;
+
+    // ── Save to Supabase IN BACKGROUND — customer already sees confirmation ───
+    if (supabaseClient) {
+      // Main booking insert
+      supabaseClient
+        .from('bookings')
+        .insert({
+          booking_ref:     state.bookingRef,
+          customer_name:   state.customerName,
+          customer_phone:  state.customerPhone,
+          customer_email:  state.customerEmail || null,
+          vehicle_brand:   state.brand,
+          vehicle_model:   state.model,
+          vehicle_year:    state.year,
+          vehicle_fuel:    state.fuel,
+          vehicle_reg:     state.registration || null,
+          package_name:    pkg.name,
+          base_price:      basePrice,
+          discount:        discountAmt,
+          total_price:     totalPrice,
+          promo_code:      state.promoCode || null,
+          inspection_date: inspDate,
+          inspection_time: state.selectedTime,
+          location_type:   state.locationType,
+          address:         fullAddrWithMap,
+          area:            state.area,
+          notes:           notesWithPayment,
+          payment_method:  paymentInfo.paymentMethod,
+          payment_status:  paymentInfo.paymentStatus,
+          // ✅ 'confirmed' = slot is truly reserved. Only set here, after payment succeeds.
+          status:          'confirmed',
+          source:          'website'
+        })
+        .then(({ error }) => {
+          if (error) console.error('Supabase booking insert error:', error);
+        })
+        .catch(err => console.warn('Supabase save failed, WhatsApp still works:', err));
+
+      // Consent log — fire-and-forget, never block UI
+      try {
+        const consentPayload = {
+          booking_ref:           state.bookingRef,
+          customer_name:         state.customerName,
+          customer_phone:        state.customerPhone,
+          customer_email:        state.customerEmail || null,
+          terms_agreed:          state.consentTC === true,
+          privacy_agreed:        state.consentPP === true,
+          consent_timestamp_ist: state.consentTimestamp,
+          consent_timestamp_utc: state.consentTimestamp,
+          ip_hint:               null,
+          user_agent:            navigator.userAgent.substring(0, 200)
+        };
+        supabaseClient
+          .from('consent_logs')
+          .insert(consentPayload)
+          .then(({ error: consentErr }) => {
+            if (consentErr) console.warn('Consent log insert error:', consentErr);
+          })
+          .catch(cErr => console.warn('Consent log save failed:', cErr));
+      } catch (cErr) {
+        console.warn('Consent log skipped:', cErr);
+      }
+    }
+
+    // 1. AUTOMATED EMAIL NOTIFICATION to info@inspectcar.in & Customer
+    try {
+      fetch('https://formsubmit.co/ajax/info@inspectcar.in', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          _subject: `🚗 NEW BOOKING CONFIRMED: ${state.bookingRef} - ${state.customerName} (${state.brand} ${state.model})`,
+          _replyto: state.customerEmail || 'info@inspectcar.in',
+          _cc: state.customerEmail || undefined,
+          "Booking Ref": state.bookingRef,
+          "Customer Name": state.customerName,
+          "Customer Phone": state.customerPhone,
+          "Customer Email": state.customerEmail || 'Not Provided',
+          "Vehicle": `${state.brand} ${state.model} (${state.year} ${state.fuel})`,
+          "Vehicle Reg": state.registration || 'N/A',
+          "Inspection Package": pkg.name,
+          "Inspection Date": dateStr,
+          "Time Slot": state.selectedTime,
+          "Doorstep Address": `${state.address}, ${state.area}, Bangalore`,
+          "Google Maps Link": state.gmapsLink || 'N/A',
+          "Payment Status": paymentInfo.paymentStatus === 'token_paid' ? '₹199 Advance Paid (Token)' : '100% Paid Online',
+          "Razorpay Payment Ref": paymentInfo.paymentId,
+          "Advance Paid Now": `₹${paymentInfo.chargedAmount}`,
+          "Balance Payable at Site": `₹${paymentInfo.balanceAmount}`
+        })
+      }).catch(e => console.warn('Email dispatch warning:', e));
+    } catch (e) {}
   }
 
+
 })();
+
 
 // ── Global helper: update consent checkbox visual feedback ────────────────────
 window.updateConsentUI = function(type) {
