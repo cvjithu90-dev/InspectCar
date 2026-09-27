@@ -194,14 +194,16 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+<link rel="preload" as="image" href="images/hero-car1.webp" type="image/webp">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/booking.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
 
 <!-- Supabase SDK for live booking capture -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- Razorpay Checkout SDK -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script defer src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 /* Remove main-page glare / sheen effects & force instant visibility */
@@ -2339,41 +2341,35 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-let shortsAutoplayLoaded = false;
-function loadShortsAutoplay() {
-    if (shortsAutoplayLoaded) return;
-    shortsAutoplayLoaded = true;
+// Instant, lightweight on-hover video preview without heavy background loading
+function setupShortsHoverPreview() {
     const cards = document.querySelectorAll('.short-card[data-short-id]');
     cards.forEach(card => {
-        const id = card.getAttribute('data-short-id');
-        if (!id) return;
-        const iframe = document.createElement('iframe');
-        iframe.className = 'short-video-preview';
-        iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0';
-        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-        iframe.setAttribute('tabindex', '-1');
-        iframe.setAttribute('aria-hidden', 'true');
-        iframe.onload = () => {
-            iframe.style.opacity = '1';
-        };
-        card.prepend(iframe);
+        let hoverTimeout = null;
+        card.addEventListener('mouseenter', function() {
+            const id = this.getAttribute('data-short-id');
+            if (!id || this.querySelector('.short-video-preview')) return;
+            hoverTimeout = setTimeout(() => {
+                const iframe = document.createElement('iframe');
+                iframe.className = 'short-video-preview';
+                iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + id + '&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0';
+                iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                iframe.setAttribute('tabindex', '-1');
+                iframe.setAttribute('aria-hidden', 'true');
+                iframe.onload = () => { iframe.style.opacity = '1'; };
+                card.prepend(iframe);
+            }, 120);
+        });
+
+        card.addEventListener('mouseleave', function() {
+            if (hoverTimeout) clearTimeout(hoverTimeout);
+            const iframe = this.querySelector('.short-video-preview');
+            if (iframe) iframe.remove();
+        });
     });
 }
 
-const shortsSection = document.getElementById('shorts');
-if ('IntersectionObserver' in window && shortsSection) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                loadShortsAutoplay();
-                observer.disconnect();
-            }
-        });
-    }, { rootMargin: '350px 0px' });
-    observer.observe(shortsSection);
-} else {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(loadShortsAutoplay, 800));
-}
+document.addEventListener('DOMContentLoaded', setupShortsHoverPreview);
 </script>
 
 <!-- PAY BALANCE MODAL OVERLAY -->
