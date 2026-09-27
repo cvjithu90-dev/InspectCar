@@ -2059,9 +2059,12 @@ document.addEventListener("DOMContentLoaded", function() {
 function drawConnectingLines() {
     const heroRight = document.getElementById('heroRight');
     const svg = document.getElementById('connectingSvg');
-    if (!heroRight || !svg || window.innerWidth <= 992) return;
+    if (!heroRight || !svg) return;
 
     const rectHero = heroRight.getBoundingClientRect();
+    if (rectHero.width === 0 || rectHero.height === 0) return;
+
+    const isMobile = window.innerWidth <= 992;
 
     const pairs = [
         { dotId: 'dotEngine', cardId: 'cardEngine', pathId: 'pathEngine', animId: 'animEngine' },
@@ -2085,13 +2088,27 @@ function drawConnectingLines() {
             const x1 = (rectDot.left + rectDot.width / 2) - rectHero.left;
             const y1 = (rectDot.top + rectDot.height / 2) - rectHero.top;
 
-            const x2 = rectCard.left - rectHero.left;
-            const y2 = (rectCard.top + rectCard.height / 2) - rectHero.top;
+            let x2, y2, cx1, cy1, cx2, cy2;
 
-            const cx1 = x1 + (x2 - x1) * 0.45;
-            const cy1 = y1;
-            const cx2 = x1 + (x2 - x1) * 0.65;
-            const cy2 = y2;
+            if (isMobile) {
+                // Mobile: Card is below car in 2-column grid
+                x2 = (rectCard.left + rectCard.width * 0.35) - rectHero.left;
+                y2 = rectCard.top - rectHero.top;
+
+                cx1 = x1;
+                cy1 = y1 + (y2 - y1) * 0.45;
+                cx2 = x2;
+                cy2 = y1 + (y2 - y1) * 0.65;
+            } else {
+                // Desktop: Exact original calculation 100% untouched
+                x2 = rectCard.left - rectHero.left;
+                y2 = (rectCard.top + rectCard.height / 2) - rectHero.top;
+
+                cx1 = x1 + (x2 - x1) * 0.45;
+                cy1 = y1;
+                cx2 = x1 + (x2 - x1) * 0.65;
+                cy2 = y2;
+            }
 
             const dStr = `M ${x1.toFixed(1)},${y1.toFixed(1)} C ${cx1.toFixed(1)},${cy1.toFixed(1)} ${cx2.toFixed(1)},${cy2.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
 
@@ -2105,8 +2122,19 @@ function drawConnectingLines() {
 
 window.addEventListener('load', drawConnectingLines);
 window.addEventListener('resize', drawConnectingLines);
+window.addEventListener('orientationchange', () => setTimeout(drawConnectingLines, 200));
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(drawConnectingLines, 200);
+    setTimeout(drawConnectingLines, 150);
+    setTimeout(drawConnectingLines, 500);
+    setTimeout(drawConnectingLines, 1200);
+    const carImg = document.getElementById('heroCarImg');
+    if (carImg) {
+        if (carImg.complete) {
+            setTimeout(drawConnectingLines, 100);
+        } else {
+            carImg.addEventListener('load', () => setTimeout(drawConnectingLines, 100));
+        }
+    }
 });
 </script>
 <!-- PAY BALANCE MODAL OVERLAY -->

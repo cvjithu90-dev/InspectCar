@@ -467,21 +467,77 @@ body.modal-open .floating-whatsapp{display:none !important;}
    These breakpoints handle layout changes (1-col vs 2-col, etc.)
 ========================================================================== */
 
-/* Tablet & Mobile (<=992px) — Hide hotspot cards & connecting lines on mobile per user request */
+/* Tablet & Mobile (<=992px) — Mobile Hero with Connected Cards & Glowing Hotspots */
 @media (max-width:992px){
   .hero{
     display:flex;flex-direction:column;align-items:center;text-align:center;
     padding:110px 16px 50px;gap:24px;min-height:auto;
   }
   .hero-left{order:1;width:100%;max-width:680px;}
-  .hero-right{order:2;width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;}
-  .hero-car-wrapper{width:100%;}
-  .hotspots-column,
-  .connecting-lines-svg,
-  .car-target-dot{display:none !important;}
+  .hero-right{
+    order:2;width:100%;max-width:520px;
+    position:relative;display:flex;flex-direction:column;align-items:center;
+    gap:18px;margin-top:8px;
+  }
+  .hero-car-wrapper{
+    position:relative;width:100%;max-width:440px;margin:0 auto;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .shield-watermark{
+    display:block !important;position:absolute;inset:0;margin:auto;
+    width:80%;max-width:320px;opacity:.10;filter:brightness(0) invert(1);
+    z-index:1;pointer-events:none;
+  }
+  .hero-car{
+    width:100%;max-width:420px;height:auto;
+  }
+  .car-target-dot{
+    display:block !important;
+    width:8px;height:8px;
+    box-shadow:0 0 6px #38bdf8, 0 0 12px #8b5cf6;
+  }
+  .connecting-lines-svg{
+    display:block !important;
+    position:absolute;inset:0;width:100%;height:100%;
+    pointer-events:none;z-index:8;overflow:visible;
+  }
+  .hotspots-column{
+    display:grid !important;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;width:100%;max-width:460px;
+    margin:0 auto;z-index:10;
+    padding:4px 6px;box-sizing:border-box;
+  }
+  #cardEngine{order:1;}
+  #cardHistory{order:2;}
+  #cardObd{order:3;}
+  #cardPaint{order:4;}
+  #cardChassis{order:5;}
+  #cardScore{order:6;}
+
+  .glass-card-item{
+    padding:8px 10px;border-radius:12px;gap:8px;
+    background:rgba(22,22,38,0.85);border:1px solid rgba(139,92,246,0.25);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    box-shadow:0 4px 16px rgba(0,0,0,0.35);min-width:0;
+  }
+  .glass-card-item:hover{transform:none;}
+  .glass-card-item:active{transform:scale(0.97);}
+  .card-icon{
+    width:30px;height:30px;border-radius:8px;font-size:13px;flex-shrink:0;
+  }
+  .card-info{min-width:0;overflow:hidden;text-align:left;}
+  .card-info h4{
+    font-size:11.5px;font-weight:700;margin:0 0 2px 0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .card-info p{
+    font-size:9.5px;margin:0;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+
   .hero p{max-width:100%;margin:12px auto 24px;}
   .hero-buttons{justify-content:center;}
-  .shield-watermark{display:none;}
   .stats{grid-template-columns:repeat(2,1fr);gap:12px;margin-top:24px;}
   .services-grid,.why-grid,.testimonial-grid{grid-template-columns:repeat(2,1fr);}
   .package-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto;}
@@ -489,8 +545,12 @@ body.modal-open .floating-whatsapp{display:none !important;}
   .footer-bottom{flex-direction:column;gap:8px;text-align:center;}
 }
 
-@media (max-width:600px){
-  .hotspots-column{grid-template-columns:repeat(2,1fr);}
+@media (max-width:380px){
+  .hotspots-column{gap:6px;}
+  .glass-card-item{padding:6px 8px;gap:6px;}
+  .card-icon{width:26px;height:26px;font-size:11px;}
+  .card-info h4{font-size:10.5px;}
+  .card-info p{font-size:8.5px;}
 }
 
 /* Mobile 481px - 768px */
