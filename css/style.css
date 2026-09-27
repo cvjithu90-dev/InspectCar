@@ -713,12 +713,28 @@ body.modal-open .floating-whatsapp{display:none !important;}
   border-color: rgba(239, 68, 68, 0.7);
   box-shadow: 0 18px 40px rgba(239, 68, 68, 0.25), 0 0 20px rgba(139, 92, 246, 0.2);
 }
+.short-video-preview {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130%;
+  height: 130%;
+  transform: translate(-50%, -50%);
+  border: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  z-index: 1;
+}
 .short-thumb-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   transition: transform 0.4s ease;
+  z-index: 0;
 }
 .short-card:hover .short-thumb-img {
   transform: scale(1.05);
@@ -726,12 +742,14 @@ body.modal-open .floating-whatsapp{display:none !important;}
 .short-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(10, 10, 20, 0.95) 0%, rgba(10, 10, 20, 0.4) 45%, rgba(10, 10, 20, 0.05) 70%, rgba(10, 10, 20, 0.5) 100%);
+  background: linear-gradient(to top, rgba(10, 10, 20, 0.92) 0%, rgba(10, 10, 20, 0.25) 45%, rgba(10, 10, 20, 0.05) 70%, rgba(10, 10, 20, 0.4) 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 14px;
   box-sizing: border-box;
+  z-index: 2;
+  pointer-events: none;
 }
 .short-badge {
   align-self: flex-start;
