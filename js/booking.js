@@ -18,14 +18,21 @@ const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
 const OLA_MAPS_API_KEY = 'YOUR_OLA_MAPS_API_KEY';
 
 let supabaseClient = null;
-try {
-  if (typeof supabase !== 'undefined' && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
-    supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    window.supabaseClient = supabaseClient; // expose globally for other scripts
+function getSupabaseClient() {
+  if (supabaseClient) return supabaseClient;
+  try {
+    const s = window.supabase || (typeof supabase !== 'undefined' ? supabase : null);
+    if (s && typeof s.createClient === 'function' && SUPABASE_URL !== 'YOUR_SUPABASE_URL') {
+      supabaseClient = s.createClient(SUPABASE_URL, SUPABASE_KEY);
+      window.supabaseClient = supabaseClient; // expose globally for other scripts
+      return supabaseClient;
+    }
+  } catch(e) {
+    console.warn('Supabase initialization error:', e);
   }
-} catch(e) {
-  console.warn('Supabase not loaded, booking will use WhatsApp only.', e);
+  return null;
 }
+getSupabaseClient();
 
 // Auto-load Google Maps Places API SDK if API Key is set
 if (GOOGLE_MAPS_API_KEY && GOOGLE_MAPS_API_KEY !== 'YOUR_GOOGLE_MAPS_API_KEY') {
@@ -166,9 +173,10 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     initGmapsAutocomplete();
 
     // Subscribe to Supabase Realtime changes so canceled/deleted bookings free up slots instantly
-    if (supabaseClient) {
+    const client = getSupabaseClient();
+    if (client) {
       try {
-        supabaseClient
+        client
           .channel('public:bookings')
           .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, () => {
             if (state.selectedDate) {
@@ -205,9 +213,10 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     const field = pkgToDbField(state.packageId);
 
     try {
-      if (supabaseClient) {
+      const client = getSupabaseClient();
+      if (client) {
         // Fetch makes that have at least one model available for this package
-        const { data: models, error } = await supabaseClient
+        const { data: models, error } = await client
           .from('car_models')
           .select('make_id, car_makes(name)')
           .eq(field, true)
@@ -302,8 +311,9 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     const field = pkgToDbField(state.packageId);
 
     try {
-      if (supabaseClient && makeId) {
-        const { data, error } = await supabaseClient
+      const client = getSupabaseClient();
+      if (client && makeId) {
+        const { data, error } = await client
           .from('car_models')
           .select('id, name')
           .eq('make_id', makeId)
@@ -1173,9 +1183,10 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     // 'pending_balance' = token paid, balance due at site
     const BLOCKING_STATUSES = ['confirmed', 'assigned', 'inspection_done', 'report_ready', 'completed', 'pending_balance'];
 
-    if (supabaseClient) {
+    const client = getSupabaseClient();
+    if (client) {
       try {
-        const { data, error } = await supabaseClient
+        const { data, error } = await client
           .from('bookings')
           .select('inspection_time, status')
           .eq('inspection_date', dateStr)
@@ -1194,7 +1205,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
 
       // Also check admin-blocked slots
       try {
-        const { data: blockedData } = await supabaseClient
+        const { data: blockedData } = await client
           .from('blocked_slots')
           .select('block_time')
           .eq('block_date', dateStr);
@@ -1532,9 +1543,10 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     `;
 
     // ── Save to Supabase IN BACKGROUND — customer already sees confirmation ───
-    if (supabaseClient) {
+    const client = getSupabaseClient();
+    if (client) {
       // Main booking insert
-      supabaseClient
+      client
         .from('bookings')
         .insert({
           booking_ref:     state.bookingRef,
@@ -1563,10 +1575,14 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
           status:          'confirmed',
           source:          'website'
         })
-        .then(({ error }) => {
-          if (error) console.error('Supabase booking insert error:', error);
+        .then(({ data, error }) => {
+          if (error) {
+            console.error('CRITICAL: Supabase booking insert error:', error);
+          } else {
+            console.log('✅ Booking successfully saved to Supabase:', state.bookingRef);
+          }
         })
-        .catch(err => console.warn('Supabase save failed, WhatsApp still works:', err));
+        .catch(err => console.error('CRITICAL: Supabase save failed:', err));
 
       // Consent log — fire-and-forget, never block UI
       try {
@@ -1582,7 +1598,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
           ip_hint:               null,
           user_agent:            navigator.userAgent.substring(0, 200)
         };
-        supabaseClient
+        client
           .from('consent_logs')
           .insert(consentPayload)
           .then(({ error: consentErr }) => {
@@ -1592,6 +1608,8 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       } catch (cErr) {
         console.warn('Consent log skipped:', cErr);
       }
+    } else {
+      console.error('CRITICAL: Supabase client unavailable at finalizeBooking for ref:', state.bookingRef);
     }
 
     // 1. AUTOMATED EMAIL NOTIFICATION to info@inspectcar.in & Customer
