@@ -1674,6 +1674,10 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
                           <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Package:</td>
                           <td style="padding: 6px 0; color: #A78BFA; font-size: 14px; font-weight: 800; text-align: right;">${pkg.name}</td>
                         </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Package Total:</td>
+                          <td style="padding: 6px 0; color: #F1F5F9; font-size: 14px; font-weight: 700; text-align: right;">₹${totalPrice.toLocaleString('en-IN')}</td>
+                        </tr>
                       </table>
                     </td>
                   </tr>
@@ -1722,16 +1726,24 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
                     <td style="padding: 14px 18px;">
                       <table width="100%" border="0" cellspacing="0" cellpadding="0">
                         <tr>
-                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Status:</td>
-                          <td style="padding: 6px 0; color: #34D399; font-size: 14px; font-weight: 700; text-align: right;">${paymentInfo.paymentStatus === 'token_paid' ? '₹199 Advance Token Paid (Online)' : '100% Paid Online'}</td>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Package Total:</td>
+                          <td style="padding: 6px 0; color: #F1F5F9; font-size: 14px; font-weight: 700; text-align: right;">₹${totalPrice.toLocaleString('en-IN')}</td>
                         </tr>
                         <tr>
-                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Advance Paid:</td>
-                          <td style="padding: 6px 0; color: #F1F5F9; font-size: 14px; font-weight: 700; text-align: right;">₹${paymentInfo.chargedAmount}</td>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Payment Status:</td>
+                          <td style="padding: 6px 0; color: #34D399; font-size: 14px; font-weight: 700; text-align: right;">${isToken ? '₹199 Advance Token Paid (Online)' : '100% Paid Online'}</td>
                         </tr>
                         <tr>
-                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Balance Payable at Site:</td>
-                          <td style="padding: 6px 0; color: ${isToken ? '#FBBF24' : '#34D399'}; font-size: 16px; font-weight: 800; text-align: right;">₹${paymentInfo.balanceAmount}</td>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Advance Paid Online:</td>
+                          <td style="padding: 6px 0; color: #34D399; font-weight: 700; text-align: right;">₹${paymentInfo.chargedAmount}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 13px;">Payment Reference:</td>
+                          <td style="padding: 6px 0; color: #94A3B8; font-family: monospace; font-size: 12.5px; text-align: right;">${paymentInfo.paymentId}</td>
+                        </tr>
+                        <tr style="border-top: 1px solid rgba(255, 255, 255, 0.08);">
+                          <td style="padding: 10px 0 4px; color: #FBBF24; font-size: 15px; font-weight: 700;">Balance Due at Site:</td>
+                          <td style="padding: 10px 0 4px; color: #FBBF24; font-size: 18px; font-weight: 800; text-align: right;">₹${(totalPrice - (parseInt(paymentInfo.chargedAmount, 10) || 0)).toLocaleString('en-IN')}</td>
                         </tr>
                       </table>
                     </td>
