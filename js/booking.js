@@ -1615,55 +1615,164 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
     // 1. AUTOMATED EMAIL NOTIFICATION to info@inspectcar.in & Customer via Resend (with FormSubmit backup)
     try {
       const emailHtml = `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0E0E1C; color: #F4F4F6; border-radius: 16px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.25);">
-          <div style="background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 24px; text-align: center;">
-            <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">🚗 New Booking Confirmed!</h1>
-            <p style="margin: 6px 0 0; color: #e0e7ff; font-size: 14px;">Booking Reference: <strong>${state.bookingRef}</strong></p>
-          </div>
-          
-          <div style="padding: 24px;">
-            <div style="background: #161625; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
-              <h3 style="margin: 0 0 12px; font-size: 14px; text-transform: uppercase; color: #A78BFA; letter-spacing: 0.5px;">Customer & Vehicle</h3>
-              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Customer:</td><td style="padding: 6px 0; color: #fff; font-weight: 600; text-align: right;">${state.customerName}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Phone:</td><td style="padding: 6px 0; color: #fff; font-weight: 600; text-align: right;"><a href="tel:${state.customerPhone}" style="color: #60A5FA; text-decoration: none;">${state.customerPhone}</a></td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Email:</td><td style="padding: 6px 0; color: #fff; text-align: right;">${state.customerEmail || 'Not Provided'}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Vehicle:</td><td style="padding: 6px 0; color: #34D399; font-weight: 700; text-align: right;">${state.brand} ${state.model} (${state.year} ${state.fuel})</td></tr>
-                ${state.registration ? `<tr><td style="padding: 6px 0; color: #9CA3AF;">Reg No:</td><td style="padding: 6px 0; color: #fff; text-align: right;">${state.registration}</td></tr>` : ''}
-              </table>
-            </div>
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed - InspectCar</title>
+  </head>
+  <body style="margin: 0; padding: 0; background-color: #080811; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #080811; padding: 30px 10px;">
+      <tr>
+        <td align="center">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 620px; background-color: #12121F; border-radius: 20px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.25); box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+            
+            <!-- HEADER -->
+            <tr>
+              <td style="background: linear-gradient(135deg, #4338CA 0%, #6366F1 50%, #8B5CF6 100%); padding: 36px 30px; text-align: center;">
+                <div style="display: inline-block; padding: 8px 16px; background: rgba(255, 255, 255, 0.15); border-radius: 50px; margin-bottom: 14px;">
+                  <span style="font-size: 13px; font-weight: 800; color: #FFFFFF; letter-spacing: 1px; text-transform: uppercase;">🚗 InspectCar · Bangalore</span>
+                </div>
+                <h1 style="margin: 0; color: #FFFFFF; font-size: 25px; font-weight: 800; letter-spacing: -0.5px;">Inspection Confirmed!</h1>
+                <p style="margin: 8px 0 0; color: #E0E7FF; font-size: 14.5px;">Your certified vehicle inspection has been scheduled</p>
+                <div style="margin-top: 16px; display: inline-block; background: #0E0E1C; padding: 8px 22px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);">
+                  <span style="font-size: 12px; color: #A78BFA; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Booking Reference: </span>
+                  <span style="font-family: monospace; font-size: 16px; font-weight: 800; color: #FFFFFF; letter-spacing: 1.5px;">${state.bookingRef}</span>
+                </div>
+              </td>
+            </tr>
 
-            <div style="background: #161625; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
-              <h3 style="margin: 0 0 12px; font-size: 14px; text-transform: uppercase; color: #A78BFA; letter-spacing: 0.5px;">Inspection Schedule</h3>
-              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Package:</td><td style="padding: 6px 0; color: #fff; font-weight: 700; text-align: right;">${pkg.name}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Date:</td><td style="padding: 6px 0; color: #FBBF24; font-weight: 700; text-align: right;">${dateStr}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Time Slot:</td><td style="padding: 6px 0; color: #FBBF24; font-weight: 700; text-align: right;">${state.selectedTime}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Location Type:</td><td style="padding: 6px 0; color: #fff; text-align: right;">${state.locationType}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF; vertical-align: top;">Address:</td><td style="padding: 6px 0; color: #fff; text-align: right;">${state.address}, ${state.area}, Bangalore</td></tr>
-                ${state.gmapsLink ? `<tr><td style="padding: 6px 0; color: #9CA3AF;">Maps:</td><td style="padding: 6px 0; text-align: right;"><a href="${state.gmapsLink}" style="color: #60A5FA; font-weight: 600;">View on Google Maps &rarr;</a></td></tr>` : ''}
-              </table>
-            </div>
+            <!-- CONTENT BODY -->
+            <tr>
+              <td style="padding: 30px 24px;">
+                
+                <!-- GREETING -->
+                <p style="margin: 0 0 16px; color: #E2E8F0; font-size: 16px; line-height: 1.6;">
+                  Hi <strong>${state.customerName}</strong>,
+                </p>
+                <p style="margin: 0 0 22px; color: #94A3B8; font-size: 14.5px; line-height: 1.6;">
+                  Thank you for booking with <strong>InspectCar</strong>! Our certified technician will arrive on time with 300+ point diagnostic equipment, paint depth gauge, and OBD scanner to perform your comprehensive inspection.
+                </p>
 
-            <div style="background: #161625; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px;">
-              <h3 style="margin: 0 0 12px; font-size: 14px; text-transform: uppercase; color: #A78BFA; letter-spacing: 0.5px;">Payment Details</h3>
-              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Payment Status:</td><td style="padding: 6px 0; color: #34D399; font-weight: 700; text-align: right;">${paymentInfo.paymentStatus === 'token_paid' ? '₹199 Advance Paid (Token)' : '100% Paid Online'}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Razorpay Payment ID:</td><td style="padding: 6px 0; color: #9CA3AF; font-family: monospace; text-align: right;">${paymentInfo.paymentId}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Advance Paid:</td><td style="padding: 6px 0; color: #fff; font-weight: 700; text-align: right;">₹${paymentInfo.chargedAmount}</td></tr>
-                <tr><td style="padding: 6px 0; color: #9CA3AF;">Balance Due at Site:</td><td style="padding: 6px 0; color: ${isToken ? '#F87171' : '#34D399'}; font-weight: 800; text-align: right;">₹${paymentInfo.balanceAmount}</td></tr>
-              </table>
-            </div>
+                <!-- SECTION 1: VEHICLE & PACKAGE -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #171728; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 16px; overflow: hidden;">
+                  <tr>
+                    <td style="padding: 14px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); background: rgba(99, 102, 241, 0.06);">
+                      <span style="font-size: 12px; font-weight: 800; color: #A78BFA; text-transform: uppercase; letter-spacing: 1px;">🚘 Vehicle & Package</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 14px 18px;">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Vehicle:</td>
+                          <td style="padding: 6px 0; color: #34D399; font-size: 14px; font-weight: 800; text-align: right;">${state.brand} ${state.model} (${state.year} ${state.fuel})</td>
+                        </tr>
+                        ${state.registration ? `<tr><td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Registration:</td><td style="padding: 6px 0; color: #F1F5F9; font-size: 14px; font-weight: 700; text-align: right;">${state.registration}</td></tr>` : ''}
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Package:</td>
+                          <td style="padding: 6px 0; color: #A78BFA; font-size: 14px; font-weight: 800; text-align: right;">${pkg.name}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
 
-            <div style="text-align: center; margin-top: 24px;">
-              <a href="https://admin.inspectcar.in/#/bookings" style="display: inline-block; background: linear-gradient(135deg, #6366F1, #8B5CF6); color: #fff; padding: 12px 28px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 14px;">Open Admin Dashboard &rarr;</a>
-            </div>
-          </div>
-          
-          <div style="background: #0A0A14; padding: 16px; text-align: center; font-size: 12px; color: #6B7280; border-top: 1px solid rgba(255, 255, 255, 0.06);">
-            InspectCar Vehicle Inspection Services · Bangalore, Karnataka
-          </div>
-        </div>
+                <!-- SECTION 2: SCHEDULE & LOCATION -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #171728; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 16px; overflow: hidden;">
+                  <tr>
+                    <td style="padding: 14px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); background: rgba(99, 102, 241, 0.06);">
+                      <span style="font-size: 12px; font-weight: 800; color: #A78BFA; text-transform: uppercase; letter-spacing: 1px;">📅 Schedule & Doorstep Location</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 14px 18px;">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Inspection Date:</td>
+                          <td style="padding: 6px 0; color: #FBBF24; font-size: 14px; font-weight: 800; text-align: right;">${dateStr}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Time Slot:</td>
+                          <td style="padding: 6px 0; color: #FBBF24; font-size: 14px; font-weight: 800; text-align: right;">${state.selectedTime}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Location Type:</td>
+                          <td style="padding: 6px 0; color: #F1F5F9; font-size: 14px; font-weight: 600; text-align: right;">${state.locationType}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px; vertical-align: top;">Address:</td>
+                          <td style="padding: 6px 0; color: #F1F5F9; font-size: 14px; text-align: right;">${state.address}, ${state.area}, Bangalore</td>
+                        </tr>
+                        ${state.gmapsLink ? `<tr><td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Google Maps:</td><td style="padding: 6px 0; text-align: right;"><a href="${state.gmapsLink}" style="color: #60A5FA; font-weight: 600; text-decoration: underline;">View Location &rarr;</a></td></tr>` : ''}
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- SECTION 3: PAYMENT BREAKDOWN -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #171728; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.08); margin-bottom: 22px; overflow: hidden;">
+                  <tr>
+                    <td style="padding: 14px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); background: rgba(99, 102, 241, 0.06);">
+                      <span style="font-size: 12px; font-weight: 800; color: #A78BFA; text-transform: uppercase; letter-spacing: 1px;">💳 Payment Breakdown</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 14px 18px;">
+                      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Status:</td>
+                          <td style="padding: 6px 0; color: #34D399; font-size: 14px; font-weight: 700; text-align: right;">${paymentInfo.paymentStatus === 'token_paid' ? '₹199 Advance Token Paid (Online)' : '100% Paid Online'}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Advance Paid:</td>
+                          <td style="padding: 6px 0; color: #F1F5F9; font-size: 14px; font-weight: 700; text-align: right;">₹${paymentInfo.chargedAmount}</td>
+                        </tr>
+                        <tr>
+                          <td style="padding: 6px 0; color: #94A3B8; font-size: 14px;">Balance Payable at Site:</td>
+                          <td style="padding: 6px 0; color: ${isToken ? '#FBBF24' : '#34D399'}; font-size: 16px; font-weight: 800; text-align: right;">₹${paymentInfo.balanceAmount}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- ACTION BUTTONS -->
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="center">
+                      <a href="https://wa.me/919900368006?text=Hi%20InspectCar,%20I%20have%20a%20query%20about%20my%20booking%20${state.bookingRef}" style="display: inline-block; background: #25D366; color: #FFFFFF; font-weight: 700; font-size: 14px; padding: 12px 24px; border-radius: 50px; text-decoration: none; margin: 4px;">
+                        💬 Chat on WhatsApp Support
+                      </a>
+                      <a href="tel:+919900368006" style="display: inline-block; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #FFFFFF; font-weight: 700; font-size: 14px; padding: 12px 20px; border-radius: 50px; text-decoration: none; margin: 4px;">
+                        📞 Call +91 99003 68006
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+              </td>
+            </tr>
+
+            <!-- FOOTER -->
+            <tr>
+              <td style="background-color: #0A0A14; padding: 20px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+                <p style="margin: 0 0 6px; color: #64748B; font-size: 12.5px;">
+                  InspectCar · Independent Pre-Purchase & PDI Vehicle Inspections
+                </p>
+                <p style="margin: 0; color: #475569; font-size: 11.5px;">
+                  Bangalore, Karnataka · <a href="https://inspectcar.in" style="color: #6366F1; text-decoration: none;">www.inspectcar.in</a>
+                </p>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+  </html>
       `;
 
       const toRecipients = ['info@inspectcar.in'];
