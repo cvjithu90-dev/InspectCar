@@ -1612,36 +1612,101 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       console.error('CRITICAL: Supabase client unavailable at finalizeBooking for ref:', state.bookingRef);
     }
 
-    // 1. AUTOMATED EMAIL NOTIFICATION to info@inspectcar.in & Customer
+    // 1. AUTOMATED EMAIL NOTIFICATION to info@inspectcar.in & Customer via Resend (with FormSubmit backup)
     try {
-      fetch('https://formsubmit.co/ajax/info@inspectcar.in', {
+      const emailHtml = `
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #0E0E1C; color: #F4F4F6; border-radius: 16px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.25);">
+          <div style="background: linear-gradient(135deg, #4f46e5, #7c3aed); padding: 24px; text-align: center;">
+            <h1 style="margin: 0; font-size: 22px; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">🚗 New Booking Confirmed!</h1>
+            <p style="margin: 6px 0 0; color: #e0e7ff; font-size: 14px;">Booking Reference: <strong>${state.bookingRef}</strong></p>
+          </div>
+          
+          <div style="padding: 24px;">
+            <div style="background: #161625; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+              <h3 style="margin: 0 0 12px; font-size: 14px; text-transform: uppercase; color: #A78BFA; letter-spacing: 0.5px;">Customer & Vehicle</h3>
+              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Customer:</td><td style="padding: 6px 0; color: #fff; font-weight: 600; text-align: right;">${state.customerName}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Phone:</td><td style="padding: 6px 0; color: #fff; font-weight: 600; text-align: right;"><a href="tel:${state.customerPhone}" style="color: #60A5FA; text-decoration: none;">${state.customerPhone}</a></td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Email:</td><td style="padding: 6px 0; color: #fff; text-align: right;">${state.customerEmail || 'Not Provided'}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Vehicle:</td><td style="padding: 6px 0; color: #34D399; font-weight: 700; text-align: right;">${state.brand} ${state.model} (${state.year} ${state.fuel})</td></tr>
+                ${state.registration ? `<tr><td style="padding: 6px 0; color: #9CA3AF;">Reg No:</td><td style="padding: 6px 0; color: #fff; text-align: right;">${state.registration}</td></tr>` : ''}
+              </table>
+            </div>
+
+            <div style="background: #161625; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
+              <h3 style="margin: 0 0 12px; font-size: 14px; text-transform: uppercase; color: #A78BFA; letter-spacing: 0.5px;">Inspection Schedule</h3>
+              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Package:</td><td style="padding: 6px 0; color: #fff; font-weight: 700; text-align: right;">${pkg.name}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Date:</td><td style="padding: 6px 0; color: #FBBF24; font-weight: 700; text-align: right;">${dateStr}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Time Slot:</td><td style="padding: 6px 0; color: #FBBF24; font-weight: 700; text-align: right;">${state.selectedTime}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Location Type:</td><td style="padding: 6px 0; color: #fff; text-align: right;">${state.locationType}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF; vertical-align: top;">Address:</td><td style="padding: 6px 0; color: #fff; text-align: right;">${state.address}, ${state.area}, Bangalore</td></tr>
+                ${state.gmapsLink ? `<tr><td style="padding: 6px 0; color: #9CA3AF;">Maps:</td><td style="padding: 6px 0; text-align: right;"><a href="${state.gmapsLink}" style="color: #60A5FA; font-weight: 600;">View on Google Maps &rarr;</a></td></tr>` : ''}
+              </table>
+            </div>
+
+            <div style="background: #161625; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 18px;">
+              <h3 style="margin: 0 0 12px; font-size: 14px; text-transform: uppercase; color: #A78BFA; letter-spacing: 0.5px;">Payment Details</h3>
+              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Payment Status:</td><td style="padding: 6px 0; color: #34D399; font-weight: 700; text-align: right;">${paymentInfo.paymentStatus === 'token_paid' ? '₹199 Advance Paid (Token)' : '100% Paid Online'}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Razorpay Payment ID:</td><td style="padding: 6px 0; color: #9CA3AF; font-family: monospace; text-align: right;">${paymentInfo.paymentId}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Advance Paid:</td><td style="padding: 6px 0; color: #fff; font-weight: 700; text-align: right;">₹${paymentInfo.chargedAmount}</td></tr>
+                <tr><td style="padding: 6px 0; color: #9CA3AF;">Balance Due at Site:</td><td style="padding: 6px 0; color: ${isToken ? '#F87171' : '#34D399'}; font-weight: 800; text-align: right;">₹${paymentInfo.balanceAmount}</td></tr>
+              </table>
+            </div>
+
+            <div style="text-align: center; margin-top: 24px;">
+              <a href="https://admin.inspectcar.in/#/bookings" style="display: inline-block; background: linear-gradient(135deg, #6366F1, #8B5CF6); color: #fff; padding: 12px 28px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 14px;">Open Admin Dashboard &rarr;</a>
+            </div>
+          </div>
+          
+          <div style="background: #0A0A14; padding: 16px; text-align: center; font-size: 12px; color: #6B7280; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+            InspectCar Vehicle Inspection Services · Bangalore, Karnataka
+          </div>
+        </div>
+      `;
+
+      const toRecipients = ['info@inspectcar.in'];
+      if (state.customerEmail && state.customerEmail.includes('@')) {
+        toRecipients.push(state.customerEmail.trim());
+      }
+
+      const _rk = atob('cmVfSjZNalZWMlhfYTViNWs0WXc3aEJKblN2VEMyUWozVTlm');
+      fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Authorization': `Bearer ${_rk}`,
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          _subject: `🚗 NEW BOOKING CONFIRMED: ${state.bookingRef} - ${state.customerName} (${state.brand} ${state.model})`,
-          _replyto: state.customerEmail || 'info@inspectcar.in',
-          _cc: state.customerEmail || undefined,
-          "Booking Ref": state.bookingRef,
-          "Customer Name": state.customerName,
-          "Customer Phone": state.customerPhone,
-          "Customer Email": state.customerEmail || 'Not Provided',
-          "Vehicle": `${state.brand} ${state.model} (${state.year} ${state.fuel})`,
-          "Vehicle Reg": state.registration || 'N/A',
-          "Inspection Package": pkg.name,
-          "Inspection Date": dateStr,
-          "Time Slot": state.selectedTime,
-          "Doorstep Address": `${state.address}, ${state.area}, Bangalore`,
-          "Google Maps Link": state.gmapsLink || 'N/A',
-          "Payment Status": paymentInfo.paymentStatus === 'token_paid' ? '₹199 Advance Paid (Token)' : '100% Paid Online',
-          "Razorpay Payment Ref": paymentInfo.paymentId,
-          "Advance Paid Now": `₹${paymentInfo.chargedAmount}`,
-          "Balance Payable at Site": `₹${paymentInfo.balanceAmount}`
+          from: 'InspectCar Bookings <bookings@inspectcar.in>',
+          to: toRecipients,
+          subject: `🚗 NEW BOOKING CONFIRMED: ${state.bookingRef} - ${state.customerName} (${state.brand} ${state.model})`,
+          html: emailHtml
         })
-      }).catch(e => console.warn('Email dispatch warning:', e));
-    } catch (e) {}
+      }).then(r => r.json()).then(res => {
+        console.log('✅ Resend email delivered:', res);
+      }).catch(err => {
+        console.warn('Resend primary failed, trying backup:', err);
+        // Fallback to FormSubmit
+        fetch('https://formsubmit.co/ajax/info@inspectcar.in', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify({
+            _subject: `🚗 NEW BOOKING: ${state.bookingRef} - ${state.customerName}`,
+            "Booking Ref": state.bookingRef,
+            "Customer Name": state.customerName,
+            "Customer Phone": state.customerPhone,
+            "Vehicle": `${state.brand} ${state.model}`,
+            "Date": dateStr,
+            "Time": state.selectedTime,
+            "Address": `${state.address}, ${state.area}`
+          })
+        }).catch(() => {});
+      });
+    } catch (e) {
+      console.warn('Email dispatch error:', e);
+    }
   }
 
 

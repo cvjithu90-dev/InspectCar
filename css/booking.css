@@ -8,9 +8,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh; /* Mobile Dynamic Viewport Height */
+  right: 0; /* Use right:0 instead of width:100vw — avoids scrollbar-width overflow on Safari */
+  bottom: 0;
+  width: 100%; /* Safer than 100vw on iOS Safari */
+  height: 100%;
   background: rgba(6, 6, 10, 0.96);
   z-index: 100000;
   display: flex;
@@ -22,6 +23,7 @@
   padding: 16px;
   transform: translateZ(0);
   box-sizing: border-box;
+  overflow: hidden; /* Prevent any child from expanding overlay */
 }
 
 .booking-modal-overlay.active {
@@ -32,6 +34,7 @@
 /* Modal Container */
 .booking-modal-container {
   width: min(860px, 100%);
+  max-width: 100%; /* Critical for Safari — prevents overflow past viewport */
   max-height: 90vh;
   max-height: 90dvh;
   background: #121219;
@@ -44,6 +47,7 @@
   transform: scale(0.96);
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
+  box-sizing: border-box; /* Ensure padding doesn't overflow */
 }
 
 .booking-modal-overlay.active .booking-modal-container {
@@ -978,4 +982,44 @@ body.modal-open .floating-whatsapp {
     padding: 10px 20px;
     font-size: 13px;
   }
+}
+
+/* Universal Date & Time Picker Styling (Pure White Icon & Dark Popover Dialog) */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+input[type="month"] {
+  color-scheme: dark !important;
+  color: #FFFFFF !important;
+  cursor: pointer;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator {
+  filter: brightness(0) invert(1) !important;
+  cursor: pointer;
+  opacity: 0.95 !important;
+  padding: 3px;
+  border-radius: 4px;
+  transition: opacity 0.15s, transform 0.15s, filter 0.15s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover,
+input[type="month"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1 !important;
+  transform: scale(1.15);
+  filter: brightness(0) invert(1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.9)) !important;
+}
+
+input[type="date"]::-webkit-datetime-edit,
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #FFFFFF !important;
 }
