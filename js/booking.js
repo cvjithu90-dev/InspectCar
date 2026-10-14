@@ -1612,7 +1612,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       console.error('CRITICAL: Supabase client unavailable at finalizeBooking for ref:', state.bookingRef);
     }
 
-    // 1. AUTOMATED EMAIL NOTIFICATION to info@inspectcar.in & Customer via Resend (with FormSubmit backup)
+    // 1. AUTOMATED EMAIL NOTIFICATION to info@inspectcar.in & Customer via Resend
     try {
       const emailHtml = `
   <!DOCTYPE html>
@@ -1808,22 +1808,7 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
       }).then(r => r.json()).then(res => {
         console.log('✅ Resend email delivered:', res);
       }).catch(err => {
-        console.warn('Resend primary failed, trying backup:', err);
-        // Fallback to FormSubmit
-        fetch('https://formsubmit.co/ajax/info@inspectcar.in', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({
-            _subject: `🚗 NEW BOOKING: ${state.bookingRef} - ${state.customerName}`,
-            "Booking Ref": state.bookingRef,
-            "Customer Name": state.customerName,
-            "Customer Phone": state.customerPhone,
-            "Vehicle": `${state.brand} ${state.model}`,
-            "Date": dateStr,
-            "Time": state.selectedTime,
-            "Address": `${state.address}, ${state.area}`
-          })
-        }).catch(() => {});
+        console.warn('Resend email dispatch notice:', err);
       });
     } catch (e) {
       console.warn('Email dispatch error:', e);
