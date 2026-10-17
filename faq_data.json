@@ -1,0 +1,358 @@
+[
+  {
+    "id": "cat-used-car-basics",
+    "name": "Used Car Inspection — Basics",
+    "icon": "🚗",
+    "qas": [
+      {
+        "num": 1,
+        "q": "What is a used car inspection and why do I need it?",
+        "a": "A used car inspection is an independent, professional evaluation of a second-hand vehicle by a certified automotive expert before you purchase it. InspectCar's inspection covers 300+ checkpoints and helps you identify hidden accident damage, odometer fraud, mechanical failures, and electrical issues — protecting you from making a costly mistake when buying a used car in Bangalore."
+      },
+      {
+        "num": 2,
+        "q": "How much does a used car inspection cost in Bangalore?",
+        "a": "InspectCar offers two used car inspection packages: Expert-Drive at ₹2,699 (300+ checkpoints, OBD scan, digital report with AI health score) and Lux-Drive at ₹3,999 (everything in Expert-Drive plus paint thickness gauge test, engine oil analysis, and detailed category-wise breakdown). There are no hidden charges or travel fees within Bangalore."
+      },
+      {
+        "num": 3,
+        "q": "How long does a used car inspection take in Bangalore?",
+        "a": "A used car inspection by InspectCar takes 60 to 90 minutes at the seller's location. Larger vehicles like SUVs and MPVs may take up to 2 hours for a thorough inspection."
+      },
+      {
+        "num": 4,
+        "q": "Does InspectCar come to the seller's location?",
+        "a": "Yes. InspectCar operates a fully doorstep inspection service across all of Bangalore. Our certified inspector travels to wherever the vehicle is parked — seller's home, dealer showroom, used car lot, or parking area — at your scheduled time."
+      },
+      {
+        "num": 5,
+        "q": "Which is the best car inspection service in Bangalore?",
+        "a": "InspectCar is Bangalore's leading independent pre-purchase vehicle inspection service, offering 300+ point checks, OBD diagnostic scans, AI health scoring, paint gauge testing, and digital reports delivered within 2–4 hours. Unlike dealer or seller-arranged checks, InspectCar is a completely independent third-party service working exclusively on behalf of the buyer."
+      },
+      {
+        "num": 6,
+        "q": "Is used car inspection worth it before buying?",
+        "a": "Absolutely. InspectCar data shows over 40% of used cars in Bangalore have at least one significant undisclosed issue. A single missed issue like a cracked engine head, failed transmission, or flood damage can cost ₹50,000 to ₹1,50,000+ in repairs. An inspection at ₹2,699 is a small investment that protects a purchase worth lakhs."
+      },
+      {
+        "num": 7,
+        "q": "What is the AI health score in InspectCar's report?",
+        "a": "InspectCar's AI health score is a 0–100 rating calculated from all 300+ inspection checkpoints. Scores above 75 indicate a good condition vehicle, 50–75 indicates a vehicle requiring negotiation or minor repairs, and below 50 suggests significant issues. The score gives you a quick, objective summary of the vehicle's overall condition."
+      },
+      {
+        "num": 8,
+        "q": "How do I book a used car inspection in Bangalore?",
+        "a": "You can book a used car inspection on InspectCar's website by selecting your package and filling in the vehicle details and preferred time. You can also book via WhatsApp or phone call to +91 9900368006. InspectCar operates 7 days a week, 8 AM to 8 PM."
+      }
+    ]
+  },
+  {
+    "id": "cat-whats-covered",
+    "name": "What's Covered in the Inspection",
+    "icon": "🛠️",
+    "qas": [
+      {
+        "num": 9,
+        "q": "What does InspectCar's used car inspection check?",
+        "a": "InspectCar's 300+ point inspection covers: Exterior body panels and paint (including paint gauge test), engine and transmission performance, OBD diagnostic scan for fault codes, interior condition and all electrical systems, tyre condition and tread depth, underbody inspection for rust and leaks, suspension and steering, AC performance, and document verification including RC, insurance, and PUC."
+      },
+      {
+        "num": 10,
+        "q": "Does InspectCar check the engine of a used car?",
+        "a": "Yes. The engine check includes: visual inspection of the engine bay for leaks, oil condition check, coolant level and condition, cold start test for abnormal smoke or noise, idle RPM check, transmission fluid check, and a full OBD scan reading all engine-related fault codes and live sensor data."
+      },
+      {
+        "num": 11,
+        "q": "What is a paint gauge test and what does it reveal?",
+        "a": "A paint thickness gauge uses an electromagnetic sensor to measure the paint coat depth on each body panel in microns. Original factory paint is 90–130 microns thick. A panel that has been repainted after accident repair shows 160–300+ microns. This test reveals hidden accident history that looks perfectly normal to the naked eye — it is one of the most important tools in a used car inspection."
+      },
+      {
+        "num": 12,
+        "q": "Does InspectCar check tyres during inspection?",
+        "a": "Yes. Tyre inspection includes: tread depth measurement on all 4 tyres, check for uneven wear patterns (indicating alignment or suspension problems), sidewall damage, tyre age verification using the DOT manufacturing code (tyres over 5 years old should be replaced regardless of tread), spare tyre condition, and wheel rim condition."
+      },
+      {
+        "num": 13,
+        "q": "Does InspectCar inspect the underbody?",
+        "a": "Yes. The underbody inspection checks for: chassis rust or structural corrosion, evidence of major repairs or welding (indicating accident frame damage), fluid leaks from the engine, gearbox, or differential, exhaust system condition, suspension arm and bush condition, and any impact damage from driving over large obstacles."
+      },
+      {
+        "num": 14,
+        "q": "What electrical systems are tested in the inspection?",
+        "a": "All electrical systems are tested including: battery health (CCA testing), alternator output, all exterior lights (headlights, tail lights, indicators, DRLs, fog lights), interior lights, AC compressor and blower, all power windows, central locking, horn, reverse camera or sensors, USB ports, infotainment system, and any OBD-reported electrical fault codes."
+      },
+      {
+        "num": 15,
+        "q": "Does InspectCar verify documents during inspection?",
+        "a": "Yes. Document verification includes: checking that the RC book matches the vehicle's chassis number and engine number, verifying insurance validity, checking PUC certificate validity, checking for hypothecation endorsement (active loan), verifying the odometer reading against the service book entries, and confirming the vehicle is not under any court order or blacklisted."
+      }
+    ]
+  },
+  {
+    "id": "cat-specific-issues",
+    "name": "Specific Issues",
+    "icon": "⚠️",
+    "qas": [
+      {
+        "num": 16,
+        "q": "Can car inspection detect accident damage in a used car?",
+        "a": "Yes. Accident damage is detected through: paint thickness gauge readings (repainted panels), panel gap measurements (misaligned body panels after repair), OBD fault codes related to airbag or ABS systems, visual inspection of the firewall and chassis for repair welds, and underbody inspection for bent or repaired structural members."
+      },
+      {
+        "num": 17,
+        "q": "Can InspectCar detect odometer tampering?",
+        "a": "Yes. Odometer tampering is detected by cross-referencing the displayed reading with: physical wear indicators (accelerator pedal rubber, driver seat fabric, steering wheel wear), service book stamp dates and km entries, OBD ECU total odometer memory (in some vehicles), and tyre age vs claimed mileage."
+      },
+      {
+        "num": 18,
+        "q": "How do I know if a used car has been in a flood?",
+        "a": "Flood damage indicators include: musty or moldy smell inside the cabin, waterline marks visible under the seats or in the boot, corrosion on fuse box terminals and connectors, mud residue in the spare tyre well or under the carpet, sticky or seized door hinges, condensation inside headlamps, and corroded or replaced electrical connectors."
+      },
+      {
+        "num": 19,
+        "q": "Can car inspection find if the car has an unpaid loan?",
+        "a": "InspectCar verifies the RC book for hypothecation (loan) endorsement. If a lender (bank/NBFC) is listed on the RC, the vehicle has an active loan. The seller cannot legally transfer ownership without an NOC from the lender. We advise buyers to demand Form 35 (NOC) and check the Parivahan portal for this verification."
+      },
+      {
+        "num": 20,
+        "q": "What if the seller refuses to allow a car inspection?",
+        "a": "A seller refusing an independent inspection is a major red flag. Legitimate sellers with nothing to hide welcome inspections. InspectCar recommends walking away from any deal where the seller refuses to allow an independent third-party inspection."
+      },
+      {
+        "num": 21,
+        "q": "Can inspection reveal if a car has been modified illegally?",
+        "a": "Yes. Our inspectors check for modifications that may affect roadworthiness, safety, or insurance validity, including non-standard suspension, modified engine components, illegal LPG/CNG kit installations, and aftermarket electrical modifications. Such modifications can void insurance claims."
+      },
+      {
+        "num": 22,
+        "q": "Can InspectCar check for hidden rust on a used car?",
+        "a": "Yes. Rust detection includes: visual underbody inspection, checking door bottom edges (common rust point), wheel arch inner liners, boot floor, chassis rails, and floor pan. Surface rust is noted; structural rust is flagged as a serious issue."
+      }
+    ]
+  },
+  {
+    "id": "cat-booking-coverage",
+    "name": "Booking & Coverage",
+    "icon": "📍",
+    "qas": [
+      {
+        "num": 23,
+        "q": "Which areas in Bangalore does InspectCar cover?",
+        "a": "InspectCar covers all of Bangalore including Whitefield, Marathahalli, KR Puram, Sarjapur Road, Bellandur, Koramangala, HSR Layout, Indiranagar, MG Road, JP Nagar, Jayanagar, Banashankari, Bannerghatta Road, Electronic City, Hebbal, Yelahanka, Rajajinagar, Malleshwaram, and all surrounding localities."
+      },
+      {
+        "num": 24,
+        "q": "Does InspectCar operate on weekends and public holidays?",
+        "a": "Yes. InspectCar operates 7 days a week from 8 AM to 8 PM, including Sundays and public holidays. Most used car inspections happen on weekends when buyers are free to attend."
+      },
+      {
+        "num": 25,
+        "q": "Can I attend the inspection in person?",
+        "a": "Yes, and we encourage buyers to attend. Being present during the inspection helps you understand the inspector's findings in real time, ask questions, and see the condition of the vehicle firsthand."
+      },
+      {
+        "num": 26,
+        "q": "Can InspectCar inspect cars outside Bangalore?",
+        "a": "InspectCar primarily serves Bangalore. For outstation inspections in nearby cities like Mysore, an additional travel allowance applies. Contact us via WhatsApp at +91 9900368006 to check availability for your specific location."
+      },
+      {
+        "num": 27,
+        "q": "Can InspectCar inspect cars listed on OLX, Cars24, or CarDekho?",
+        "a": "Yes. InspectCar inspects any used car regardless of the platform — OLX, Cars24, CarDekho, Spinny, CARS24, or a private seller. Simply share the vehicle's location when booking."
+      },
+      {
+        "num": 28,
+        "q": "How do I get the inspection report?",
+        "a": "The digital inspection report is sent via WhatsApp and email within 2–4 hours of inspection completion. It includes high-resolution photos, pass/warn/fail for every checkpoint, category-wise scores, AI health score, inspector notes, and a final recommendation."
+      },
+      {
+        "num": 29,
+        "q": "Can I share the InspectCar report with the seller?",
+        "a": "Yes. The digital PDF report is fully shareable. Many buyers share it with the seller to negotiate a price reduction based on documented issues. It can also be shared with a bank for vehicle loan appraisal."
+      },
+      {
+        "num": 30,
+        "q": "How is InspectCar different from a free inspection offered by a dealer?",
+        "a": "A dealer's in-house inspection has a direct conflict of interest — their goal is to sell the car. InspectCar is a completely independent third party with no relationship to the seller or dealer. Our inspectors are paid only by the buyer and report only to the buyer. This independence is what makes InspectCar's assessment genuinely trustworthy."
+      }
+    ]
+  },
+  {
+    "id": "cat-new-car-pdi-basics",
+    "name": "New Car PDI — Basics",
+    "icon": "🆕",
+    "qas": [
+      {
+        "num": 31,
+        "q": "What is PDI (Pre-Delivery Inspection) for a new car?",
+        "a": "PDI is an independent inspection of a brand new car at the dealership before you take delivery. InspectCar's PDI covers 300+ checkpoints to ensure there is no transit damage, manufacturing defect, missing accessory, or documentation issue before you sign the delivery gate pass."
+      },
+      {
+        "num": 32,
+        "q": "Is PDI mandatory before taking delivery of a new car in India?",
+        "a": "PDI is not legally mandatory, but automotive experts and consumer protection advocates strongly recommend it for every new car buyer. InspectCar has found defects — including repainted panels, rat bite wiring, and wrong accessories — in over 25% of new cars inspected in Bangalore. Skipping PDI means accepting any pre-existing defect as your own problem post-delivery."
+      },
+      {
+        "num": 33,
+        "q": "How much does new car PDI cost in Bangalore?",
+        "a": "InspectCar's new car PDI (Pre-Drive package) costs ₹1,999 and covers 300+ checkpoints including paint gauge test, OBD scan, all electrical systems, documentation verification, and accessory check."
+      },
+      {
+        "num": 34,
+        "q": "How long does new car PDI take?",
+        "a": "InspectCar's new car PDI takes 45 to 75 minutes at the dealership or stockyard."
+      },
+      {
+        "num": 35,
+        "q": "When should I book a new car PDI?",
+        "a": "Book your PDI as soon as the dealer confirms a specific VIN/chassis number for your vehicle. Always book BEFORE the registration process begins. Once registered, you lose the leverage to demand defect rectification or a replacement vehicle."
+      },
+      {
+        "num": 36,
+        "q": "Does InspectCar do PDI at the dealership in Bangalore?",
+        "a": "Yes. InspectCar inspectors visit the dealership or stockyard anywhere in Bangalore. We cover all major dealer corridors including Tumkur Road, Old Madras Road, Hosur Road, Bellary Road, Mysore Road, and Outer Ring Road."
+      },
+      {
+        "num": 37,
+        "q": "What happens if InspectCar finds defects during new car PDI?",
+        "a": "InspectCar's detailed PDF report with photos gives you documented evidence. You can use this to demand the dealer rectify all issues before delivery, request a replacement vehicle from the same stock, or negotiate complimentary accessories (3D mats, dashcam, extended warranty) as compensation for minor defects."
+      },
+      {
+        "num": 38,
+        "q": "Can I reject a new car if PDI fails?",
+        "a": "Yes. Before signing the delivery gate pass and before registration, you have the right to refuse delivery or demand a defect-free replacement. InspectCar's inspection report provides the legal and moral basis for this demand."
+      }
+    ]
+  },
+  {
+    "id": "cat-pdi-whats-checked",
+    "name": "New Car PDI — What's Checked",
+    "icon": "📋",
+    "qas": [
+      {
+        "num": 39,
+        "q": "What does InspectCar check during new car PDI?",
+        "a": "InspectCar's 300+ point new car PDI covers: all body panels and paint (paint gauge test on every panel), all glass panes for OEM markings and chips, all electrical systems and infotainment, AC performance, OBD scan for pre-existing fault codes, all fluid levels, tyre condition and DOT code, underbody for transit damage, and complete documentation and accessory verification."
+      },
+      {
+        "num": 40,
+        "q": "Can a brand new car have paint defects from the factory?",
+        "a": "Yes. Factory paint defects include orange peel texture, paint runs, dirt inclusions, fish-eye marks, and uneven coverage. Transit handling can cause bumper or panel paint damage that dealers repair before delivery without disclosure. A paint gauge test detects all of these."
+      },
+      {
+        "num": 41,
+        "q": "What is stockyard damage in a new car?",
+        "a": "Stockyard damage occurs when cars are stored in dealer lots for weeks or months awaiting buyers. During this time, rats can chew wiring harnesses, battery voltage drops affecting ECU, UV exposure fades plastic trim, and hailstorms can cause small dents. InspectCar's PDI specifically inspects for all stockyard damage types."
+      },
+      {
+        "num": 42,
+        "q": "How can I tell if my new car was used as a demo car?",
+        "a": "Signs of a demo car include: odometer reading above 200 km, wear on driver's accelerator pedal rubber, scuffs on door sill entry plates, previous service history stamp in the service book, fuel level below full, and any interior wear not consistent with a brand new car."
+      },
+      {
+        "num": 43,
+        "q": "What documents should I check at new car delivery?",
+        "a": "Verify: Form 21 (Notice of dispatch from manufacturer), Form 22 (Roadworthiness certificate), manufacturer's invoice (check all accessories match), warranty booklet, owner's manual, insurance policy, 2 sets of keys, spare tyre with matching OEM size, wheel spanner and jack, and all accessories listed on your booking invoice."
+      },
+      {
+        "num": 44,
+        "q": "Does InspectCar check for rat bite wiring in new cars?",
+        "a": "Yes. Rat bite damage to wiring harnesses is a genuine problem in Bangalore dealership stockyards. Our PDI specifically inspects the engine bay wiring harness, underbody wiring, and runs a full electrical function test. If any electrical fault is found, we run an OBD scan to identify affected circuits."
+      },
+      {
+        "num": 45,
+        "q": "What is the OBD scan check in new car PDI?",
+        "a": "Even brand new cars can have pre-existing OBD fault codes from: factory calibration runs, transport handling, battery drain during storage, or ECU software issues. InspectCar runs a full OBD scan on every new car PDI. Any stored or pending DTCs are documented in the report so you can demand they be cleared and verified before taking delivery."
+      }
+    ]
+  },
+  {
+    "id": "cat-pdi-negotiation",
+    "name": "PDI Negotiation & Value",
+    "icon": "🤝",
+    "qas": [
+      {
+        "num": 46,
+        "q": "Can InspectCar's PDI report help me get free accessories from the dealer?",
+        "a": "Yes. Even minor documented defects in our PDI report — a small paint touch-up, missing accessory, or OBD code — give you formal written evidence to negotiate with the dealer. Many of our customers use PDI reports to receive complimentary 3D mats, mud flaps, dashcams, or extended warranty coverage."
+      },
+      {
+        "num": 47,
+        "q": "Is the price of a new car negotiable?",
+        "a": "New car ex-showroom prices are fixed, but on-road price components can be negotiated. Insurance premiums, extended warranty pricing, and accessories can be negotiated. InspectCar's PDI report, by documenting any defects, creates leverage to demand these value-additions at no extra cost."
+      },
+      {
+        "num": 48,
+        "q": "Can the InspectCar PDI report be used to demand a replacement car?",
+        "a": "Yes. If our PDI documents significant defects such as a repainted panel, electrical fault, or structural damage, you have clear grounds to reject the allocated vehicle and demand a defect-free replacement from the dealer's stock before registration."
+      },
+      {
+        "num": 49,
+        "q": "What if the dealer refuses to rectify PDI defects?",
+        "a": "If a dealer refuses to address documented defects, you can escalate to the manufacturer's customer care (Honda, Maruti, Hyundai, Tata, etc.), file a complaint on the National Consumer Helpline (1800-11-4000), or approach a consumer forum. InspectCar's timestamped, photographic report is strong evidence in any such dispute."
+      },
+      {
+        "num": 50,
+        "q": "Does InspectCar's PDI cover warranty check?",
+        "a": "Yes. We verify that the vehicle's warranty period starts from the correct delivery date, the warranty booklet is properly filled, and the manufacturer's warranty terms cover the detected defects. We also advise on extended warranty options."
+      },
+      {
+        "num": 51,
+        "q": "What is the benefit of PDI for luxury car buyers in Bangalore?",
+        "a": "For luxury car buyers (Mercedes, BMW, Audi, Volvo, Lexus), an independent PDI is even more important. These vehicles have complex electronics, advanced ADAS, and higher repair costs. InspectCar's Lux-Drive PDI package provides additional depth for premium segment vehicles."
+      },
+      {
+        "num": 52,
+        "q": "Can PDI be done for electric vehicles (EVs) in Bangalore?",
+        "a": "Yes. InspectCar performs PDI on electric vehicles including Tata Nexon EV, Tata Tiago EV, Hyundai Ioniq 5, MG ZS EV, and BYD Atto 3. EV PDI includes battery health assessment, charging port test, regenerative braking check, OBD scan via EV diagnostic protocols, and range display verification."
+      }
+    ]
+  },
+  {
+    "id": "cat-report-after-inspection",
+    "name": "Report & After-Inspection",
+    "icon": "📄",
+    "qas": [
+      {
+        "num": 53,
+        "q": "What does InspectCar's inspection report contain?",
+        "a": "The report contains: AI health score (0–100), pass/warn/fail status for all 300+ checkpoints, category-wise scores (Exterior, Interior, Engine, Electricals, Tyres, Underbody, Documents), high-resolution photos of all noted issues, inspector notes, negotiation tips for identified defects, and a final recommendation (Buy / Negotiate / Avoid for used cars, or Approved / Rectify for new car PDI)."
+      },
+      {
+        "num": 54,
+        "q": "How soon do I get the inspection report?",
+        "a": "InspectCar delivers the digital report via WhatsApp and email within 2–4 hours of inspection completion. For same-day reports, book morning slots."
+      },
+      {
+        "num": 55,
+        "q": "Is the report digital or physical?",
+        "a": "The report is delivered digitally as a PDF via WhatsApp and email. It is fully shareable, printable, and suitable for presenting to sellers, dealers, banks, or consumer forums."
+      },
+      {
+        "num": 56,
+        "q": "Can I negotiate the used car price based on InspectCar's report?",
+        "a": "Yes, and this is one of the most practical uses of the inspection report. If our report documents issues such as worn tyres, service history gaps, or OBD fault codes, you can calculate the cost of repairs and deduct a proportionate amount from the asking price. Many InspectCar customers save ₹20,000–₹1,00,000+ in price negotiations using our report."
+      },
+      {
+        "num": 57,
+        "q": "Does InspectCar offer any re-inspection if I want a second opinion?",
+        "a": "Yes. InspectCar can perform a re-inspection of the same vehicle after the seller addresses issues. Contact us to book a follow-up inspection at a discounted rate."
+      },
+      {
+        "num": 58,
+        "q": "Can I use InspectCar's report for car insurance?",
+        "a": "Some insurance providers accept third-party inspection reports for insurance policy purposes. The InspectCar report's documented vehicle condition and photos can support insurance claims if a defect existed at purchase that caused a later issue."
+      },
+      {
+        "num": 59,
+        "q": "Is InspectCar's report accepted by banks for car loans?",
+        "a": "InspectCar's report is a professional assessment that many banks and NBFCs view favorably when evaluating a used vehicle for loan purposes. It demonstrates due diligence by the buyer. However, formal bank valuation is a separate process — some banks have their own empaneled inspectors."
+      },
+      {
+        "num": 60,
+        "q": "How do I contact InspectCar to book an inspection?",
+        "a": "You can reach InspectCar through: WhatsApp: +91 9900368006, Phone: +91 9900368006, Email: info@inspectcar.in, or book directly on the website at https://inspectcar.in/#packages. We are available 7 days a week, 8 AM to 8 PM."
+      }
+    ]
+  }
+]
