@@ -195,8 +195,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="preload" as="image" href="images/hero-car1.webp" type="image/webp">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/booking.css">
+<link rel="stylesheet" href="css/style.css?v=20261019_4">
+<link rel="stylesheet" href="css/booking.css?v=20261019_4">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
 
@@ -206,6 +206,18 @@
 <script defer src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
+/* Mobile: completely remove connecting line animation layer to prevent dangling lines and scroll breakage */
+@media (max-width: 992px) {
+    #connectingSvg,
+    .connecting-lines-svg {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        width: 0 !important;
+        height: 0 !important;
+        pointer-events: none !important;
+    }
+}
 /* Remove main-page glare / sheen effects & force instant visibility */
 .hero-right::before,
 .hero-right::after,
@@ -2223,15 +2235,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <script>
 function drawConnectingLines() {
-    if (window.innerWidth <= 992) return;
-    const heroRight = document.getElementById('heroRight');
     const svg = document.getElementById('connectingSvg');
+    if (window.innerWidth <= 992) {
+        if (svg) {
+            svg.style.display = 'none';
+            svg.querySelectorAll('.guide-path').forEach(p => p.removeAttribute('d'));
+            svg.querySelectorAll('animateMotion').forEach(a => a.removeAttribute('path'));
+        }
+        return;
+    }
+    const heroRight = document.getElementById('heroRight');
     if (!heroRight || !svg) return;
+    svg.style.display = '';
 
     const rectHero = heroRight.getBoundingClientRect();
     if (rectHero.width === 0 || rectHero.height === 0) return;
-
-    const isMobile = false;
 
     const pairs = [
         { dotId: 'dotEngine', cardId: 'cardEngine', pathId: 'pathEngine', animId: 'animEngine' },
@@ -2255,27 +2273,14 @@ function drawConnectingLines() {
             const x1 = (rectDot.left + rectDot.width / 2) - rectHero.left;
             const y1 = (rectDot.top + rectDot.height / 2) - rectHero.top;
 
-            let x2, y2, cx1, cy1, cx2, cy2;
+            // Desktop: Exact original calculation 100% untouched
+            const x2 = rectCard.left - rectHero.left;
+            const y2 = (rectCard.top + rectCard.height / 2) - rectHero.top;
 
-            if (isMobile) {
-                // Mobile: Card is below car in 2-column grid
-                x2 = (rectCard.left + rectCard.width * 0.35) - rectHero.left;
-                y2 = rectCard.top - rectHero.top;
-
-                cx1 = x1;
-                cy1 = y1 + (y2 - y1) * 0.45;
-                cx2 = x2;
-                cy2 = y1 + (y2 - y1) * 0.65;
-            } else {
-                // Desktop: Exact original calculation 100% untouched
-                x2 = rectCard.left - rectHero.left;
-                y2 = (rectCard.top + rectCard.height / 2) - rectHero.top;
-
-                cx1 = x1 + (x2 - x1) * 0.45;
-                cy1 = y1;
-                cx2 = x1 + (x2 - x1) * 0.65;
-                cy2 = y2;
-            }
+            const cx1 = x1 + (x2 - x1) * 0.45;
+            const cy1 = y1;
+            const cx2 = x1 + (x2 - x1) * 0.65;
+            const cy2 = y2;
 
             const dStr = `M ${x1.toFixed(1)},${y1.toFixed(1)} C ${cx1.toFixed(1)},${cy1.toFixed(1)} ${cx2.toFixed(1)},${cy2.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`;
 

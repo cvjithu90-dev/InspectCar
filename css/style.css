@@ -498,6 +498,11 @@ body.modal-open .floating-whatsapp{display:none !important;}
   }
   .connecting-lines-svg{
     display:none !important;
+    visibility:hidden !important;
+    opacity:0 !important;
+    width:0 !important;
+    height:0 !important;
+    pointer-events:none !important;
   }
   .hotspots-column{
     display:grid !important;
