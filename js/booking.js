@@ -507,6 +507,11 @@ const LUXURY_PACKAGES = ['lux-drive', 'luxury-expert'];
           state.promoCode = code;
           promoStatus.className = 'promo-status success';
           promoStatus.innerText = '✓ Promo code applied successfully! (₹300 OFF)';
+        } else if (code === 'FIRSTINSPECT') {
+          state.discount = 199;
+          state.promoCode = code;
+          promoStatus.className = 'promo-status success';
+          promoStatus.innerText = '✓ Promo code applied successfully! (₹199 OFF)';
         } else {
           promoStatus.className = 'promo-status error';
           promoStatus.innerText = 'Invalid promo code. Please check and try again.';
